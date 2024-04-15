@@ -125,3 +125,45 @@ button{
     justify-content: center;
     align-items: center;
 }
+
+.pop {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    height: 65vh;
+    border-style: solid;
+    background-color: var(--secondary);
+    border-radius: 1em;
+    align-self: center;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.description {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: x-large;
+}
+
+.number-player {
+    padding: 4em;
+    display: flex;
+    width: 34%;
+    height: 10vh;
+    border-style: solid;
+    background-color: var(--background);
+    border-radius: 1em;
+    margin-right: 0.5em;
+    margin-bottom: 18em;
+    margin-left: 1em;
+    
+}
+
+.player-count {
+    display: flex;
+    flex-direction: row;
+    
+   
+}
