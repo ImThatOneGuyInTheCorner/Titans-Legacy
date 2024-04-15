@@ -75,3 +75,23 @@ footer{
     justify-content: center;
 
 }
+
+#game{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#createPanel{
+    display: flex;
+    justify-content: center;
+    
+}
+
+button{
+    width: 5rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

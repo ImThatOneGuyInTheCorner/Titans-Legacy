@@ -1,19 +1,38 @@
+class Player {
+    constructor(){
+        this.inventory = new Map;
+    }
+    // get inventory(){
+    //     return this.inventory
+    // }
+    hasItem(key){
+        return this.inventory.has(key)
+    }
+    getInventoryItem(key){
+        if(this.hasItem(key)){
+            return this.inventory.get(key);
+        }
+    }
+    setInventoryItem(key,value){
+        this.inventory.set(key,value)
+    }
+}
+
 //Import all things needed from PIXI
 import { Application, Assets, Sprite, Graphics, Polygon, Container, hslWgsl } from "../libraries/pixi.mjs"
 //Create a new application
 const app = new Application;
-//Setup function that adds the canvas to the body
+//Setup function that adds the canvas to the body and starts the game loop
 async function setup() {
     await app.init({ background: 'white', resizeTo: window, antialias: true, autoDensity: true, resolution: 2 });
-    document.body.appendChild(app.canvas);
+    const main = document.getElementById("game");
+    // if(main){
+    //     main.appendChild(app.canvas);
+    // }
 }
 //Preloads the assets needed
 async function preload() {
-    Assets.addBundle("tiles",[
-        { alias: 'bunny', src: 'background.png' },
-    ]);
-    // Load the assets defined above
-    await Assets.loadBundle('tiles');
+
 }
 //Get the midpoint of 2 points
 function getMidpoint(point1,point2){
@@ -70,7 +89,7 @@ function getMidpoint(point1,point2){
                 .stroke({ width: 1, color: "black" });
         }
         gameBoard.addChild(graphics);
-        app.stage.addChild(gameBoard);
+        // app.stage.addChild(gameBoard);
     });
    
     document.addEventListener('click', ({ offsetX, offsetY }) => {
@@ -86,3 +105,21 @@ function getMidpoint(point1,point2){
         console.log(hex)
     })
 })()
+
+function getElementPromiseById(id){
+    return new Promise((resolve,reject)=>{
+        const element = document.getElementById(id);
+        if(element !== null){
+            resolve(element)
+        }else{
+            reject()
+        }
+
+    });
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+    getElementPromiseById("createPanel").then((a)=>{
+        console.log(a)
+    })
+})
