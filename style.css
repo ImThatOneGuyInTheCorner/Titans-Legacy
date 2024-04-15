@@ -40,7 +40,6 @@ a {
 }
 
 .button {
-    display: flex;
     padding: 1em;
     margin: 1em;
     border-style: solid;
@@ -76,6 +75,37 @@ footer{
 
 }
 
+a:hover {
+    color: #415F3E;
+}
+
+.button { 
+    border-radius: 5px;
+    padding: 15px 55px;
+    font-size: 22px;
+    text-decoration: none;
+    margin: 20px;
+    color: #fff;
+    position: relative;
+    display: flex;
+  }
+  .button:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+  }
+  .green {
+    background-color: #000;
+    box-shadow: 3px 5px 5px #000000;
+    border-radius: 2px;
+    transition: all .3s ease-in-out;
+  }
+  .green:hover {
+    background-color: #000;
+    /*  Making button bigger on hover  */
+    padding: 20px 60px;
+    transform: scale(1.1);
+  }
 #game{
     width: 100vw;
     height: 100vh;
@@ -98,4 +128,46 @@ button{
 
 .hidden{
     display: none;
+}
+
+.pop {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    height: 65vh;
+    border-style: solid;
+    background-color: var(--secondary);
+    border-radius: 1em;
+    align-self: center;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.description {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: x-large;
+}
+
+.number-player {
+    padding: 4em;
+    display: flex;
+    width: 34%;
+    height: 10vh;
+    border-style: solid;
+    background-color: var(--background);
+    border-radius: 1em;
+    margin-right: 0.5em;
+    margin-bottom: 18em;
+    margin-left: 1em;
+    
+}
+
+.player-count {
+    display: flex;
+    flex-direction: row;
+    
+   
 }
