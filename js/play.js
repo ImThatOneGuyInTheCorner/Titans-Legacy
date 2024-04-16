@@ -26,12 +26,14 @@ const app = new Application;
 async function setup() {
     await app.init({ background: 'white', resizeTo: window, antialias: true, autoDensity: true, resolution: 2 });
     const main = document.getElementById("game");
-    // if(main){
-    //     main.appendChild(app.canvas);
-    // }
+    if(main){
+        main.appendChild(app.canvas);
+    }
 }
 //Preloads the assets needed
 async function preload() {
+    Assets.add({alias: 'bunnyBooBoo', src: 'bunny.png'});
+    await Assets.load('bunnyBooBoo');
 
 }
 //Get the midpoint of 2 points
@@ -83,13 +85,11 @@ function getMidpoint(point1,point2){
             }
            //circles on the edges of all hexagons
             const midpoints = getMidpoint(hex.corners[i+1],hex.corners[i])
-            graphics
-                .circle(midpoints[0], midpoints[1], 5)
-                .fill("red")
-                .stroke({ width: 1, color: "black" });
+            let edge = Sprite.from("bunnyBooBoo")
+            app.stage.addChild(edge)
         }
         gameBoard.addChild(graphics);
-        // app.stage.addChild(gameBoard);
+        app.stage.addChild(gameBoard);
     });
    
     document.addEventListener('click', ({ offsetX, offsetY }) => {
@@ -106,9 +106,9 @@ function getMidpoint(point1,point2){
     })
 })()
 
-function getElementPromiseById(id){
+function getElementPromiseBySelctor(selector){
     return new Promise((resolve,reject)=>{
-        const element = document.getElementById(id);
+        const element = document.querySelector(selector);
         if(element !== null){
             resolve(element)
         }else{
@@ -119,8 +119,7 @@ function getElementPromiseById(id){
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
-    getElementPromiseById("createPanel").then((a)=>{
-        console.log(a)
+    getElementPromiseBySelctor("#createPanel button").then(startBtn=>{
     })
 })
 

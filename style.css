@@ -126,6 +126,10 @@ button{
     align-items: center;
 }
 
+.hidden{
+    display: none;
+}
+
 .pop {
     display: flex;
     flex-wrap: wrap;
