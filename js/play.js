@@ -104,7 +104,7 @@ function grid() {
         })
         tile.position.set(hex.x, hex.y);
         tileText.position.set(hex.x, hex.y+tile.height/4.5);
-        tile.on("click", () => {
+        tile.on("pointerdown", () => {
             tile.texture = Texture.from('house')
             tile.tint = 0xFFFFFF;
 
@@ -141,7 +141,7 @@ function grid() {
             corner.on("mouseleave", () => {
                 corner.tint = "white";
             })
-            corner.on("click", () => {
+            corner.on("pointerdown", () => {
                 corner.texture = Texture.from('house')
                 corner.tint = 0xFFFFFF;
 
