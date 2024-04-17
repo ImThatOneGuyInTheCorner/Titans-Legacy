@@ -1,8 +1,8 @@
 
 
 //Import all things needed from PIXI
-import { Application, Assets, Sprite, Container, Text, Texture } from "../libraries/pixi.mjs"
-
+import { Application, Assets, Sprite, Container, Text, Texture, VERSION } from "../libraries/pixi.mjs"
+console.log(VERSION)
 class Player {
     constructor() {
         this.inventory = new Map;
@@ -31,7 +31,7 @@ globalThis.__PIXI_APP__ = app;
 async function setup() {
     await app.init({ background: 'white', resizeTo: window, antialias: true, autoDensity: true, resolution: 2 });
     const main = document.getElementById("game");
-    getElementPromiseBySelctor("#game").then(x=>x.appendChild(app.canvas)).catch(console.error);
+    await getElementPromiseBySelctor("#game").then(x=>x.appendChild(app.canvas)).catch(console.error);
 
 }
 //Preloads the assets needed
@@ -98,15 +98,11 @@ function grid() {
         tile.scale = 1;
         tile.anchor.set(.5);
         tile.interactive = true;
-        tile.on("click", () => {
-            console.log(tile);
-            tile.tint = 0xff0000;
-        })
         tile.position.set(hex.x, hex.y);
         tileText.position.set(hex.x, hex.y+tile.height/4.5);
         tile.on("pointerdown", () => {
             tile.texture = Texture.from('house')
-            tile.tint = 0xFFFFFF;
+            // tile.tint = 0xFFFFFF;
 
         })
         tileContainer.addChild(tile, tileText);
