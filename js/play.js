@@ -25,7 +25,7 @@ class Player {
 
 //Create a new application
 const app = new Application;
-
+window.__PIXI_DEVTOOLS__ = {app: app}
 globalThis.__PIXI_APP__ = app;
 //Setup function that adds the canvas to the body and starts the game loop
 async function setup() {
@@ -37,8 +37,8 @@ async function setup() {
 //Preloads the assets needed
 async function preload() {
     let assets = [
-        { alias: "hex", src: "polygon4.svg" },
-        { alias: "house", src: "ryantile.png" }
+        { alias: "hex", src: "../assets/polygon4.svg" },
+        { alias: "house", src: "../assets/ryantile.png" }
 
     ]
     await Assets.load(assets);
@@ -102,10 +102,9 @@ function grid() {
             console.log(tile);
             tile.tint = 0xff0000;
         })
-        console.log(hex.origin.x);
         tile.position.set(hex.x, hex.y);
         tileText.position.set(hex.x, hex.y+tile.height/4.5);
-        tile.on("click", () => {
+        tile.on("pointerdown", () => {
             tile.texture = Texture.from('house')
             tile.tint = 0xFFFFFF;
 
@@ -142,7 +141,7 @@ function grid() {
             corner.on("mouseleave", () => {
                 corner.tint = "white";
             })
-            corner.on("click", () => {
+            corner.on("pointerdown", () => {
                 corner.texture = Texture.from('house')
                 corner.tint = 0xFFFFFF;
 
@@ -190,11 +189,6 @@ function getElementPromiseBySelctor(selector) {
 
     });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    getElementPromiseBySelctor("#createPanel button").then(startBtn => {
-    }).catch(console.error)
-})
 
 
 var slider = document.getElementById("myRange");
