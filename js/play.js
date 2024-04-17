@@ -102,7 +102,6 @@ function grid() {
             console.log(tile);
             tile.tint = 0xff0000;
         })
-        console.log(hex.origin.x);
         tile.position.set(hex.x, hex.y);
         tileText.position.set(hex.x, hex.y+tile.height/4.5);
         tile.on("click", () => {
@@ -190,10 +189,5 @@ function getElementPromiseBySelctor(selector) {
 
     });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    getElementPromiseBySelctor("#createPanel button").then(startBtn => {
-    }).catch(console.error)
-})
 
 

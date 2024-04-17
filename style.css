@@ -45,7 +45,7 @@ a {
     border-style: solid;
     border-color: black;
     width: 25%;
-    background-image: url(woodBackground.jpg);
+    background-image: url(assets/woodBackground.jpg);
 }
 
 body {
@@ -53,7 +53,7 @@ body {
 }
 
 main {
-    background-image: url(background.png);
+    background-image: url(assets/background.png);
     width: 100%;
     margin-top: 0px;
     height: 100vh;
