@@ -25,7 +25,7 @@ class Player {
 
 //Create a new application
 const app = new Application;
-
+window.__PIXI_DEVTOOLS__ = {app: app}
 globalThis.__PIXI_APP__ = app;
 //Setup function that adds the canvas to the body and starts the game loop
 async function setup() {
