@@ -37,8 +37,8 @@ async function setup() {
 //Preloads the assets needed
 async function preload() {
     let assets = [
-        { alias: "hex", src: "polygon4.svg" },
-        { alias: "house", src: "ryantile.png" }
+        { alias: "hex", src: "../assets/polygon4.svg" },
+        { alias: "house", src: "../assets/ryantile.png" }
 
     ]
     await Assets.load(assets);
