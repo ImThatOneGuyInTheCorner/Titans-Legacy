@@ -48,6 +48,12 @@ a {
     background-image: url(assets/woodBackground.jpg);
 }
 
+.background{
+    background-image: url(assets/background.png);
+    background-size: 250px;
+
+}
+
 body {
     margin:0px
 }
@@ -226,7 +232,7 @@ template {
 
 }
 #gameboard{
-    width: 90dvw;
+    width: 83dvw;
 }
 #playing ul{
     list-style: none;
@@ -262,4 +268,35 @@ template {
 
 .list {
     
+.flex{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#placepop{
+    position: absolute;
+    flex-flow: column wrap;
+    align-items: center;
+}
+#resources{
+    width: 10dvw;
+    justify-content: space-around;
+}
+#resources > figure > figcaption{
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+#resources > figure{
+    width: 23%;
+}
+#placepop > figure{
+    width: 23%;
+}
+#placepop > figure > img{
+    width: 100%;
+}
+#resources > figure img{
+    width: 100%;
 }
