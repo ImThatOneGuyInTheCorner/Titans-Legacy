@@ -6,6 +6,7 @@
     --text: #000000;
     font-size: 14px;
     color: var(--text);
+    overflow: hidden;
 }
 
 .font {
@@ -24,7 +25,7 @@
     font: xx-large;
 }
 
-a {
+.button{
     display: flex;
     justify-content: center;
     color: white;
@@ -58,7 +59,7 @@ body {
     margin:0px
 }
 
-main {
+main, #createGame {
     background-image: url(assets/background.png);
     width: 100%;
     margin-top: 0px;
@@ -94,6 +95,7 @@ a:hover {
     color: #fff;
     position: relative;
     display: flex;
+    cursor: pointer;
   }
   .button:active {
     transform: translate(0px, 5px);
@@ -115,7 +117,7 @@ a:hover {
 #game{
     width: 100vw;
     height: 100vh;
-    /* overflow: hidden; */
+    display: none;
 }
 
 #createPanel{
@@ -124,7 +126,7 @@ a:hover {
     
 }
 
-button{
+.button-select{
     width: 5rem;
     height: 2rem;
     display: flex;
@@ -162,6 +164,7 @@ button{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    align-items: center;
 }
 
 .column {
@@ -181,6 +184,12 @@ button{
     padding: 3em;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+.createSelected {
+    border-style: double;
+    border-color: #1d1a15;
+    border-width: 10px;
 }
 
 
@@ -227,21 +236,36 @@ template {
 
 #playing{
     display: flex;
+    background-color: #89A587;
     flex-flow: row wrap;
-
+    flex-direction: row;
+    height: 100dvh;
+}
+#left {
+    display: flex;
+    flex-direction: column;
+    width: 83dvw;
+    height: 100%;
+}
+#right {
+    width: 17dvw;
+    height: 100%;
 }
 #gameboard{
-    width: 90dvw;
+    width: 83dvw;
+    height: 80dvh;
 }
 #playing ul{
     list-style: none;
 }
 #bottombar{
-    width: 100dvw;
+    width: 100%;
+    height: 20dvh;
 }
 #sidebar{
     width: 10dvw;
     height: 100dvh;
+    background-color: #89A587;
 }
 .list > ul{
     display:  flex;
@@ -249,6 +273,26 @@ template {
     justify-content:  space-around;
 }
 
+
+#how-to-play-overlay {
+    display: flex;
+}
+    
+.offerBtn {
+    height: 4vh;
+    width: 50%;
+    display: flex;
+    color: white;
+    background-color: #BB0505;
+    align-items: center;
+    justify-content: center;
+}
+
+.tradeBox {
+    border-style: solid;
+    background-color: #FFEAC0;
+}
+    
 .flex{
     display: flex;
     flex-flow: row wrap;

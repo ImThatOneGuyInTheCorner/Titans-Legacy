@@ -24,6 +24,21 @@ class Player {
     }
 }
 
+// On document load run function
+document.addEventListener("DOMContentLoaded", function () {
+    // Add listener to create start button
+    if ( document.getElementById('createPanel') !== null) {
+        let startBtn = document.getElementById('createPanel');
+        startBtn.addEventListener('click', startGame)
+    }
+});
+
+// Starts Game (What did you think it'd do)
+function startGame() {
+    document.getElementById('createGame').style.display = 'none';
+    document.getElementById('game').style.display = 'flex';
+};
+
 class Placer{
     constructor(x,y){
         this.sprite = Sprite.from("placer");
@@ -103,6 +118,7 @@ async function setup() {
     globalThis.__PIXI_APP__ = app;
 
 }
+
 //Preloads the assets needed
 async function preload() {
     let assets = [
