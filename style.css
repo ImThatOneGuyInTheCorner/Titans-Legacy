@@ -253,11 +253,8 @@ template {
 }
 #gameboard{
     width: 83dvw;
-<<<<<<< Updated upstream
     height: 80dvh;
-=======
     height: 100vh;
->>>>>>> Stashed changes
 }
 #playing ul{
     display: flex;
@@ -306,8 +303,6 @@ template {
 .avail {
     color: white;
 }
-<<<<<<< Updated upstream
-=======
 
 .list {
     display: flex;
@@ -319,26 +314,32 @@ template {
     border-style: solid;
     align-items: center;
 }
->>>>>>> Stashed changes
     
 .flex{
     display: flex;
     flex-flow: row wrap;
 }
-
+#popcontainer{
+    width: 100dvw;
+    height: 100dvh;
+    justify-content: center;
+    align-content: center;
+}
 #placepop{
-    position: absolute;
     flex-flow: column wrap;
     align-items: center;
+    width: 25%;
+    height: 25%;
+    justify-content: center;
 }
 #resources{
-    width: 10dvw;
+    width: 100%;
     justify-content: space-around;
+    color: white;
 }
 #resources > figure > figcaption{
     width: 100%;
     text-align: center;
-    color: white;
 }
 
 #resources > figure{
@@ -365,4 +366,11 @@ template {
     width: 66%;
     flex-wrap: wrap;
     
+#placepop{
+    color:white
+}
+
+#placepop > h2{
+    cursor: pointer;
+    color:white
 }
