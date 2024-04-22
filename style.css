@@ -260,11 +260,10 @@ template {
     justify-content:  space-around;
 }
 
-<<<<<<< HEAD
-#how-to-play-overlay {
-    display: flex;
+.hidden {
+    display: none;
+}
 
-=======
 .offerBtn {
     height: 4vh;
     width: 50%;
@@ -311,5 +310,14 @@ template {
 }
 #resources > figure img{
     width: 100%;
->>>>>>> 3871ddeb12737798b7c0927b90a1572b232d2551
+}
+
+#how-to-play-overlay {
+    width: 75vw;
+    height: 75vh;
+}
+
+#exitBtn {
+    width: 25px;
+    height: 25px;
 }
