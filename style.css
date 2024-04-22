@@ -118,7 +118,7 @@ a:hover {
     
 }
 
-button{
+.button-select{
     width: 5rem;
     height: 2rem;
     display: flex;
@@ -221,6 +221,7 @@ template {
 
 #playing{
     display: flex;
+    background-color: #89A587;
     flex-flow: row wrap;
 
 }
@@ -236,9 +237,29 @@ template {
 #sidebar{
     width: 10dvw;
     height: 100dvh;
+    background-color: #89A587;
 }
 .list > ul{
     display:  flex;
     flex-flow: row wrap;
     justify-content:  space-around;
+}
+
+.offerBtn {
+    height: 4vh;
+    width: 50%;
+    display: flex;
+    color: white;
+    background-color: #BB0505;
+    align-items: center;
+    justify-content: center;
+}
+
+.tradeBox {
+    border-style: solid;
+    background-color: #FFEAC0;
+}
+
+.list {
+    
 }
