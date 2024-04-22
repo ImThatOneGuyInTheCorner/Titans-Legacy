@@ -253,20 +253,27 @@ template {
     display: flex;
     flex-flow: row wrap;
 }
-
+#popcontainer{
+    width: 100dvw;
+    height: 100dvh;
+    justify-content: center;
+    align-content: center;
+}
 #placepop{
-    position: absolute;
     flex-flow: column wrap;
     align-items: center;
+    width: 25%;
+    height: 25%;
+    justify-content: center;
 }
 #resources{
-    width: 10dvw;
+    width: 100%;
     justify-content: space-around;
+    color: white;
 }
 #resources > figure > figcaption{
     width: 100%;
     text-align: center;
-    color: white;
 }
 
 #resources > figure{
@@ -280,4 +287,13 @@ template {
 }
 #resources > figure img{
     width: 100%;
+}
+
+#placepop{
+    color:white
+}
+
+#placepop > h2{
+    cursor: pointer;
+    color:white
 }

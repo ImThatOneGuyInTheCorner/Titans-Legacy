@@ -4,8 +4,9 @@
 import { Application, Assets, Sprite, Container, Text, Texture, VERSION, Graphics } from "../libraries/pixi.mjs"
 console.log(VERSION)
 class Player {
-    constructor() {
+    constructor(render) {
         this.inventory = new Map;
+        this.inventoryRender = render;
     }
     // get inventory(){
     //     return this.inventory
@@ -107,11 +108,17 @@ async function preload() {
     let assets = [
         { alias: "hex", src: "../assets/polygon4.svg" },
         { alias: "placer", src: "../assets/polygon4.svg" },
-        { alias: "house", src: "../assets/ryantile.png" }
+        { alias: "outpost", src: "../assets/house.svg" },
+        { alias: "road", src: "../assets/ryantile.png" }
+
 
     ]
     await Assets.load(assets);
 }
+function directionFromPoints(point1,point2){
+    return Math.atan(point1.y-point2.y/point1.x-point2.x)
+}
+
 //Get the midpoint of 2 points
 function getMidpoint(point1, point2) {
     if (point1 == null || point2 == null) return;
@@ -128,6 +135,9 @@ function getMidpoints(points) {
 }
 
 //Immedietly invoke a async function that runs both the setup and preload
+let building = "outpost";
+let selected;
+
 (async () => {
 
     await preload();
@@ -139,7 +149,13 @@ function getMidpoints(points) {
         tile.text = Math.floor(Math.random() * 4) + 1 
         tile.placers = createPlacers(tile);
     }
-
+    const popup = await getElementPromiseBySelctor("#placepop");
+    document.getElementById("building").addEventListener("click",()=>{
+        if(selected){
+            selected.sprite.texture = Texture.from(building)
+        }
+    popup.classList.toggle("flex",false)
+    })
 })()
 
 function addPlacers(places) {
@@ -152,6 +168,16 @@ function addPlacers(places) {
     return placers;
 }
 
+function modifyPopup(popup,resources,text){
+    // let outpost = {mushroom:1,log:1}
+    //     modifyPopup(popup,outpost,"Place Outpost");
+    //     popup.classList.toggle("flex");
+    let use = document.getElementById("resources");
+    let building = document.getElementById("building");
+    console.log(use.children);
+    building.innerText = text
+}
+
 async function createPlacers(tile){
     const hex = tile.hex;
     let corners = hex.corners;
@@ -159,14 +185,27 @@ async function createPlacers(tile){
     let cornerPlacers = addPlacers(corners)
     let edgePlacers = addPlacers(midpoints)
     const popup = await getElementPromiseBySelctor("#placepop");
-    const e = document.createElement("dialog")
-    cornerPlacers.forEach(x=>x.setInteraction("pointerdown",()=>{
+    cornerPlacers.forEach(x=>x.setInteraction("pointerdown",(e)=>{
+        selected = x
+        building = "outpost"
+        let outpost = {mushroom:1,log:1}
+        modifyPopup(popup,outpost,"Place Outpost");
         popup.classList.toggle("flex");
-        popup.classList.toggle("hidden",true);
-        popup.style.transform = 'translateY('+(ev.clientY-80)+'px)';
-        popup.style.transform += 'translateX('+(ev.clientX-100)+'px)';  
     }))
-    return cornerPlacers.concat(edgePlacers)
+    edgePlacers.forEach(x=>x.setInteraction("pointerdown",(e)=>{
+        selected = x
+        building = "road"
+        let road = {mushroom:1,log:1}
+        modifyPopup(popup,road,"Place Road");
+        popup.classList.toggle("flex");
+
+        
+    }))
+    let allPlacers = cornerPlacers.concat(edgePlacers)
+    allPlacers.forEach(x=>x.setInteraction("pointerenter",(e)=>{x.sprite.tint = "green"}))
+    allPlacers.forEach(x=>x.setInteraction("pointerleave",(e)=>{x.sprite.tint = 0xffffff}))
+
+    return allPlacers
 }
 
 
