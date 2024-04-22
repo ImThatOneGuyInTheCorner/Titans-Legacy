@@ -109,7 +109,7 @@ a:hover {
 #game{
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #createPanel{
@@ -216,4 +216,29 @@ button{
 
 template {
   display: contents;
+}
+
+
+#playing{
+    display: flex;
+    flex-flow: row wrap;
+
+}
+#gameboard{
+    width: 90dvw;
+}
+#playing ul{
+    list-style: none;
+}
+#bottombar{
+    width: 100dvw;
+}
+#sidebar{
+    width: 10dvw;
+    height: 100dvh;
+}
+.list > ul{
+    display:  flex;
+    flex-flow: row wrap;
+    justify-content:  space-around;
 }
