@@ -365,6 +365,7 @@ template {
     display: flex;
     width: 66%;
     flex-wrap: wrap;
+}
     
 #placepop{
     color:white
