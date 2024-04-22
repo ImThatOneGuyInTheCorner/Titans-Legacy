@@ -242,3 +242,8 @@ template {
     flex-flow: row wrap;
     justify-content:  space-around;
 }
+
+#how-to-play-overlay {
+    display: flex;
+
+}
