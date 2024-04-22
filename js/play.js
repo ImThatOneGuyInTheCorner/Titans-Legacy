@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add listener to create start button
     if ( document.getElementById('createPanel') !== null) {
         let startBtn = document.getElementById('createPanel');
-        startBtn.addEventListener('click', startGame)
+        startBtn.addEventListener('click', startGame);
     }
 });
 
@@ -113,7 +113,7 @@ const app = new Application;
 //Setup function that adds the canvas to the body and starts the game loop
 async function setup() {
     const board = await getElementPromiseBySelctor("#gameboard");
-    await app.init({ background: 'white', resizeTo: board, antialias: true, autoDensity: true, resolution: 2 });
+    await app.init({ background: 'white', antialias: true, autoDensity: true, resolution: 2 });
     board.appendChild(app.canvas);
     globalThis.__PIXI_APP__ = app;
 
@@ -166,7 +166,9 @@ let selected;
         tile.placers = createPlacers(tile);
     }
     const popup = await getElementPromiseBySelctor("#placepop");
-    document.getElementById("building").addEventListener("click",()=>{
+    const building = await getElementPromiseBySelctor("#building");
+
+    building.addEventListener("click",()=>{
         if(selected){
             selected.sprite.texture = Texture.from(building)
         }
