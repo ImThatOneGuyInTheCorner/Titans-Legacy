@@ -6,6 +6,7 @@
     --text: #000000;
     font-size: 14px;
     color: var(--text);
+    overflow-x: hidden;
 }
 
 .font {
@@ -24,7 +25,7 @@
     font: xx-large;
 }
 
-a {
+.button{
     display: flex;
     justify-content: center;
     color: white;
@@ -58,7 +59,7 @@ body {
     margin:0px
 }
 
-main {
+main, #createGame {
     background-image: url(assets/background.png);
     width: 100%;
     margin-top: 0px;
@@ -94,6 +95,7 @@ a:hover {
     color: #fff;
     position: relative;
     display: flex;
+    cursor: pointer;
   }
   .button:active {
     transform: translate(0px, 5px);
@@ -115,7 +117,7 @@ a:hover {
 #game{
     width: 100vw;
     height: 100vh;
-    /* overflow: hidden; */
+    display: none;
 }
 
 #createPanel{
@@ -162,6 +164,7 @@ a:hover {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    align-items: center;
 }
 
 .column {
@@ -181,6 +184,12 @@ a:hover {
     padding: 3em;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+.createSelected {
+    border-style: double;
+    border-color: #1d1a15;
+    border-width: 10px;
 }
 
 
