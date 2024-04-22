@@ -96,10 +96,10 @@ const app = new Application;
 
 //Setup function that adds the canvas to the body and starts the game loop
 async function setup() {
-    await app.init({ background: 'white', resizeTo: window, antialias: true, autoDensity: true, resolution: 2 });
-    
+    const board = await getElementPromiseBySelctor("#gameboard");
+    await app.init({ background: 'white', resizeTo: board, antialias: true, autoDensity: true, resolution: 2 });
+    board.appendChild(app.canvas);
     globalThis.__PIXI_APP__ = app;
-    await getElementPromiseBySelctor("#gameboard").then(x=>x.appendChild(app.canvas)).catch(console.error);
 
 }
 //Preloads the assets needed
@@ -152,13 +152,20 @@ function addPlacers(places) {
     return placers;
 }
 
-function createPlacers(tile){
+async function createPlacers(tile){
     const hex = tile.hex;
     let corners = hex.corners;
     let midpoints = getMidpoints(corners).map(point=> {return {x:point[0], y:point[1]}});
     let cornerPlacers = addPlacers(corners)
     let edgePlacers = addPlacers(midpoints)
-    cornerPlacers.forEach(x=>x.setInteraction("pointerdown",()=>{x.sprite.tint = "red"}))
+    const popup = await getElementPromiseBySelctor("#placepop");
+    const e = document.createElement("dialog")
+    cornerPlacers.forEach(x=>x.setInteraction("pointerdown",()=>{
+        popup.classList.toggle("flex");
+        popup.classList.toggle("hidden",true);
+        popup.style.transform = 'translateY('+(ev.clientY-80)+'px)';
+        popup.style.transform += 'translateX('+(ev.clientX-100)+'px)';  
+    }))
     return cornerPlacers.concat(edgePlacers)
 }
 
