@@ -2,375 +2,119 @@
     --background : #594E36;
     --primary: #415F3E;
     --secondary: #89A587;
-    --accent: #BB0505;
-    --text: #000000;
+    --accent: #865792;
+    --text1: #ffffff;
+    --text2: #000000;
     font-size: 14px;
-    color: var(--text);
-    overflow: hidden;
+}
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* REUSABLE CLASSES USE THESE PLEASE */
+.flex{
+    display: flex;
+    flex-flow: row wrap;
+}
+.half{
+    width: 50%;
+}
+.full{
+    width: 100%;
+}
+.column{
+    flex-flow: column wrap;
+}
+
+body{
+    background-image: url(assets/background.png);
+    background-size: 250px;
 }
 
 .font {
     font-family: "Mystery Quest", system-ui;
     font-weight: 400;
     font-style: normal;
-  }
-  
-  *{
-    margin:0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-.headingMain {
-    font: xx-large;
 }
 
 .button{
     display: flex;
     justify-content: center;
-    color: white;
-    font-size: 25px;
+    color: var(--text1);
+    font-size: 2rem;
+    text-decoration: none;
+    background-color: var(--primary);
+
+
 }
 
-#nav {
-    display: flex;
-    flex-direction: column;
+#home{
+    flex-flow: column wrap;
+    justify-content: space-between;
     align-items: center;
-    padding-top: 3emd;
-    
+    height: 100dvh;
 }
 
-.button {
-    padding: 1em;
-    margin: 1em;
-    border-style: solid;
-    border-color: black;
-    width: 25%;
-    background-image: url(assets/woodBackground.jpg);
+nav{
+    justify-content: center;
+    align-content: space-around;
+    height: 30%;
 }
 
-.background{
-    background-image: url(assets/background.png);
-    background-size: 250px;
-
-}
-
-body {
-    margin:0px
-}
-
-main, #createGame {
-    background-image: url(assets/background.png);
+nav > a{
+    padding: 1.2rem 0;
     width: 100%;
-    margin-top: 0px;
-    height: 100vh;
-    background-size: 250px;
-}
-
-footer{
-    color:white;
-    display: flex;
-     justify-content: center;
+    border: var(--secondary) .2rem solid;
 }
 
 #fontHead {
-    display: flex;
     color: white;
-    font-size: 75px;
-    padding-top:2em;
-    justify-content: center;
-
-}
-
-a:hover {
-    color: #415F3E;
-}
-
-.button { 
-    border-radius: 5px;
-    padding: 15px 55px;
-    font-size: 22px;
-    text-decoration: none;
-    margin: 20px;
-    color: #fff;
-    position: relative;
-    display: flex;
-    cursor: pointer;
-  }
-  .button:active {
-    transform: translate(0px, 5px);
-    -webkit-transform: translate(0px, 5px);
-    box-shadow: 0px 1px 0px 0px;
-  }
-  .green {
-    background-color: #000;
-    box-shadow: 3px 5px 5px #000000;
-    border-radius: 2px;
-    transition: all .3s ease-in-out;
-  }
-  .green:hover {
-    background-color: #000;
-    /*  Making button bigger on hover  */
-    padding: 20px 60px;
-    transform: scale(1.1);
-  }
-#game{
-    width: 100vw;
-    height: 100vh;
-}
-
-#createPanel{
-    display: flex;
-    justify-content: center;
-    
-}
-
-.button-select{
-    width: 5rem;
-    height: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hidden{
-    display: none;
-}
-
-.pop {
-    display: flex;
-    flex-wrap: wrap;
-    width: 50%;
-    height: 65vh;
-    border-style: solid;
-    background-color: var(--secondary);
-    border-radius: 1em;
-    align-self: center;
-    margin-left: 25%;
-    margin-right: 25%;
-    justify-content: center;
-}
-
-.description {
-    display: flex;
+    padding-top: 2rem;
+    font-size: 4rem;
     width: 100%;
-    justify-content: center;
     text-align: center;
-    font-size: x-large;
 }
 
-.row {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.column {
-    display: flex;
-    flex-flow: column wrap;
-}
-
-.box-select {
-    display: flex;
-    border-style: solid;
-    background-color: #594E36;
-    border-color: #000;
-    color: white;
-    width: 24%;
-    border-radius: 0.5em;
-    gap: 1rem;
-    padding: 3em;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-.createSelected {
-    border-style: double;
-    border-color: #1d1a15;
-    border-width: 10px;
-}
-
-
-.instruct {
-    font-size: xx-large;
-    margin-bottom: 1em;
-    margin-top: 1em;
-}
-
-.slide {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 15px;
-  border-radius: 5px;  
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slide::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%; 
-  background: #04AA6D;
-  cursor: pointer;
-}
-
-.slide::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #04AA6D;
-  cursor: pointer;
-}
-
-template {
-  display: contents;
-}
-
-
-#playing{
-    display: flex;
-    background-color: #89A587;
-    flex-flow: row wrap;
-    flex-direction: row;
-    height: 100dvh;
-}
-#left {
-    display: flex;
-    flex-direction: column;
-    width: 83dvw;
-    height: 100%;
-}
-#right {
-    width: 17dvw;
-    height: 100%;
-}
-#gameboard{
-    width: 83dvw;
-    height: 80dvh;
-    height: 100vh;
-}
-#playing ul{
-    display: flex;
-    flex-flow: row wrap;
-    list-style: none;
-    justify-content: flex-end;
-}
-#bottombar{
-    width: 100%;
-    height: 20dvh;
-}
-#sidebar{
-    display: flex;
-    width: 17dvw;
-    height: 31dvh;
-    background-color: #89A587;
-    justify-content: center;
-}
-
-
-
-#how-to-play-overlay {
-    display: flex;
-}
-    
-.offerBtn {
-    height: 4vh;
-    width: 10vw;
-    display: flex;
-    color: white;
-    background-color: #BB0505;
-    align-items: center;
-    justify-content: center;
-}
-
-.tradeBox {
-    display: flex;
-    flex-flow: column wrap;
-    border-style: solid;
-    width:90%;
-    background-color:#FFEAC0 ;
-    margin: 0.5em;
-    padding: 1em;
-
-}
-.avail {
-    color: white;
-}
-
-.list {
-    display: flex;
-    margin-top: 1rem;
-    background-color: #415F3E;
-    flex-flow: column wrap;
-    width: 75%;
-    justify-content: center;
-    border-style: solid;
-    align-items: center;
-}
-    
-.flex{
-    display: flex;
-    flex-flow: row wrap;
-}
-#popcontainer{
+.fillpage{
     width: 100dvw;
     height: 100dvh;
-    justify-content: center;
+}
+
+#createGame{
     align-content: center;
-}
-#placepop{
-    flex-flow: column wrap;
-    align-items: center;
-    width: 25%;
-    height: 25%;
     justify-content: center;
+
 }
-#resources{
-    width: 100%;
-    justify-content: space-around;
+#pop{
+    background-color: var(--primary);
+    padding: 2rem;
+    row-gap: 2rem;
+    border-radius: 1vmin;
+    border: #000000 solid .2rem;
+}
+#pop h2,p{
+    font-size: 1.75rem;
+}
+.box-select {
+    background-color: #594E36;
     color: white;
-}
-#resources > figure > figcaption{
-    width: 100%;
-    text-align: center;
-}
-
-#resources > figure{
-    width: 23%;
-}
-#placepop > figure{
-    width: 23%;
-}
-#placepop > figure > img{
-    width: 100%;
-}
-#resources > figure img{
-    width: 100%;
-}
-
-#playercard {
-    display: flex;
-    width:100%;
-    flex-flow: row wrap;
-}
-
-.resourceCards {
-    display: flex;
-    width: 66%;
-    flex-wrap: wrap;
-}
-    
-#placepop{
-    color:white
-}
-
-#placepop > h2{
+    width: 20%;
+    border-radius: 1vmin;
+    border: #000000 solid .2rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    color:white
+}
+
+#players{
+    justify-content: space-between;
+}
+.selector{
+    justify-content: space-between;
+    padding-bottom: 3rem;
+    padding-top: 1rem;
 }

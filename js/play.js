@@ -1,5 +1,3 @@
-
-
 //Import all things needed from PIXI
 import { Application, Assets, Sprite, Container, Text, Texture, VERSION, Graphics } from "../libraries/pixi.mjs"
 console.log(VERSION)
@@ -24,20 +22,6 @@ class Player {
     }
 }
 
-// On document load run function
-document.addEventListener("DOMContentLoaded", function () {
-    // Add listener to create start button
-    if ( document.getElementById('createPanel') !== null) {
-        let startBtn = document.getElementById('createPanel');
-        startBtn.addEventListener('click', startGame);
-    }
-});
-
-// Starts Game (What did you think it'd do)
-function startGame() {
-    document.getElementById('createGame').style.display = 'none';
-    document.getElementById('game').style.display = 'flex';
-};
 
 class Placer{
     constructor(x,y){
@@ -238,3 +222,17 @@ function getElementPromiseBySelctor(selector) {
     });
 }
 
+// On document load run function
+document.addEventListener("DOMContentLoaded", async function () {
+    let createPanel = await getElementPromiseBySelctor('#createPanel');
+    if ( createPanel !== null) {
+        createPanel.addEventListener('click', startGame);
+    }
+});
+
+// Starts Game (What did you think it'd do)
+function startGame() {
+    document.getElementById('createGame').classList.toggle("hidden",true)
+    document.getElementById('createGame').classList.toggle("flex",false)
+
+};

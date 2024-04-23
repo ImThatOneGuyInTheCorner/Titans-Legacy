@@ -14,18 +14,18 @@
 
 <body>
     <main id="game">
-        <section id="createGame" class="">
+        <section id="createGame" class="fillpage flex">
             <h1 class="font" id="fontHead">
                 Create Your Game
             </h1>
-            <section class="pop">
+            <section id="pop" class="flex column">
                 <section class="description font">
                     <p>To make your game, select the number of players and the duration of your game. </p>
                 </section>
-                <section class="column">
-                    <section class="font" id="player">
-                        <h1 class="instruct font">Number of Players</h1>
-                        <section class="row center">
+                <section class="column flex">
+                    <section class="flex column" id="players">
+                        <h2 class="instruct font">Number of Players</h2>
+                        <section class="flex selector" id="playerSelector">
                             <button id="numPlayer1" class="box-select button-select">
                                 <p>1</p>
                             </button>
@@ -40,44 +40,46 @@
                             </button>
                         </section>
                     </section>
-                    <section class="duration">
-                        <h1 class="instruct font">Duration of player turns</h1>
-                        <section class="row">
-                            <button id="durationTime" class="box-select button-select">
+                    <section id="duration" class="flex column">
+                        <h2 class="instruct font">Duration of player turns</h2>
+                        <section class="flex selector">
+                            <button class="box-select button-select">
                                 <p>30 seconds</p>
                             </button>
-                            <button id="durationTime" class="box-select button-select">
+                            <button  class="box-select button-select">
                                 <p>1 minute</p>
                             </button>
-                            <button id="durationTime" class="box-select button-select">
+                            <button class="box-select button-select">
                                 <p>1 minute 30 seconds</p>
                             </button>
-                            <button id="durationTime" class="box-select button-select" id="btnSelect">2 Minutes</button>
+                            <button class="box-select button-select" id="btnSelect">
+                                <p>2 Minutes</p>
+                            </button>
                         </section>
                     </section>
                     <section class="points font columnNoWrap">
-                        <h1 class="instruct font">Points to Win!</h1>
+                        <h2 class="instruct font">Points to Win!</h2>
                         <div class="slidecontainer">
                             <input type="range" min="5" max="15" value="15" class="slider" id="myRange">
                         </div>
                     </section>
                 </section>
             </section>
-            <section id="createPanel">
+            <section id="createPanel" class="full flex">
                 <a href="#" class="button">
                     Start
                 </a>
             </section>
         </section>
-        <section id="titanSelect" class="hidden">
+        <section id="titanSelect" class="fillpage hidden">
 
             <section id="titanSelection">
 
             </section>
         </section>
-        <section id="playing">
+        <section id="playing fillpage">
             <section id="gameboard">
-                
+
             </section>
             <section id="sidebar">
                 <section class="list" id="trades">
@@ -91,12 +93,12 @@
                         <section id="tradebox2" class="tradeBox">
                             <p>Trade 1 Mushroom for 1 wood</p>
                         </section>
-                    </section>  
+                    </section>
                     <section id="offerBtn">
                         <button class="offerBtn font">Create an Offer</button>
                     </section>
                 </section>
-                
+
             </section>
             <section id="bottombar">
                 <section class="list" id="inventory">
@@ -112,9 +114,15 @@
                     </figure>
                 </section>
                 <ul>
-                    <li><figure><img src="assets/polygon4.svg" alt="resource"></figure></li>
-                    <li><figure><img src="assets/polygon4.svg" alt="resource"></figure></li>
-                    <li><figure><img src="assets/polygon4.svg" alt="resource"></figure></li>
+                    <li>
+                        <figure><img src="assets/polygon4.svg" alt="resource"></figure>
+                    </li>
+                    <li>
+                        <figure><img src="assets/polygon4.svg" alt="resource"></figure>
+                    </li>
+                    <li>
+                        <figure><img src="assets/polygon4.svg" alt="resource"></figure>
+                    </li>
 
 
                 </ul>
@@ -145,4 +153,5 @@
         <h2 id="building"></h2>
     </section>
 </body>
+
 </html>
