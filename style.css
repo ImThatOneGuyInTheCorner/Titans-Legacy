@@ -14,26 +14,15 @@ button{
     margin:0;
     padding: 0;
     box-sizing: border-box;
+    max-width: 100%;
 }
 
-/* REUSABLE CLASSES USE THESE PLEASE */
-.flex{
-    display: flex;
-    flex-flow: row wrap;
-}
-.half{
-    width: 50%;
-}
-.full{
-    width: 100%;
-}
-.column{
-    flex-flow: column wrap;
-}
-
-body{
+.background{
     background-image: url(assets/background.png);
     background-size: 250px;
+}
+body{
+    width: 100%;
 }
 
 .font {
@@ -88,12 +77,11 @@ nav{
 #createGame{
     align-content: center;
     justify-content: center;
-
+    padding: 2rem;
 }
 #pop{
     background-color: var(--primary);
     padding: 2rem;
-    row-gap: 2rem;
     border-radius: 1vmin;
     border: #000000 solid .2rem;
 }
@@ -132,9 +120,7 @@ nav{
     width: 25%;
 }
 
-.hidden{
-    display: none;
-}
+
 #titanSelect{
     justify-content: center;
     align-content: center;
@@ -162,8 +148,9 @@ nav{
 .titanCardSelect figcaption{
     font-size: 2rem;
 }
-.titanCardSelect img{
+figure img{
     width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
@@ -189,9 +176,155 @@ nav{
     width: 50%;
 }
 *:is(button,a){
-    transition: filter .3s cubic-bezier(0.215, 0.610, 0.355, 1);
+    transition: filter .2s cubic-bezier(0.215, 0.610, 0.355, 1);
 
 }
 *:is(button,a):hover{
     filter: brightness(1.2);
 }
+
+*:is(button,a):active{
+    filter: brightness(.8);
+}
+
+#playing{
+    height: 100dvh;
+    width: 100dvw;
+    overflow: hidden;
+}
+
+#gameboard{
+    width: 75dvw;
+    height: 85dvh;
+}
+
+
+#sidebar{
+    width: 25dvw;
+    height: 85dvh;
+}
+
+
+#bottombar{
+    height: 15dvh;
+    align-self: flex-end;
+}
+#bottombar {
+    justify-content: space-between;
+    width: 100dvw;
+}
+
+#bottombar figure{
+    height: 100%;
+}
+#cards{
+    list-style: none;
+    width: 80%;
+    height: 100%;
+}
+#cards li{
+    height: 100%;
+
+}
+
+
+.offerBtn {
+    height: 3rem;
+    width: 100%;
+    padding: 1rem;
+    font-size: 2rem;
+    display: flex;
+    color: white;
+    background-color: #BB0505;
+    align-items: center;
+    justify-content: center;
+}
+
+.tradeBox {
+    display: flex;
+    flex-flow: column wrap;
+    border-style: solid;
+    width:100%;
+    background-color:#FFEAC0 ;
+    padding: 1em;
+
+}
+
+.avail {
+    color: white;
+}
+
+.list {
+    display: flex;
+    background-color: #415F3E;
+    flex-flow: column wrap;
+    width: 75%;
+    justify-content: center;
+    border-style: solid;
+    align-items: center;
+}
+/*     
+
+#placepop{
+    position: absolute;
+    width: 100dvw;
+    height: 100dvh;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+} */
+#popcontainer{
+    position: absolute;
+    width: 75dvw;
+    height: 85dvh;
+    inset: 0;
+    justify-content: center;
+    align-content: center;
+}
+#placepop{
+    flex-flow: column wrap;
+    align-items: center;
+    /* width: 50%;
+    height: 100%; */
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: var(--primary);
+}
+#resources{
+    height: 50%;
+}
+#placing{
+    height: 50%;
+}
+#placing figure{
+    height: 80%;
+}
+#resources figure{
+    width: 33.33%;
+}
+#resources figcaption{
+    width: 100%;
+    text-align: center;
+}
+#building{
+    cursor: pointer;
+}
+/* REUSABLE CLASSES USE THESE PLEASE */
+
+.flex{
+    display: flex;
+    flex-flow: row wrap;
+}
+.half{
+    width: 50%;
+}
+.full{
+    width: 100%;
+}
+.column{
+    flex-flow: column wrap;
+}
+.hidden{
+    display: none;
+}
+/* End reusables */

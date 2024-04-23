@@ -12,9 +12,9 @@
 
 </head>
 
-<body>
+<body class="background">
     <main id="game">
-        <section id="createGame" class="fillpage flex">
+        <section id="createGame" class="fillpage hidden flex">
             <h1 class="font" id="fontHead">
                 Create Your Game
             </h1>
@@ -26,7 +26,7 @@
                     <section class="flex column" id="players">
                         <h2 class="instruct font">Number of Players</h2>
                         <section class="flex selector" id="playerSelector">
-                            <button id="numPlayer1" class="box-select button-select">
+                            <button id="numPlayer1" class="box-select button-select selected">
                                 1
                             </button>
                             <button id="numPlayer2" class="box-select button-select">
@@ -75,13 +75,13 @@
             <button id="prevTitan" class="controller">&LessLess;</button>
             <section id="titanSelection" class="flex half">
                 <ul class="full">
-                    <li class="titanCardSelect flex">      
+                    <li class="titanCardSelect flex">
                         <figure class="flex">
                             <figcaption class="font">Bandit</figcaption>
                             <img src="assets/bandit.png" alt="bandit">
                         </figure>
                         <section class="stats flex column half">
-                            
+
                             <h2>Stats</h2>
                             <hr>
                             <section class="displayStats flex">
@@ -103,12 +103,12 @@
             <button id="nextTitan" class="controller">&GreaterGreater;</button>
 
         </section>
-        <section id="playing fillpage" class="hidden">
+        <section id="playing" class="flex fillpage">
             <section id="gameboard">
 
             </section>
-            <section id="sidebar">
-                <section class="list" id="trades">
+            <section id="sidebar" class="flex column">
+                <section class="list flex full column" id="trades">
                     <h2>Available Trades</h2>
                     <section class="trade1">
                         <section id="tradebox1" class="tradeBox">
@@ -124,22 +124,20 @@
                         <button class="offerBtn font">Create an Offer</button>
                     </section>
                 </section>
-
-            </section>
-            <section id="bottombar">
-                <section class="list" id="inventory">
+                <section class="list flex" id="inventory">
                     <h2>inventory</h2>
                     <ul>
                         <li>Sword</li>
                         <li>Dagger</li>
                     </ul>
                 </section>
-                <section id="playercard">
-                    <figure>
-                        <img src="assets/ryantile.png" alt="card image">
-                    </figure>
-                </section>
-                <ul>
+            </section>
+            <section id="bottombar" class="flex">
+
+                <figure id="playerCard">
+                    <img src="assets/ryantile.png" alt="card image">
+                </figure>
+                <ul id="cards" class="flex">
                     <li>
                         <figure><img src="assets/polygon4.svg" alt="resource"></figure>
                     </li>
@@ -155,28 +153,32 @@
             </section>
         </section>
     </main>
-    <section id="placepop" class="hidden background">
-        <section id="resources" class="flex">
-            <figure>
-                <img src="assets/polygon4.svg" alt="shroom">
-                <figcaption>1</figcaption>
-            </figure>
-            <figure>
-                <img src="assets/polygon4.svg" alt="log">
-                <figcaption>1</figcaption>
+    <section id="popcontainer" class="flex hidden">
+        <section id="placepop" class="flex column">
+            <section id="resources" class="flex">
+                <figure>
+                    <img src="assets/polygon4.svg" alt="shroom">
+                    <figcaption>1</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/polygon4.svg" alt="log">
+                    <figcaption>1</figcaption>
 
-            </figure>
-            <figure>
-                <img src="assets/polygon4.svg" alt="house">
-                <figcaption>1</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/polygon4.svg" alt="house">
+                    <figcaption>1</figcaption>
 
-            </figure>
+                </figure>
 
+            </section>
+            <section id="placing" class="flex column">
+                <figure >
+                    <img src="assets/house.svg" alt="house">
+                </figure>
+                <h2 id="building"></h2>
+            </section>
         </section>
-        <figure>
-            <img src="assets/house.svg" alt="house">
-        </figure>
-        <h2 id="building"></h2>
     </section>
 </body>
 

@@ -23,6 +23,13 @@ class Player {
 }
 
 
+class Titan{
+    constructor(name, stats){
+        this.name = name;
+        this.stats = stats
+    }
+}
+
 class Placer{
     constructor(x,y){
         this.sprite = Sprite.from("placer");
@@ -90,14 +97,21 @@ class HexBoard{
         return this.boardTiles;
     }
 }
-
+//Define variables
+let buildingCurrent = "outpost";
+let selected;
+let selectedTitans = [];
+let titans = {"bandit":{health:20,maxhealth:20,dmg:2,def:1,special:()=>{console.log("i do stuff")}}}
 //Create a new application
 const app = new Application;
 
 //Setup function that adds the canvas to the body and starts the game loop
 async function setup() {
+    for(const [titan,stats] of Object.entries(titans)){
+        titans[titan] = createTitan(titan,stats);
+    }
     const board = await getElementPromiseBySelctor("#gameboard");
-    await app.init({ background: 'white', antialias: true, autoDensity: true, resolution: 2 });
+    await app.init({ background: 'white', antialias: true, autoDensity: true, resolution: 2 , resizeTo:board});
     board.appendChild(app.canvas);
     globalThis.__PIXI_APP__ = app;
 
@@ -115,6 +129,7 @@ async function preload() {
     ]
     await Assets.load(assets);
 }
+
 function directionFromPoints(point1,point2){
     return Math.atan(point1.y-point2.y/point1.x-point2.x)
 }
@@ -135,40 +150,12 @@ function getMidpoints(points) {
 }
 
 //Immedietly invoke a async function that runs both the setup and preload
-let building = "outpost";
-let selected;
-
-(async () => {
-
-    await preload();
-    await setup();
-    const origin = {x:-window.innerWidth/2,y:-window.innerHeight/2}
-    const mainBoard = new HexBoard(100,"POINTY",2,origin);    
-    mainBoard.buildTiles("hex","3");
-    for (const tile of mainBoard.tiles) {
-        tile.text = Math.floor(Math.random() * 4) + 1 
-        tile.placers = createPlacers(tile);
-    }
-    const popup = await getElementPromiseBySelctor("#placepop");
-    const building = await getElementPromiseBySelctor("#building");
-
-    building.addEventListener("click",()=>{
-        if(selected){
-            selected.sprite.texture = Texture.from(building)
-        }
-    popup.classList.toggle("flex",false)
-    })
-})()
-
-function addPlacers(places) {
-    let placers = [];
-    for (const place of places) {
-        let placed = new Placer(place.x,place.y);
-        app.stage.addChild(placed.sprite);
-        placers.push(placed);
-    }
-    return placers;
+function createTitan(name,stats){
+    let titan = new Titan(name,stats)
+    return titan;
 }
+
+
 
 function modifyPopup(popup,resources,text){
     // let outpost = {mushroom:1,log:1}
@@ -180,26 +167,36 @@ function modifyPopup(popup,resources,text){
     building.innerText = text
 }
 
+function addPlacers(places) {
+    let placers = [];
+    for (const place of places) {
+        let placed = new Placer(place.x,place.y);
+        app.stage.addChild(placed.sprite);
+        placers.push(placed);
+    }
+    return placers;
+}
+
 async function createPlacers(tile){
     const hex = tile.hex;
     let corners = hex.corners;
     let midpoints = getMidpoints(corners).map(point=> {return {x:point[0], y:point[1]}});
     let cornerPlacers = addPlacers(corners)
     let edgePlacers = addPlacers(midpoints)
-    const popup = await getElementPromiseBySelctor("#placepop");
+    const popup = await getElementPromiseBySelctor("#popcontainer");
     cornerPlacers.forEach(x=>x.setInteraction("pointerdown",(e)=>{
         selected = x
-        building = "outpost"
+        buildingCurrent = "outpost"
         let outpost = {mushroom:1,log:1}
         modifyPopup(popup,outpost,"Place Outpost");
-        popup.classList.toggle("flex");
+        popup.classList.toggle("hidden",false);
     }))
     edgePlacers.forEach(x=>x.setInteraction("pointerdown",(e)=>{
         selected = x
-        building = "road"
+        buildingCurrent = "road"
         let road = {mushroom:1,log:1}
         modifyPopup(popup,road,"Place Road");
-        popup.classList.toggle("flex");
+        popup.classList.toggle("hidden",false);
 
         
     }))
@@ -232,11 +229,52 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 // Starts Game (What did you think it'd do)
-function startGame(e) {
+function startGame(){
+    let playersNum;
     getElementPromiseBySelctor('#createGame').then(x=>{
-        x.classList.toggle("hidden",true)
-    })
+        x.classList.toggle("hidden",true);
+        playersNum = +getElementPromiseBySelctor('#playerSelector > button .selected').then(x=>x.innerText).catch(console.error)
+    }).catch(console.error);
     getElementPromiseBySelctor('#titanSelect').then(x=>{
         x.classList.toggle("hidden",false)
-    })
+    }).catch(console.error);
+    getElementPromiseBySelctor('#selectTitan').then(x=>{
+        x.addEventListener("click",titanSelected)
+    }).catch(console.error);
+}
+function titanSelected(e) {
+    getElementPromiseBySelctor(".titanCardSelect .flex:not(.hidden)").then(x=>{
+        let titanName = x.getElementsByTagName("figcaption")[0].innerText
+        titanName = titanName.toLowerCase()
+        console.log(titans[titanName])
+        getElementPromiseBySelctor('#titanSelect').then(x=>x.classList.toggle("hidden",true)).catch(console.error);
+        getElementPromiseBySelctor('#playing').then(x=>x.classList.toggle("hidden",false)).catch(console.error);
+
+    }).catch(console.error);
 };
+
+//Loads in the canvas for the board game
+(async () => {
+
+    await preload();
+    await setup();
+    const origin = {x:-app.canvas.width/4,y:-app.canvas.height/4}
+    const mainBoard = new HexBoard(75,"POINTY",2,origin);    
+
+    mainBoard.buildTiles("hex","3");
+    for (const tile of mainBoard.tiles) {
+        tile.sprite.scale.set(.75)
+        tile.text = Math.floor(Math.random() * 4) + 1 
+        tile.placers = createPlacers(tile);
+    }
+
+    const popup = await getElementPromiseBySelctor("#popcontainer");
+    const building = await getElementPromiseBySelctor("#building");
+
+    building.addEventListener("click",()=>{
+        if(selected && selected.sprite.texture != Texture.from(buildingCurrent)){
+            selected.sprite.texture = Texture.from(buildingCurrent)
+        }
+        popup.classList.toggle("hidden",true)
+    })
+})()
