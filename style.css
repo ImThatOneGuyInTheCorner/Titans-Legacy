@@ -64,7 +64,7 @@ nav{
     height: 30%;
 }
 
-nav > a{
+.menuButton {
     padding: 1.2rem 0;
     width: 100%;
     border: var(--secondary) .2rem solid;
@@ -95,7 +95,7 @@ nav > a{
     border-radius: 1vmin;
     border: #000000 solid .2rem;
 }
-#pop h2,p{
+#pop h2,p,label{
     font-size: 1.75rem;
 }
 .box-select {
@@ -108,13 +108,48 @@ nav > a{
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-size: 1.2rem;
 }
 
-#players{
-    justify-content: space-between;
+#players,#duration{
+    justify-content: center;
 }
 .selector{
     justify-content: space-between;
+    align-content: center;
     padding-bottom: 3rem;
-    padding-top: 1rem;
+    padding-top: .5rem;
+}
+
+#createPanel{
+    justify-content: center;
+    padding: 1rem;
+}
+
+#createPanel > a {
+    width: 25%;
+}
+
+.hidden{
+    display: none;
+}
+#titanSelect{
+    justify-content: center;
+}
+
+#titanSelection{
+    background-color: var(--primary);
+    height: 50%;
+
+}
+
+.titanCardSelect > figure{
+    justify-content: center;
+}
+
+.titanCardSelect figcaption{
+    font-size: 2rem;
+}
+.titanCardSelect img{
+    width: 100%;
 }

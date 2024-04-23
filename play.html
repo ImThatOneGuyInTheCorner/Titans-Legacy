@@ -14,7 +14,7 @@
 
 <body>
     <main id="game">
-        <section id="createGame" class="fillpage flex">
+        <section id="createGame" class="fillpage flex hidden">
             <h1 class="font" id="fontHead">
                 Create Your Game
             </h1>
@@ -27,57 +27,71 @@
                         <h2 class="instruct font">Number of Players</h2>
                         <section class="flex selector" id="playerSelector">
                             <button id="numPlayer1" class="box-select button-select">
-                                <p>1</p>
+                                1
                             </button>
                             <button id="numPlayer2" class="box-select button-select">
-                                <p>2</p>
+                                2
                             </button>
                             <button id="numPlayer3" class="box-select button-select">
-                                <p>3</p>
+                                3
                             </button>
                             <button id="numPlayer4" class="box-select button-select">
-                                <p>4</p>
+                                4
                             </button>
                         </section>
                     </section>
                     <section id="duration" class="flex column">
                         <h2 class="instruct font">Duration of player turns</h2>
-                        <section class="flex selector">
+                        <section class="flex selector" id="durationSelector">
                             <button class="box-select button-select">
-                                <p>30 seconds</p>
-                            </button>
-                            <button  class="box-select button-select">
-                                <p>1 minute</p>
+                                0:30
                             </button>
                             <button class="box-select button-select">
-                                <p>1 minute 30 seconds</p>
+                                1:00
                             </button>
-                            <button class="box-select button-select" id="btnSelect">
-                                <p>2 Minutes</p>
+                            <button class="box-select button-select">
+                                1:30
+                            </button>
+                            <button class="box-select button-select">
+                                2:00
                             </button>
                         </section>
                     </section>
                     <section class="points font columnNoWrap">
-                        <h2 class="instruct font">Points to Win!</h2>
+                        <label for="pointsSlider" class="instruct font">Points to Win!</label>
                         <div class="slidecontainer">
-                            <input type="range" min="5" max="15" value="15" class="slider" id="myRange">
+                            <input type="range" min="5" max="15" value="15" class="slider" id="pointsSlider">
                         </div>
                     </section>
                 </section>
             </section>
             <section id="createPanel" class="full flex">
-                <a href="#" class="button">
+                <a href="#" class="button menuButton">
                     Start
                 </a>
             </section>
         </section>
-        <section id="titanSelect" class="fillpage hidden">
+        <section id="titanSelect" class="fillpage flex">
 
-            <section id="titanSelection">
-
+            <section id="titanSelection" class="flex">
+                <ul>
+                    <li class="titanCardSelect flex">
+                        <figure class="flex half">
+                            <figcaption class="font">Bandit</figcaption>
+                            <img src="assets/bandit.png" alt="bandit">
+                        </figure>
+                    </li>
+                    <li class="titanCardSelect flex">
+                        <figure class="flex half">
+                            <figcaption class="font">Bandit</figcaption>
+                            <img src="assets/bandit.png" alt="bandit">
+                        </figure>
+                    </li>
+                </ul>
             </section>
+
         </section>
-        <section id="playing fillpage">
+        <section id="playing fillpage" class="hidden">
             <section id="gameboard">
 
             </section>

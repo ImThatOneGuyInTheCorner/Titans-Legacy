@@ -218,6 +218,7 @@ function getElementPromiseBySelctor(selector) {
             resolve(element)
         } else {
             reject(`selector: "${selector}" queried null`)
+            return
         }
     });
 }
@@ -225,14 +226,17 @@ function getElementPromiseBySelctor(selector) {
 // On document load run function
 document.addEventListener("DOMContentLoaded", async function () {
     let createPanel = await getElementPromiseBySelctor('#createPanel');
-    if ( createPanel !== null) {
+    if (createPanel !== null) {
         createPanel.addEventListener('click', startGame);
     }
 });
 
 // Starts Game (What did you think it'd do)
-function startGame() {
-    document.getElementById('createGame').classList.toggle("hidden",true)
-    document.getElementById('createGame').classList.toggle("flex",false)
-
+function startGame(e) {
+    getElementPromiseBySelctor('#createGame').then(x=>{
+        x.classList.toggle("hidden",true)
+    })
+    getElementPromiseBySelctor('#titanSelect').then(x=>{
+        x.classList.toggle("hidden",false)
+    })
 };
