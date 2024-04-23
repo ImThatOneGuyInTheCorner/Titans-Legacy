@@ -2,7 +2,7 @@
     --background : #594E36;
     --primary: #415F3E;
     --secondary: #89A587;
-    --accent: #865792;
+    --accent: #818e97;
     --text1: #ffffff;
     --text2: #000000;
     font-size: 14px;
@@ -139,6 +139,7 @@ nav{
     justify-content: center;
     align-content: center;
     align-items: center;
+    column-gap: 2rem;
 }
 
 #titanSelection{
@@ -176,10 +177,21 @@ nav{
 
 .controller{
     display: flex;
-    border-radius: 3vmax;
-    width: 3vmax;
-    height: 3vmax;
+    border-radius: 15vmin;
+    width: 8vmin;
+    height: 8vmin;
     font-size: 2rem;
     justify-content: center;
     align-items: center;
+    background-color: var(--accent);
+}
+#selectTitan{
+    width: 50%;
+}
+*:is(button,a){
+    transition: filter .3s cubic-bezier(0.215, 0.610, 0.355, 1);
+
+}
+*:is(button,a):hover{
+    filter: brightness(1.2);
 }
