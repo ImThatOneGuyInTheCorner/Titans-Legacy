@@ -198,16 +198,18 @@ figure img{
     height: 85dvh;
 }
 
-
 #sidebar{
     width: 25dvw;
     height: 85dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
 
 #bottombar{
     height: 15dvh;
     align-self: flex-end;
+    align-items: center;
 }
 #bottombar {
     justify-content: space-between;
@@ -220,12 +222,14 @@ figure img{
 #cards{
     list-style: none;
     width: 80%;
-    height: 100%;
+    height: 90%;
 }
 #cards li{
     height: 100%;
-
 }
+/* #cards > li > p {
+    position: fixed;
+} */
 
 
 .offerBtn {
@@ -309,6 +313,15 @@ figure img{
 #building{
     cursor: pointer;
 }
+#inventory, #trades {
+    width: 90%;
+    margin-top: 5%;
+}
+#inventory {
+    display: flex;
+    flex-direction: column;
+}
+
 /* REUSABLE CLASSES USE THESE PLEASE */
 
 .flex{
