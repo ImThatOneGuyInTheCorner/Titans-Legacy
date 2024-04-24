@@ -371,12 +371,12 @@ figure img{
     width: 100%;
 }
 
-#how-to-play-overlay {
+#how-to-play-overlay, #credits-overlay {
     width: 75vw;
     height: 75vh;
 }
 
-#exitBtn {
+#exitBtn, #exitBtntwo {
     width: 25px;
     height: 25px;
 }
