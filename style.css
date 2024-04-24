@@ -102,6 +102,20 @@ nav{
     font-size: 1.2rem;
 }
 
+#endturn {
+    background-color: #BB0505;
+    color: white;
+    border-style: solid;
+    border-radius: 0.2em;
+    border-color: white;
+    width: 13%;
+    height: 41%;
+    display: flex;
+    align-items: center;
+    font-size: xx-large;
+    margin-right: 1em;
+}
+
 #players,#duration{
     justify-content: center;
 }
@@ -340,7 +354,38 @@ figure img{
     flex-direction: column;
 }
 
+.weapons {
+    background-color: #FFEAC0;
+    margin-bottom: 1em;
+    color: black;
+    
+}
 
+.swordImg {
+    width: 15%;
+}
+
+#swordAvailable {
+    display: flex;
+    align-items: center;
+    margin-left: 3em;
+}
+
+.miniMargin {
+    display: flex;
+    width: 97%;
+    margin-left: 0.5em;
+}
+
+.developcards {
+    margin: 0.3em;
+}
+
+.inv {
+    color: white;
+    margin-bottom: 0.5em;
+    font-size: xx-large;
+}
 
 /* for create game selections */
 .selected{
@@ -366,7 +411,36 @@ figure img{
     margin-bottom: 10px;
     font-size: 20px;
 }
-#closeHowToPlayButton {
+#closeHowToButton {
+    align-self: flex-end;
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+}
+#credits-overlay {
+    width: 80dvw;
+    height: 90dvh;
+    position: fixed;
+    margin-left: 10dvw;
+    top: 5dvh;
+    background-color: #415F3E;
+    flex-direction: column;
+    align-items: center;
+    color: aliceblue;
+}
+#credits-overlay > p {
+    border-bottom-style: solid;
+    border-width: 3px;
+    border-color: #000000;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+#closeCreditsButton {
     align-self: flex-end;
     position: absolute;
     width: 45px;
@@ -386,6 +460,20 @@ figure img{
 }
 .r {
     rotate: -45deg;
+}.miniMargin {
+    display: flex;
+    width: 97%;
+    margin-left: 0.5em;
+}
+
+.developcards {
+    margin: 0.3em;
+}
+
+.inv {
+    color: white;
+    margin-bottom: 0.5em;
+    font-size: xx-large;
 }
 
 /* REUSABLE CLASSES USE THESE PLEASE */
@@ -394,6 +482,11 @@ figure img{
     display: flex;
     flex-flow: row wrap;
 }
+
+.quarter {
+    width: 23%;
+}
+
 .half{
     width: 50%;
 }
