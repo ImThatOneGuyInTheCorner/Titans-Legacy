@@ -104,6 +104,7 @@ let playersNum;
 let durationTurn;
 let winningpoints = 10;
 
+let currentTurn = 0;
 let buildingCurrent = "outpost";
 let selected;
 let selectedTitans = [];
@@ -294,7 +295,7 @@ async function startGame() {
     getElementPromiseBySelctor('#prevTitan').then(x => x.addEventListener("click", e => { index = toTitanCard(index, titans, -1) }))
     let selected = 0;
     getElementPromiseBySelctor('#selectTitan').then(x => {
-        x.addEventListener("click", e => {
+        x.addEventListener("click",async e => {
             selected++
             titans[index].classList.toggle("hidden",true)
             titans.splice(index, 1);
@@ -304,7 +305,7 @@ async function startGame() {
             if(selected >= playersNum){
                 
                 getElementPromiseBySelctor('#titanSelect').then(x => x.classList.toggle("hidden", true)).catch(console.error);
-                getElementPromiseBySelctor('#playing').then(x => x.classList.toggle("hidden", false)).catch(console.error);
+                await getElementPromiseBySelctor('#playing').then(x => x.classList.toggle("hidden", false)).catch(console.error);
                 startGameLoop();
                 return
             }
@@ -325,11 +326,11 @@ async function titanSelected(e) {
     await getElementPromiseBySelctor(".titanCardSelect .flex:not(.hidden)").then(async x => {
         let titanName = x.getElementsByTagName("figcaption")[0].innerText
         titanName = titanName.toLowerCase()
-        // let player = new Player
-        // player.titan = titans[titanName];
-        // player.name = "player"+=players.length
-        // players.push(player);
-        
+        let player = new Player;
+        player.titan = titans[titanName];
+        player.name = "player" + players.length
+        players.push(player);
+    
         console.log(titans[titanName])
     }).catch(console.error);
 };
@@ -360,11 +361,12 @@ async function titanSelected(e) {
         popup.classList.toggle("hidden", true)
     })
 })()
-
-function notify(){
-    
+let notification = await getElementPromiseBySelctor("#notify");
+function notify(message){
+    notification.innerText = message;
 }
 
 function startGameLoop(){
-    notify("")
+    currentTurn = 0;
+    notify(`${players[currentTurn].name} place your first outpost`);
 }

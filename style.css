@@ -221,7 +221,7 @@ figure img{
 }
 #cards{
     list-style: none;
-    width: 80%;
+    /* width: 80%; */
     height: 90%;
 }
 #cards li{
@@ -327,6 +327,9 @@ figure img{
     border: var(--accent) solid;
     filter: brightness(1.3);
 }
+
+
+
 
 /* REUSABLE CLASSES USE THESE PLEASE */
 
