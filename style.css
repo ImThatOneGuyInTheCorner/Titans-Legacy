@@ -144,24 +144,45 @@ nav{
 }
 
 #titanSelection{
-    background-color: var(--primary);
-    height: 50%;
+    background-image: url(assets/woodBackground.jpg);
+    height: 60%;
     align-content: center;
     justify-content: space-around;
+    border-style: solid;
+    border-radius: 1em;
+    border-color: #2F2504;
+    border-width: 1em;
 }
 .titanCardSelect{
     height: 100%;
     padding: 2rem;
     justify-content: space-around;
 }
+
+.titanName {
+    color: white;
+    margin-bottom: 1em;
+}
+
 .titanCardSelect > figure{
     width: 33%;
     justify-content: center;
     align-content: center;
 }
 
+.titanCardBack {
+    background-color: #2F2504;
+    padding: 2em;
+}
+
+.titanImg {
+    height: 76%;
+    display: flex;
+    justify-content: center;
+}
+
 .titanCardSelect figcaption{
-    font-size: 2rem;
+    font-size: 3rem;
 }
 figure img{
     width: 100%;
@@ -171,10 +192,14 @@ figure img{
 
 .displayStats p{
     width: 100%;
+    color: white;
+    font-size: xx-large;
 }
 
 .stats{
     justify-content: center;
+    color: white;
+    font-size: xx-large;
 }
 
 .controller{
