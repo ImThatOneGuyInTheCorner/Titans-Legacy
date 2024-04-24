@@ -377,15 +377,11 @@ function notify(message){
 }
 
 async function newTurn() {
-    return new Promise((resolve, reject) => {
-        let yielder = ()=>{
-            if (placing == false) {
-                ticker.remove(yielder);
-                resolve(true)
-                return
-            }
+    return new Promise(async (resolve, reject) => {
+        await placing == false
+        if(placing == false){
+            resolve()
         }
-        ticker.add(yielder);
     });
 }
 
@@ -403,7 +399,8 @@ async function nextTurn(){
     restrictOutpost = true
     await newTurn()
     currentTurn++ 
-    currentTurn=currentTurn%playersNum;
+    console.log(currentTurn%playersNum )
+    if(currentTurn%playersNum == 0) return  
     nextTurn()
 }
 
