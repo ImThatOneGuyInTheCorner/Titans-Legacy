@@ -215,6 +215,9 @@ figure img{
     width: 100dvw;
 }
 
+.hidden {
+    display: none;
+}
 #bottombar figure{
     height: 100%;
 }
@@ -361,5 +364,33 @@ figure img{
 }
 .hidden{
     display: none;
+}
+#resources > figure > figcaption{
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+#resources > figure{
+    width: 23%;
+}
+#placepop > figure{
+    width: 23%;
+}
+#placepop > figure > img{
+    width: 100%;
+}
+#resources > figure img{
+    width: 100%;
+}
+
+#how-to-play-overlay, #credits-overlay {
+    width: 75vw;
+    height: 75vh;
+}
+
+#exitBtn, #exitBtntwo {
+    width: 25px;
+    height: 25px;
 }
 /* End reusables */
