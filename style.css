@@ -18,7 +18,8 @@ button{
 }
 
 .background{
-    background-color: #89A587;
+    background-image: url(assets/background.png);
+    background-size: 250px;
 }
 body{
     width: 100%;
@@ -198,6 +199,7 @@ figure img{
 }
 
 #sidebar{
+    background-color: #89A587;
     width: 25dvw;
     height: 85dvh;
     display: flex;
@@ -206,6 +208,7 @@ figure img{
 }
 
 #bottombar{
+    background-color: #89A587;
     height: 15dvh;
     align-self: flex-end;
     align-items: center;
