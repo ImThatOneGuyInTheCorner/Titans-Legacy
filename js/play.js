@@ -259,11 +259,12 @@ function titanSelected(e) {
     await preload();
     await setup();
     const origin = {x:-app.canvas.width/4,y:-app.canvas.height/4}
-    const mainBoard = new HexBoard(75,"POINTY",2,origin);    
+    const tileHeight = app.canvas.height/20;
+    const mainBoard = new HexBoard(tileHeight,"POINTY",2,origin);    
 
     mainBoard.buildTiles("hex","3");
     for (const tile of mainBoard.tiles) {
-        tile.sprite.scale.set(.75)
+        tile.sprite.scale.set(tileHeight/100)
         tile.text = Math.floor(Math.random() * 4) + 1 
         tile.placers = createPlacers(tile);
     }
