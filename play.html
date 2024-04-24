@@ -14,7 +14,7 @@
 
 <body class="background">
     <main id="game">
-        <section id="createGame" class="fillpage hidden flex">
+        <section id="createGame" class="fillpage flex">
             <h1 class="font" id="fontHead">
                 Create Your Game
             </h1>
@@ -43,7 +43,7 @@
                     <section id="duration" class="flex column">
                         <h2 class="instruct font">Duration of player turns</h2>
                         <section class="flex selector" id="durationSelector">
-                            <button class="box-select button-select">
+                            <button class="box-select button-select selected">
                                 0:30
                             </button>
                             <button class="box-select button-select">
@@ -74,7 +74,7 @@
         <section id="titanSelect" class="fillpage flex hidden">
             <button id="prevTitan" class="controller">&LessLess;</button>
             <section id="titanSelection" class="flex half">
-                <ul class="full">
+                <ul id="titanCards" class="full">
                     <li class="titanCardSelect flex">
                         <figure class="flex">
                             <figcaption class="font">Bandit</figcaption>
@@ -103,7 +103,7 @@
             <button id="nextTitan" class="controller">&GreaterGreater;</button>
 
         </section>
-        <section id="playing" class="flex fillpage">
+        <section id="playing" class="flex fillpage hidden">
             <section id="gameboard">
 
             </section>
