@@ -12,128 +12,115 @@
 
 </head>
 
-<body>
-<<<<<<< Updated upstream
+<body class="background">
     <main id="game">
-        <section id="createGame" class="">
+        <section id="createGame" class="fillpage flex">
             <h1 class="font" id="fontHead">
                 Create Your Game
             </h1>
-            <section class="pop">
+            <section id="pop" class="flex column">
                 <section class="description font">
                     <p>To make your game, select the number of players and the duration of your game. </p>
                 </section>
-                <section class="column">
-                    <section class="font" id="player">
-                        <h1 class="instruct font">Number of Players</h1>
-                        <section class="row center">
-                            <button id="numPlayer1" class="box-select button-select">
-                                <p>1</p>
+                <section class="column flex">
+                    <section class="flex column" id="players">
+                        <h2 class="instruct font">Number of Players</h2>
+                        <section class="flex selector" id="playerSelector">
+                            <button id="numPlayer1" class="box-select button-select selected">
+                                1
                             </button>
                             <button id="numPlayer2" class="box-select button-select">
-                                <p>2</p>
+                                2
                             </button>
                             <button id="numPlayer3" class="box-select button-select">
-                                <p>3</p>
+                                3
                             </button>
                             <button id="numPlayer4" class="box-select button-select">
-                                <p>4</p>
+                                4
                             </button>
                         </section>
                     </section>
-                    <section class="duration">
-                        <h1 class="instruct font">Duration of player turns</h1>
-                        <section class="row">
-                            <button id="durationTime" class="box-select button-select">
-                                <p>30 seconds</p>
+                    <section id="duration" class="flex column">
+                        <h2 class="instruct font">Duration of player turns</h2>
+                        <section class="flex selector" id="durationSelector">
+                            <button class="box-select button-select selected">
+                                0:30
                             </button>
-                            <button id="durationTime" class="box-select button-select">
-                                <p>1 minute</p>
+                            <button class="box-select button-select">
+                                1:00
                             </button>
-                            <button id="durationTime" class="box-select button-select">
-                                <p>1 minute 30 seconds</p>
+                            <button class="box-select button-select">
+                                1:30
                             </button>
-                            <button id="durationTime" class="box-select button-select" id="btnSelect">2 Minutes</button>
+                            <button class="box-select button-select">
+                                2:00
+                            </button>
                         </section>
                     </section>
                     <section class="points font columnNoWrap">
-                        <h1 class="instruct font">Points to Win!</h1>
+                        <label for="pointsSlider" class="instruct font">Points to Win!</label>
                         <div class="slidecontainer">
-                            <input type="range" min="5" max="15" value="15" class="slider" id="myRange">
+                            <input type="range" min="5" max="15" value="15" class="slider" id="pointsSlider">
                         </div>
                     </section>
                 </section>
-=======
-    <section id="createGame" class="">
-        <h1 class="font" id="fontHead">
-            Create Your Game
-        </h1>
-        <section class="pop">
-            <section class="description font">
-                <p>To make your game, select the number of players and the duration of your game. </p>
->>>>>>> Stashed changes
             </section>
-            <section class="column">
-                <section class="font" id="player">
-                    <h1 class="instruct font">Number of Players</h1>
-                    <section class="row center">
-                        <button id="numPlayer" class="box-select createSelected">
-                            <p>1</p>
-                        </button>
-                        <button id="numPlayer" class="box-select">
-                            <p>2</p>
-                        </button>
-                        <button id="numPlayer" class="box-select">
-                            <p>3</p>
-                        </button>
-                        <button id="numPlayer" class="box-select">
-                            <p>4</p>
-                        </button>
-                    </section>
-                </section>
-                <section class="duration">
-                    <h1 class="instruct font">Duration of player turns</h1>
-                    <section class="row">
-                        <button id="durationTime" class="box-select createSelected">
-                            <p>30 seconds</p>
-                        </button>
-                        <button id="durationTime" class="box-select">
-                            <p>1 minute</p>
-                        </button>
-                        <button id="durationTime" class="box-select">
-                            <p>1 minute 30 seconds</p>
-                        </button>
-                        <button id="durationTime" class="box-select" id="btnSelect">2 Minutes</button>
-                    </section>
-                </section>
-                <section class="points font columnNoWrap">
-                    <h1 class="instruct font">Points to Win!</h1>
-                    <div class="slidecontainer">
-                        <input type="range" min="5" max="15" value="15" class="slider" id="myRange">
-                    </div>
-                </section>
+            <section id="createPanel" class="full flex">
+                <a href="#" class="button menuButton">
+                    Start
+                </a>
             </section>
         </section>
-        <section id="createPanel">
-            <section class="button">
-                Start
-            </section>
-        </section>
-    </section>
-    <main id="game">
-        
-        <section id="titanSelect" class="hidden">
+        <section id="titanSelect" class="fillpage flex hidden">
+            <button id="prevTitan" class="controller">&LessLess;</button>
+            <section id="titanSelection" class="flex half">
+                <ul id="titanCards" class="full">
+                    <li class="titanCardSelect flex">
+                        <figure class="flex">
+                            <figcaption class="font">Bandit</figcaption>
+                            <img src="assets/bandit.svg" alt="bandit">
+                        </figure>
+                        <section class="stats flex column half">
 
-            <section id="titanSelection">
-
+                            <h2>Stats</h2>
+                            <hr>
+                            <section class="displayStats flex">
+                                <p>stat</p>
+                                <p>stat</p>
+                                <p>stat</p>
+                            </section>
+                        </section>
+                    </li>
+                    <li class="titanCardSelect flex hidden">
+                        <figure class="flex half">
+                            <figcaption class="font">Ravange</figcaption>
+                            <img src="assets/ravange.svg" alt="bandit">
+                        </figure>
+                    </li>
+                    <li class="titanCardSelect flex hidden">
+                        <figure class="flex half">
+                            <figcaption class="font">Brutus</figcaption>
+                            <img src="assets/brutus.svg" alt="bandit">
+                        </figure>
+                    </li>
+                    <li class="titanCardSelect flex hidden">
+                        <figure class="flex half">
+                            <figcaption class="font">Magnificus</figcaption>
+                            <img src="assets/magnificus.svg" alt="bandit">
+                        </figure>
+                    </li>
+                </ul>
+                <button id="selectTitan" class="button menuButton">Select</button>
             </section>
+            <button id="nextTitan" class="controller">&GreaterGreater;</button>
+
         </section>
-        <section id="playing">
+        <section id="playing" class="flex fillpage hidden">
             <section id="gameboard">
-                
+
             </section>
-            <section id="sidebar">
-                <section class="list" id="trades">
+            <section id="sidebar" class="flex column">
+                <section class="list flex full column" id="trades">
                     <h2>Available Trades</h2>
                     <section class="trade1">
                         <section id="tradebox1" class="tradeBox">
@@ -144,57 +131,79 @@
                         <section id="tradebox2" class="tradeBox">
                             <p>Trade 1 Mushroom for 1 wood</p>
                         </section>
-                    </section>  
+                    </section>
                     <section id="offerBtn">
                         <button class="offerBtn font">Create an Offer</button>
                     </section>
                 </section>
-                
-            </section>
-            <section id="bottombar">
-                <section class="list" id="inventory">
+                <section class="list flex" id="inventory">
                     <h2>inventory</h2>
                     <ul>
                         <li>Sword</li>
                         <li>Dagger</li>
                     </ul>
                 </section>
-                <section id="playercard">
-                    <figure>
-                        <img src="assets/ryantile.png" alt="card image">
-                    </figure>
-                </section>
-                <ul>
-                    <li><figure><img src="assets/polygon4.svg" alt="resource"></figure></li>
-                    <li><figure><img src="assets/polygon4.svg" alt="resource"></figure></li>
-                    <li><figure><img src="assets/polygon4.svg" alt="resource"></figure></li>
+            </section>
+            <section id="bottombar" class="flex">
 
-
+                <figure id="playerCard">
+                    <img src="assets/ryantile.png" alt="card image">
+                </figure>
+                <ul id="cards" class="flex">
+                    <li>
+                        <figure><img src="assets/1.png" alt="resource"></figure>
+                        <p id="resource1" class="resourceCount">1</p>
+                    </li>
+                    <li>
+                        <figure><img src="assets/2.png" alt="resource"></figure>
+                        <p id="resource2" class="resourceCount">1</p>
+                    </li>
+                    <li>
+                        <figure><img src="assets/3.png" alt="resource"></figure>
+                        <p id="resource3" class="resourceCount">1</p>
+                    </li>
+                    <li>
+                        <figure><img src="assets/4.png" alt="resource"></figure>
+                        <p id="resource4" class="resourceCount">1</p>
+                    </li>
+                    <li>
+                        <figure><img src="assets/5.png" alt="resource"></figure>
+                        <p id="resource5" class="resourceCount">1</p>
+                    </li>
                 </ul>
+                <p id="notify">Waiting for...</p>
+                <button id="endturn" class="button">End Turn</button>
             </section>
         </section>
     </main>
-    <section id="placepop" class="hidden background">
-        <section id="resources" class="flex">
-            <figure>
-                <img src="assets/polygon4.svg" alt="shroom">
-                <figcaption>1</figcaption>
-            </figure>
-            <figure>
-                <img src="assets/polygon4.svg" alt="log">
-                <figcaption>1</figcaption>
+    <section id="popcontainer" class="flex hidden">
+        <section id="placepop" class="flex column">
+            <section id="resources" class="flex">
+                <figure>
+                    <img src="assets/polygon4.svg" alt="shroom">
+                    <figcaption>1</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/polygon4.svg" alt="log">
+                    <figcaption>1</figcaption>
 
-            </figure>
-            <figure>
-                <img src="assets/polygon4.svg" alt="house">
-                <figcaption>1</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/polygon4.svg" alt="house">
+                    <figcaption>1</figcaption>
 
-            </figure>
+                </figure>
 
+            </section>
+            <section id="placing" class="flex column">
+                <figure>
+                    <img src="assets/house.svg" alt="house">
+                </figure>
+                <h2 id="building"></h2>
+            </section>
         </section>
-        <figure>
-            <img src="assets/house.svg" alt="house">
-        </figure>
     </section>
+
 </body>
+
 </html>

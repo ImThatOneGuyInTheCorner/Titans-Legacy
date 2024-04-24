@@ -2,271 +2,244 @@
     --background : #594E36;
     --primary: #415F3E;
     --secondary: #89A587;
-    --accent: #BB0505;
-    --text: #000000;
+    --accent: #818e97;
+    --text1: #ffffff;
+    --text2: #000000;
     font-size: 14px;
-    color: var(--text);
-    overflow-x: hidden;
+}
+button{
+    border: none;
+}
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.background{
+    background-image: url(assets/background.png);
+    background-size: 250px;
+}
+body{
+    width: 100%;
 }
 
 .font {
     font-family: "Mystery Quest", system-ui;
     font-weight: 400;
     font-style: normal;
-  }
-  
-  *{
-    margin:0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-.headingMain {
-    font: xx-large;
 }
 
 .button{
     display: flex;
     justify-content: center;
-    color: white;
-    font-size: 25px;
+    color: var(--text1);
+    font-size: 2rem;
+    text-decoration: none;
+    background-color: var(--primary);
+
+
 }
 
-#nav {
-    display: flex;
-    flex-direction: column;
+#home{
+    flex-flow: column wrap;
+    justify-content: space-between;
     align-items: center;
-    padding-top: 3emd;
-    
+    height: 100dvh;
 }
 
-.button {
-    padding: 1em;
-    margin: 1em;
-    border-style: solid;
-    border-color: black;
-    width: 25%;
-    background-image: url(assets/woodBackground.jpg);
+nav{
+    justify-content: center;
+    align-content: space-around;
+    height: 30%;
 }
 
-.background{
-    background-image: url(assets/background.png);
-    background-size: 250px;
-
-}
-
-body {
-    margin:0px
-}
-
-main, #createGame {
-    background-image: url(assets/background.png);
+.menuButton {
+    padding: 1.2rem 0;
     width: 100%;
-    margin-top: 0px;
-    height: 100vh;
-    background-size: 250px;
-}
-
-footer{
-    color:white;
-    display: flex;
-     justify-content: center;
+    border: var(--secondary) .2rem solid;
 }
 
 #fontHead {
-    display: flex;
     color: white;
-    font-size: 75px;
-    padding-top:2em;
+    padding-top: 2rem;
+    font-size: 4rem;
+    width: 100%;
+    text-align: center;
+}
+
+.fillpage{
+    width: 100dvw;
+    height: 100dvh;
+}
+
+#createGame{
+    align-content: center;
     justify-content: center;
-
+    padding: 2rem;
 }
-
-a:hover {
-    color: #415F3E;
+#pop{
+    background-color: var(--primary);
+    padding: 2rem;
+    border-radius: 1vmin;
+    border: #000000 solid .2rem;
 }
-
-.button { 
-    border-radius: 5px;
-    padding: 15px 55px;
-    font-size: 22px;
-    text-decoration: none;
-    margin: 20px;
-    color: #fff;
-    position: relative;
-    display: flex;
+#pop h2,p,label{
+    font-size: 1.75rem;
+}
+.box-select {
+    background-color: #594E36;
+    color: white;
+    width: 20%;
+    border-radius: 1vmin;
+    border: #000000 solid .2rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-  }
-  .button:active {
-    transform: translate(0px, 5px);
-    -webkit-transform: translate(0px, 5px);
-    box-shadow: 0px 1px 0px 0px;
-  }
-  .green {
-    background-color: #000;
-    box-shadow: 3px 5px 5px #000000;
-    border-radius: 2px;
-    transition: all .3s ease-in-out;
-  }
-  .green:hover {
-    background-color: #000;
-    /*  Making button bigger on hover  */
-    padding: 20px 60px;
-    transform: scale(1.1);
-  }
-#game{
-    width: 100vw;
-    height: 100vh;
-    display: none;
+    font-size: 1.2rem;
+}
+
+#players,#duration{
+    justify-content: center;
+}
+.selector{
+    justify-content: space-between;
+    align-content: center;
+    padding-bottom: 3rem;
+    padding-top: .5rem;
 }
 
 #createPanel{
-    display: flex;
     justify-content: center;
-    
+    padding: 1rem;
 }
 
-.button-select{
-    width: 5rem;
-    height: 2rem;
-    display: flex;
+#createPanel > a {
+    width: 25%;
+}
+
+
+#titanSelect{
     justify-content: center;
+    align-content: center;
     align-items: center;
+    column-gap: 2rem;
 }
 
-.hidden{
-    display: none;
-}
-
-.pop {
-    display: flex;
-    flex-wrap: wrap;
-    width: 50%;
-    height: 65vh;
-    border-style: solid;
-    background-color: var(--secondary);
-    border-radius: 1em;
-    align-self: center;
-    margin-left: 25%;
-    margin-right: 25%;
-    justify-content: center;
-}
-
-.description {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-    font-size: x-large;
-}
-
-.row {
-    display: flex;
-    flex-flow: row wrap;
+#titanSelection{
+    background-color: var(--primary);
+    height: 50%;
+    align-content: center;
     justify-content: space-around;
-    align-items: center;
+}
+.titanCardSelect{
+    height: 100%;
+    padding: 2rem;
+    justify-content: space-around;
+}
+.titanCardSelect > figure{
+    width: 33%;
+    justify-content: center;
+    align-content: center;
 }
 
-.column {
-    display: flex;
-    flex-flow: column wrap;
+.titanCardSelect figcaption{
+    font-size: 2rem;
+}
+figure img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
-.box-select {
+.displayStats p{
+    width: 100%;
+}
+
+.stats{
+    justify-content: center;
+}
+
+.controller{
     display: flex;
-    border-style: solid;
-    background-color: #594E36;
-    border-color: #000;
-    color: white;
-    width: 24%;
-    border-radius: 0.5em;
-    gap: 1rem;
-    padding: 3em;
+    border-radius: 15vmin;
+    width: 8vmin;
+    height: 8vmin;
+    font-size: 2rem;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    background-color: var(--accent);
 }
-.createSelected {
-    border-style: double;
-    border-color: #1d1a15;
-    border-width: 10px;
+#selectTitan{
+    width: 50%;
 }
+*:is(button,a){
+    transition: filter .2s cubic-bezier(0.215, 0.610, 0.355, 1);
 
-
-.instruct {
-    font-size: xx-large;
-    margin-bottom: 1em;
-    margin-top: 1em;
+}
+*:is(button,a):hover{
+    filter: brightness(1.2);
 }
 
-.slide {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 15px;
-  border-radius: 5px;  
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+*:is(button,a):active{
+    filter: brightness(.8);
 }
-
-.slide::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%; 
-  background: #04AA6D;
-  cursor: pointer;
-}
-
-.slide::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #04AA6D;
-  cursor: pointer;
-}
-
-template {
-  display: contents;
-}
-
 
 #playing{
-    display: flex;
-    background-color: #89A587;
-    flex-flow: row wrap;
-
-}
-#gameboard{
-    width: 83dvw;
-}
-#playing ul{
-    list-style: none;
-}
-#bottombar{
-    width: 100dvw;
-}
-#sidebar{
-    width: 10dvw;
     height: 100dvh;
-    background-color: #89A587;
+    width: 100dvw;
+    overflow: hidden;
 }
-.list > ul{
-    display:  flex;
-    flex-flow: row wrap;
-    justify-content:  space-around;
+
+#gameboard{
+    width: 75dvw;
+    height: 85dvh;
+}
+
+#sidebar{
+    width: 25dvw;
+    height: 85dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bottombar{
+    height: 15dvh;
+    align-self: flex-end;
+    align-items: center;
+}
+#bottombar {
+    justify-content: space-between;
+    width: 100dvw;
 }
 
 .hidden {
     display: none;
 }
+#bottombar figure{
+    height: 100%;
+}
+#cards{
+    list-style: none;
+    /* width: 80%; */
+    height: 90%;
+}
+#cards li{
+    height: 100%;
+}
+/* #cards > li > p {
+    position: fixed;
+} */
+
 
 .offerBtn {
-    height: 4vh;
-    width: 50%;
+    height: 3rem;
+    width: 100%;
+    padding: 1rem;
+    font-size: 2rem;
     display: flex;
     color: white;
     background-color: #BB0505;
@@ -275,23 +248,109 @@ template {
 }
 
 .tradeBox {
+    display: flex;
+    flex-flow: column wrap;
     border-style: solid;
-    background-color: #FFEAC0;
+    width:100%;
+    background-color:#FFEAC0 ;
+    padding: 1em;
+
 }
-    
+
+.avail {
+    color: white;
+}
+
+.list {
+    display: flex;
+    background-color: #415F3E;
+    flex-flow: column wrap;
+    width: 75%;
+    justify-content: center;
+    border-style: solid;
+    align-items: center;
+}
+/*     
+
+#placepop{
+    position: absolute;
+    width: 100dvw;
+    height: 100dvh;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+} */
+#popcontainer{
+    position: absolute;
+    width: 75dvw;
+    height: 85dvh;
+    inset: 0;
+    justify-content: center;
+    align-content: center;
+}
+#placepop{
+    flex-flow: column wrap;
+    align-items: center;
+    /* width: 50%;
+    height: 100%; */
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: var(--primary);
+}
+#resources{
+    height: 50%;
+}
+#placing{
+    height: 50%;
+}
+#placing figure{
+    height: 80%;
+}
+#resources figure{
+    width: 33.33%;
+}
+#resources figcaption{
+    width: 100%;
+    text-align: center;
+}
+#building{
+    cursor: pointer;
+}
+#inventory, #trades {
+    width: 90%;
+    margin-top: 5%;
+}
+#inventory {
+    display: flex;
+    flex-direction: column;
+}
+
+/* for create game selections */
+.selected{
+    border: var(--accent) solid;
+    filter: brightness(1.3);
+}
+
+
+
+
+/* REUSABLE CLASSES USE THESE PLEASE */
+
 .flex{
     display: flex;
     flex-flow: row wrap;
 }
-
-#placepop{
-    position: absolute;
-    flex-flow: column wrap;
-    align-items: center;
+.half{
+    width: 50%;
 }
-#resources{
-    width: 10dvw;
-    justify-content: space-around;
+.full{
+    width: 100%;
+}
+.column{
+    flex-flow: column wrap;
+}
+.hidden{
+    display: none;
 }
 #resources > figure > figcaption{
     width: 100%;
@@ -321,3 +380,4 @@ template {
     width: 25px;
     height: 25px;
 }
+/* End reusables */
