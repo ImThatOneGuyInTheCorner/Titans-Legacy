@@ -43,7 +43,7 @@
                     <section id="duration" class="flex column">
                         <h2 class="instruct font">Duration of player turns</h2>
                         <section class="flex selector" id="durationSelector">
-                            <button class="box-select button-select">
+                            <button class="box-select button-select selected">
                                 0:30
                             </button>
                             <button class="box-select button-select">
@@ -74,11 +74,11 @@
         <section id="titanSelect" class="fillpage flex hidden">
             <button id="prevTitan" class="controller">&LessLess;</button>
             <section id="titanSelection" class="flex half">
-                <ul class="full">
+                <ul id="titanCards" class="full">
                     <li class="titanCardSelect flex">
                         <figure class="flex">
                             <figcaption class="font">Bandit</figcaption>
-                            <img src="assets/bandit.png" alt="bandit">
+                            <img src="assets/bandit.svg" alt="bandit">
                         </figure>
                         <section class="stats flex column half">
 
@@ -93,8 +93,20 @@
                     </li>
                     <li class="titanCardSelect flex hidden">
                         <figure class="flex half">
-                            <figcaption class="font">Bandit</figcaption>
-                            <img src="assets/bandit.png" alt="bandit">
+                            <figcaption class="font">Ravange</figcaption>
+                            <img src="assets/ravange.svg" alt="bandit">
+                        </figure>
+                    </li>
+                    <li class="titanCardSelect flex hidden">
+                        <figure class="flex half">
+                            <figcaption class="font">Brutus</figcaption>
+                            <img src="assets/brutus.svg" alt="bandit">
+                        </figure>
+                    </li>
+                    <li class="titanCardSelect flex hidden">
+                        <figure class="flex half">
+                            <figcaption class="font">Magnificus</figcaption>
+                            <img src="assets/magnificus.svg" alt="bandit">
                         </figure>
                     </li>
                 </ul>
@@ -103,7 +115,7 @@
             <button id="nextTitan" class="controller">&GreaterGreater;</button>
 
         </section>
-        <section id="playing" class="flex hidden fillpage">
+        <section id="playing" class="flex fillpage hidden">
             <section id="gameboard">
 
             </section>
@@ -139,17 +151,28 @@
                 </figure>
                 <ul id="cards" class="flex">
                     <li>
-                        <figure><img src="assets/polygon4.svg" alt="resource"></figure>
+                        <figure><img src="assets/1.png" alt="resource"></figure>
+                        <p id="resource1" class="resourceCount">1</p>
                     </li>
                     <li>
-                        <figure><img src="assets/polygon4.svg" alt="resource"></figure>
+                        <figure><img src="assets/2.png" alt="resource"></figure>
+                        <p id="resource2" class="resourceCount">1</p>
                     </li>
                     <li>
-                        <figure><img src="assets/polygon4.svg" alt="resource"></figure>
+                        <figure><img src="assets/3.png" alt="resource"></figure>
+                        <p id="resource3" class="resourceCount">1</p>
                     </li>
-
-
+                    <li>
+                        <figure><img src="assets/4.png" alt="resource"></figure>
+                        <p id="resource4" class="resourceCount">1</p>
+                    </li>
+                    <li>
+                        <figure><img src="assets/5.png" alt="resource"></figure>
+                        <p id="resource5" class="resourceCount">1</p>
+                    </li>
                 </ul>
+                <p id="notify">Waiting for...</p>
+                <button id="endturn" class="button">End Turn</button>
             </section>
         </section>
     </main>
@@ -173,13 +196,14 @@
 
             </section>
             <section id="placing" class="flex column">
-                <figure >
+                <figure>
                     <img src="assets/house.svg" alt="house">
                 </figure>
                 <h2 id="building"></h2>
             </section>
         </section>
     </section>
+
 </body>
 
 </html>
