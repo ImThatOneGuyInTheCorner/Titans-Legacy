@@ -18,8 +18,7 @@ button{
 }
 
 .background{
-    background-image: url(assets/background.png);
-    background-size: 250px;
+    background-color: #89A587;
 }
 body{
     width: 100%;
@@ -235,13 +234,23 @@ figure img{
 .offerBtn {
     height: 3rem;
     width: 100%;
+    margin-top: 2em;
     padding: 1rem;
     font-size: 2rem;
     display: flex;
     color: white;
     background-color: #BB0505;
+    border-style: solid;
+    border-radius: 0.2em;
+    border-color: white;
     align-items: center;
     justify-content: center;
+}
+
+.avail {
+    color: white;
+    font-size: xx-large;
+    margin-bottom: 2em;
 }
 
 .tradeBox {
@@ -251,6 +260,7 @@ figure img{
     width:100%;
     background-color:#FFEAC0 ;
     padding: 1em;
+    margin:0.5em;
 
 }
 
@@ -316,11 +326,14 @@ figure img{
 #inventory, #trades {
     width: 90%;
     margin-top: 5%;
+    height: 46%;
 }
 #inventory {
     display: flex;
     flex-direction: column;
 }
+
+
 
 /* for create game selections */
 .selected{
