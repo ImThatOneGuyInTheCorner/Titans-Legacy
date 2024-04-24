@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Add listener to create start button
+    // How to play screen
     if ( document.getElementById('how-to-play-overlay') !== null) {
         let howToPlay = document.getElementById('howToPlay');
         howToPlay.addEventListener('click', overlayShuffle)
@@ -8,19 +8,23 @@ document.addEventListener("DOMContentLoaded", function () {
         let howToPlay = document.getElementById('closeHowToPlayButton');
         howToPlay.addEventListener('click', overlayShuffle)
     }
-});
-function overlayShuffle() {
-    document.getElementById("how-to-play-overlay").classList.toggle("hidden");
-}
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Add listener to create start button
+    // Credits
     if ( document.getElementById('credits-overlay') !== null) {
-        let credits = document.getElementById('Credits');
-        credits.addEventListener('click', overlayShuffle)
+        let credits = document.getElementById('credits');
+        credits.addEventListener('click', overlayShuffleTwo)
+    }
+    if ( document.getElementById('closeCreditsButton') !== null) {
+        let credits = document.getElementById('closeCreditsButton');
+        credits.addEventListener('click', overlayShuffleTwo)
     }
 });
 function overlayShuffle() {
-    document.getElementById("credits-overlay").classList.toggle("hidden");
+    document.getElementById("how-to-play-overlay").classList.toggle("hidden");
     document.getElementById("how-to-play-overlay").classList.toggle("flex");
+}
+function overlayShuffleTwo() {
+    document.getElementById("credits-overlay").classList.toggle("hidden");
+    document.getElementById("credits-overlay").classList.toggle("flex");
+    
 }
