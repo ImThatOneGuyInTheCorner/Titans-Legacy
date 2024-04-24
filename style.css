@@ -18,7 +18,8 @@ button{
 }
 
 .background{
-    background-color: #89A587;
+    background-image: url(assets/background.png);
+    background-size: 250px;
 }
 body{
     width: 100%;
