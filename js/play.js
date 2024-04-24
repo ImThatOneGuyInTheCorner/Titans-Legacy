@@ -1,5 +1,5 @@
 //Import all things needed from PIXI
-import { Application, Assets, Sprite, Container, Text, Texture, VERSION, Graphics } from "../libraries/pixi.mjs"
+import { Application, Assets, Sprite, Container, Text, Texture, VERSION, Graphics, Ticker } from "../libraries/pixi.mjs"
 console.log(VERSION)
 class Player {
     constructor(render) {
@@ -36,6 +36,7 @@ class Placer {
     constructor(x, y) {
         this.sprite = Sprite.from("placer");
         this.sprite.scale = .15;
+        this.sprite.alpha = .75
         this.sprite.anchor.set(.5);
         this.sprite.position.set(x, y);
         this.sprite.interactive = true;
@@ -104,11 +105,17 @@ let playersNum;
 let durationTurn;
 let winningpoints = 10;
 
+let placing = false;
+let restrictRoad = false;
+let restrictOutpost = false;
+let ticker = Ticker.shared;
+
 let currentTurn = 0;
 let buildingCurrent = "outpost";
 let selected;
 let selectedTitans = [];
 let players = [];
+const gameboard = await getElementPromiseBySelctor("#gameboard");
 let titans = { "bandit": { health: 20, maxhealth: 20, dmg: 2, def: 1, special: () => { console.log("i do stuff") } } }
 // let resources = {
 // "mushroom":"asset",
@@ -142,10 +149,10 @@ async function setup() {
     for (const [titan, stats] of Object.entries(titans)) {
         titans[titan] = createTitan(titan, stats);
     }
-    const board = await getElementPromiseBySelctor("#gameboard");
-    await app.init({ background: 'white', antialias: true, autoDensity: true, resolution: 2, resizeTo: board });
-    board.appendChild(app.canvas);
+    await app.init({ background: 'white', antialias: true, autoDensity: true, resolution: 2 });
+    gameboard.appendChild(app.canvas);
     globalThis.__PIXI_APP__ = app;
+
 
 }
 
@@ -199,7 +206,7 @@ function modifyPopup(popup, resources, text) {
     building.innerText = text
 }
 
-function addPlacers(places) {
+async function addPlacers(places) {
     let placers = [];
     for (const place of places) {
         let placed = new Placer(place.x, place.y);
@@ -213,18 +220,29 @@ async function createPlacers(tile) {
     const hex = tile.hex;
     let corners = hex.corners;
     let midpoints = getMidpoints(corners).map(point => { return { x: point[0], y: point[1] } });
-    let cornerPlacers = addPlacers(corners)
-    let edgePlacers = addPlacers(midpoints)
+    let cornerPlacers = await addPlacers(corners);
+    let edgePlacers = await addPlacers(midpoints);
     const popup = await getElementPromiseBySelctor("#popcontainer");
     cornerPlacers.forEach(x => x.setInteraction("pointerdown", (e) => {
+        if(placing == false || restrictOutpost == true) return;
         selected = x
+        if (selected && selected.sprite.texture != Texture.from("placer")) {
+            return
+        }
+        placing = false
         buildingCurrent = "outpost"
         let outpost = { mushroom: 1, log: 1 }
         modifyPopup(popup, outpost, "Place Outpost");
         popup.classList.toggle("hidden", false);
     }))
     edgePlacers.forEach(x => x.setInteraction("pointerdown", (e) => {
+    if(placing == false || restrictRoad == true) return;
         selected = x
+        if (selected && selected.sprite.texture != Texture.from("placer")) {
+            return
+        }
+        placing = false
+
         buildingCurrent = "road"
         let road = { mushroom: 1, log: 1 }
         modifyPopup(popup, road, "Place Road");
@@ -254,6 +272,7 @@ function getElementPromiseBySelctor(selector) {
 
 // On document load run function
 document.addEventListener("DOMContentLoaded", async function () {
+
     let createPanel = await getElementPromiseBySelctor('#createPanel');
     if (createPanel !== null) {
         createPanel.addEventListener('click', startGame);
@@ -297,11 +316,9 @@ async function startGame() {
     getElementPromiseBySelctor('#selectTitan').then(x => {
         x.addEventListener("click",async e => {
             selected++
-            titans[index].classList.toggle("hidden",true)
-            titans.splice(index, 1);
+            titanSelected(...titans.splice(index, 1))
             index = 0;
-            toTitanCard(index, titans, 0)
-            titanSelected(e)
+            toTitanCard(0, titans, 0);
             if(selected >= playersNum){
                 
                 getElementPromiseBySelctor('#titanSelect').then(x => x.classList.toggle("hidden", true)).catch(console.error);
@@ -322,17 +339,18 @@ function toTitanCard(currentIndex, cards, moveAmount) {
     return currentIndex + moveAmount
 }
 
-async function titanSelected(e) {
-    await getElementPromiseBySelctor(".titanCardSelect .flex:not(.hidden)").then(async x => {
-        let titanName = x.getElementsByTagName("figcaption")[0].innerText
-        titanName = titanName.toLowerCase()
-        let player = new Player;
-        player.titan = titans[titanName];
-        player.name = "player" + players.length
-        players.push(player);
-    
-        console.log(titans[titanName])
-    }).catch(console.error);
+async function titanSelected(currentCard) {
+    console.log(currentCard)
+    let titanName = currentCard.getElementsByTagName("figcaption")[0].innerText
+    let titanImg = currentCard.getElementsByTagName("img")[0].src
+    titanName = titanName.toLowerCase()
+    let player = new Player();
+    player.titan = titanName;
+    player.name = "player" + players.length
+    player.img = titanImg
+    players.push(player);
+    currentCard.classList.toggle("hidden",true)
+
 };
 
 //Loads in the canvas for the board game
@@ -340,16 +358,8 @@ async function titanSelected(e) {
 
     await preload();
     await setup();
-    const origin = { x: -app.canvas.width / 4, y: -app.canvas.height / 4 }
-    const tileHeight = app.canvas.height / 20;
-    const mainBoard = new HexBoard(tileHeight, "POINTY", 2, origin);
 
-    mainBoard.buildTiles("hex", "3");
-    for (const tile of mainBoard.tiles) {
-        tile.sprite.scale.set(tileHeight / 100)
-        tile.text = Math.floor(Math.random() * 4) + 1
-        tile.placers = createPlacers(tile);
-    }
+
 
     const popup = await getElementPromiseBySelctor("#popcontainer");
     const building = await getElementPromiseBySelctor("#building");
@@ -366,7 +376,51 @@ function notify(message){
     notification.innerText = message;
 }
 
-function startGameLoop(){
-    currentTurn = 0;
-    notify(`${players[currentTurn].name} place your first outpost`);
+async function newTurn() {
+    return new Promise((resolve, reject) => {
+        let yielder = ()=>{
+            if (placing == false) {
+                ticker.remove(yielder);
+                resolve(true)
+                return
+            }
+        }
+        ticker.add(yielder);
+    });
 }
+
+async function nextTurn(){
+    let currentPlayer = players[currentTurn]
+    getElementPromiseBySelctor("#playerCard > img:nth-child(1)").then(img=>img.src=currentPlayer.img)
+    notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first outpost`);
+    placing = true
+    restrictRoad = true
+    restrictOutpost = false
+    await newTurn()
+    notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first road`);
+    placing = true
+    restrictRoad = false
+    restrictOutpost = true
+    await newTurn()
+    currentTurn++ 
+    currentTurn=currentTurn%playersNum;
+    nextTurn()
+}
+
+async function startGameLoop(){
+    app.renderer.resize(gameboard.getBoundingClientRect().width, gameboard.getBoundingClientRect().height);
+    const origin = { x: -app.canvas.width / 4, y: -app.canvas.height / 4 }
+    const tileHeight = app.canvas.height / 20;
+    const mainBoard = new HexBoard(tileHeight, "POINTY", 2, origin);
+
+    mainBoard.buildTiles("hex", "3");
+    for (const tile of mainBoard.tiles) {
+        tile.sprite.scale.set(tileHeight / 100)
+        tile.text = Math.floor(Math.random() * 4) + 1
+        tile.placers = createPlacers(tile);
+    }
+    currentTurn = 0;
+    endturn.addEventListener("click",nextTurn);
+    nextTurn()
+}
+
