@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
         let howToPlay = document.getElementById('howToPlay');
         howToPlay.addEventListener('click', overlayShuffle)
     }
-    if ( document.getElementById('closeHowToPlayButton') !== null) {
-        let howToPlay = document.getElementById('closeHowToPlayButton');
+    if ( document.getElementById('closeHowToButton') !== null) {
+        let howToPlay = document.getElementById('closeHowToButton');
         howToPlay.addEventListener('click', overlayShuffle)
     }
 

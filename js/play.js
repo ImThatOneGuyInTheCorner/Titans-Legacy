@@ -1,5 +1,5 @@
 //Import all things needed from PIXI
-import { Application, Assets, Sprite, Container, Text, Texture, VERSION, Graphics, Ticker } from "../libraries/pixi.mjs"
+import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker } from "../libraries/pixi.mjs"
 console.log(VERSION)
 class Player {
     constructor(render) {
@@ -29,6 +29,26 @@ class Titan {
     constructor(name, stats) {
         this.name = name;
         this.stats = stats
+    }
+}
+const turnEvent = new Event("turnEvent", { cancelable: true })
+
+class Turn{
+    constructor(){
+        this.event = turnEvent;
+        this.finished = false;
+    }
+
+    turnFinished(){
+        return new Promise(async (resolve,reject)=>{
+            if(this.finished == true){
+                resolve()
+            }
+        });
+    }
+    finshTurn(){
+        document.dispatchEvent(this.event)
+        this.finished = true;
     }
 }
 
@@ -150,6 +170,7 @@ async function setup() {
         titans[titan] = createTitan(titan, stats);
     }
     await app.init({ background: 'white', antialias: true, autoDensity: true, resolution: 2 });
+   
     gameboard.appendChild(app.canvas);
     globalThis.__PIXI_APP__ = app;
 
@@ -162,7 +183,8 @@ async function preload() {
         { alias: "hex", src: "../assets/polygon4.svg" },
         { alias: "placer", src: "../assets/polygon4.svg" },
         { alias: "outpost", src: "../assets/house.svg" },
-        { alias: "road", src: "../assets/ryantile.png" }
+        { alias: "road", src: "../assets/ryantile.png" },
+        { alias: "bg", src: "../assets/background.png" }
 
 
     ]
@@ -215,6 +237,7 @@ async function addPlacers(places) {
     }
     return placers;
 }
+let toResolve = []
 
 async function createPlacers(tile) {
     const hex = tile.hex;
@@ -242,7 +265,6 @@ async function createPlacers(tile) {
             return
         }
         placing = false
-
         buildingCurrent = "road"
         let road = { mushroom: 1, log: 1 }
         modifyPopup(popup, road, "Place Road");
@@ -376,28 +398,20 @@ function notify(message){
     notification.innerText = message;
 }
 
-async function newTurn() {
-    return new Promise(async (resolve, reject) => {
-        await placing == false
-        if(placing == false){
-            resolve()
-        }
-    });
-}
-
 async function nextTurn(){
+    let turn = new Turn();
     let currentPlayer = players[currentTurn]
     getElementPromiseBySelctor("#playerCard > img:nth-child(1)").then(img=>img.src=currentPlayer.img)
     notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first outpost`);
     placing = true
     restrictRoad = true
     restrictOutpost = false
-    await newTurn()
+    await turn.turnFinished()
     notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first road`);
     placing = true
     restrictRoad = false
     restrictOutpost = true
-    await newTurn()
+    await turn.turnFinished()
     currentTurn++ 
     console.log(currentTurn%playersNum )
     if(currentTurn%playersNum == 0) return  
@@ -405,7 +419,15 @@ async function nextTurn(){
 }
 
 async function startGameLoop(){
+    
+
     app.renderer.resize(gameboard.getBoundingClientRect().width, gameboard.getBoundingClientRect().height);
+    const tilingSprite = new TilingSprite({
+        texture:Texture.from("bg"),
+        width: app.screen.width,
+        height: app.screen.height,
+    });
+    app.stage.addChild(tilingSprite)
     const origin = { x: -app.canvas.width / 4, y: -app.canvas.height / 4 }
     const tileHeight = app.canvas.height / 20;
     const mainBoard = new HexBoard(tileHeight, "POINTY", 2, origin);
