@@ -44,7 +44,6 @@ body{
 
 #home{
     flex-flow: column wrap;
-    justify-content: space-between;
     align-items: center;
     height: 100dvh;
 }
@@ -59,6 +58,7 @@ nav{
     padding: 1.2rem 0;
     width: 100%;
     border: var(--secondary) .2rem solid;
+    cursor: pointer;
 }
 
 #fontHead {
@@ -67,6 +67,7 @@ nav{
     font-size: 4rem;
     width: 100%;
     text-align: center;
+    margin-bottom: 20dvh;
 }
 
 .fillpage{
@@ -189,15 +190,15 @@ figure img{
 #selectTitan{
     width: 50%;
 }
-*:is(button,a){
+*:is(button,a), .menuButton{
     transition: filter .2s cubic-bezier(0.215, 0.610, 0.355, 1);
 
 }
-*:is(button,a):hover{
+*:is(button,a):hover, .menuButton:hover{
     filter: brightness(1.2);
 }
 
-*:is(button,a):active{
+*:is(button,a):active, .menuButton:active{
     filter: brightness(.8);
 }
 
@@ -370,14 +371,67 @@ figure img{
     margin-left: 3em;
 }
 
+.miniMargin {
+    display: flex;
+    width: 97%;
+    margin-left: 0.5em;
+}
+
+.developcards {
+    margin: 0.3em;
+}
+
+.inv {
+    color: white;
+    margin-bottom: 0.5em;
+    font-size: xx-large;
+}
+
 /* for create game selections */
 .selected{
     border: var(--accent) solid;
     filter: brightness(1.3);
 }
 
-
-.miniMargin {
+#how-to-play-overlay {
+    width: 80dvw;
+    height: 90dvh;
+    position: fixed;
+    margin-left: 10dvw;
+    top: 5dvh;
+    background-color: #415F3E;
+    flex-direction: column;
+    align-items: center;
+    color: aliceblue;
+}
+#how-to-play-overlay > p {
+    border-bottom-style: solid;
+    border-width: 3px;
+    border-color: #000000;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+#closeHowToPlayButton {
+    align-self: flex-end;
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+}
+.l {
+    height: 100%;
+    width: 3px;
+    background-color: #000000;
+    position: absolute;
+    rotate: 45deg;
+}
+.r {
+    rotate: -45deg;
+}.miniMargin {
     display: flex;
     width: 97%;
     margin-left: 0.5em;
@@ -416,6 +470,8 @@ figure img{
 .hidden{
     display: none;
 }
+/* End reusables */
+
 #resources > figure > figcaption{
     width: 100%;
     text-align: center;
@@ -435,7 +491,7 @@ figure img{
     width: 100%;
 }
 
-#how-to-play-overlay, #credits-overlay {
+#credits-overlay {
     width: 75vw;
     height: 75vh;
 }
@@ -444,4 +500,3 @@ figure img{
     width: 25px;
     height: 25px;
 }
-/* End reusables */
