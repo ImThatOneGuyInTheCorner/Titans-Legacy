@@ -303,6 +303,10 @@ figure img {
 
 #cards li {
     height: 100%;
+    margin: 0.5em;
+    margin-bottom: 0.2em;
+    border-style: solid;
+    border-color: #2F2504;
 }
 
 /* #cards > li > p {
