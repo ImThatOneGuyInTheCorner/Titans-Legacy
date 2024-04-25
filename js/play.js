@@ -71,24 +71,6 @@ class Titan {
 }
 const turnEvent = new Event("turnEvent", { cancelable: true })
 
-class Turn {
-    constructor() {
-        this.event = turnEvent;
-        this.finished = false;
-    }
-
-    turnFinished() {
-        return new Promise(async (resolve, reject) => {
-            if (this.finished == true) {
-                resolve()
-            }
-        });
-    }
-    finshTurn() {
-        document.dispatchEvent(this.event)
-        this.finished = true;
-    }
-}
 
 class Placer {
     constructor(x, y) {
@@ -300,16 +282,15 @@ async function place(placeOn) {
     let placer = [];
     for (const child of app.stage.children) {
             if(placeOn.sprite.getBounds() && child.getBounds() && placeOn.sprite.getBounds().rectangle.intersects(child.getBounds().rectangle)){
-                let texture = selected == "outpost" ? "road" : "outpost";
+                let texture = buildingCurrent == "outpost" ? "road" : "outpost";
+                console.log("what",texture,child,child.texture,child.texture == Texture.from(texture));
                 placer.push(child.texture == Texture.from(texture))
             }
     }
-    let nextTo = placer.some(x=>{
-        return x == true
-    })
-    // if((!nextTo) && player.roads > 0 && player.outposts > 0){
-    //     return
-    // }
+    let nextTo = placer.some(x=>x == true)
+    if((!nextTo) && player.roads > 0 && player.outposts > 0){
+        return
+    }
     switch (buildingCurrent) {
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
@@ -478,9 +459,6 @@ async function titanSelected(currentCard) {
 
     await preload();
     await setup();
-
-
-
     const popup = await getElementPromiseBySelctor("#popcontainer");
     const building = await getElementPromiseBySelctor("#building");
 
@@ -578,7 +556,7 @@ async function startGameLoop() {
         for (const [resource,cost] of Object.entries(costs)) {
             // let player = new Player();
             players.forEach(player=>{
-                player.addResource(resource,4)
+                player.addResource(resource,cost)
                 console.log(player.hasResourceAmount(resource,cost));
             })
            

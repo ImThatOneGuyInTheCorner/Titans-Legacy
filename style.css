@@ -28,6 +28,10 @@ body {
     width: 100%;
 }
 
+.none{
+    background-color: none;
+}
+
 .font {
     font-family: "Mystery Quest", system-ui;
     font-weight: 400;
@@ -45,6 +49,30 @@ body {
 
 }
 
+.playerOffer {
+    background-color: #FFEAC0;
+    border-style: solid;
+    border-color: #2F2504;
+    color: black;
+    width: 28dvw;
+    margin-top: 5em;
+    margin-left: 1em;
+    height: 40.5dvh;
+}
+
+.btnTransparent {
+    background-color: transparent;
+    width: 19%;
+}
+
+.resourceBtn {
+    display: flex;
+    background-color: transparent;
+    width: 100%;
+    margin-left: 2em;
+    justify-content: flex-end;
+}
+
 #home {
     flex-flow: column wrap;
     align-items: center;
@@ -55,6 +83,13 @@ nav {
     justify-content: center;
     align-content: space-around;
     height: 30%;
+}
+
+.offerText {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+    margin-top: 1em;
 }
 
 .menuButton {
@@ -231,6 +266,10 @@ figure img {
 }
 
 #selectTitan {
+    width: 50%;
+}
+
+.polyTrade {
     width: 50%;
 }
 
@@ -563,11 +602,42 @@ figure img {
     font-size: xx-large;
 }
 
+.tradeText {
+    font-size: xxx-large;
+    display: flex;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.bottom-overlay {
+    width: 98%;
+}
+
+.selectTrade {
+    background-color: #89A587;
+    border-color: #000000;
+    border-style: solid;
+    border-radius: 0.3em;
+    color: black;
+    padding: 0.5em;
+    margin-top: 20em;
+}
+
 /* REUSABLE CLASSES USE THESE PLEASE */
+
+.rowNowrap {
+    display: flex;
+    flex-direction: row;
+}
 
 .flex {
     display: flex;
     flex-flow: row wrap;
+}
+
+.offerWidth {
+    width: 40%;
+    height: 170%;
 }
 
 .quarter {
@@ -591,6 +661,13 @@ figure img {
 }
 
 /* End reusables */
+
+.playerOfferShow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
 #resources>figure>figcaption {
     width: 100%;
@@ -626,8 +703,8 @@ figure img {
 }
 
 #create-trade-overlay {
-    width: 80dvw;
-    height: 90dvh;
+    width: 55%;
+    height: 75%;
     position: fixed;
     margin-left: 10dvw;
     top: 5dvh;
@@ -635,12 +712,15 @@ figure img {
     flex-direction: column;
     align-items: center;
     color: aliceblue;
+    border-style: solid;
+    border-color: #2F2504;
+    border-width: 0.5em;
 }
 
 #create-trade-overlay>p {
     border-bottom-style: solid;
     border-width: 3px;
-    border-color: #000000;
+    border-color: white;
     margin-bottom: 10px;
     font-size: 20px;
 }
