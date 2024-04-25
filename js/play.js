@@ -145,6 +145,7 @@ class HexBoard {
 let playersNum;
 let durationTurn;
 let winningpoints = 10;
+let isDragging = false;
 
 let placing = false;
 let restrictRoad = false;
@@ -205,7 +206,12 @@ async function preload() {
         { alias: "placer", src: "../assets/placer.svg" },
         { alias: "outpost", src: "../assets/house.svg" },
         { alias: "road", src: "../assets/ryantile.png" },
-        { alias: "bg", src: "../assets/background.png" }
+        { alias: "bg", src: "../assets/background.png" },
+        { alias: "orange", src: "../assets/orange-resource.png" },
+        { alias: "wood", src: "../assets/log-resource.png" },
+        { alias: "mushroom", src: "../assets/mushroom.png" },
+        { alias: "stone", src: "../assets/stone.png" },
+        { alias: "gem", src: "../assets/gem.png" }
 
 
     ]
@@ -265,6 +271,26 @@ async function place(placeOn) {
     let current = buildings[buildingCurrent];
     let costs = current.costs
     let canBuild = [];
+    isDragging = false
+    if(player.roads == 0 && player.outposts == 1 && buildingCurrent == "outpost"){
+        return
+    }
+    if(player.roads == 0 && player.outposts == 0 && buildingCurrent == "road"){
+        return
+    }
+    let placer = [];
+    for (const child of app.stage.children) {
+            if(placeOn.sprite.getBounds() && child.getBounds() && placeOn.sprite.getBounds().rectangle.intersects(child.getBounds().rectangle)){
+                let texture = buildingCurrent == "outpost" ? "road" : "outpost";
+                console.log("what",texture,child,child.texture,child.texture == Texture.from(texture));
+                placer.push(child.texture == Texture.from(texture))
+            }
+    }
+    let nextTo = placer.some(x=>x == true)
+    if(nextTo == false && player.outposts > 0){
+        return
+    }
+
     for (const [resource,cost] of Object.entries(costs)) {
         //let player = new Player();
         let buildCost = {}
@@ -278,19 +304,8 @@ async function place(placeOn) {
     for(const [resource,cost] of Object.entries(costs)){
         player.addResource(resource,-cost);
     }
-    let radi = new Circle(placeOn.sprite.x, placeOn.sprite.y, placeOn.sprite.width);
-    let placer = [];
-    for (const child of app.stage.children) {
-            if(placeOn.sprite.getBounds() && child.getBounds() && placeOn.sprite.getBounds().rectangle.intersects(child.getBounds().rectangle)){
-                let texture = buildingCurrent == "outpost" ? "road" : "outpost";
-                console.log("what",texture,child,child.texture,child.texture == Texture.from(texture));
-                placer.push(child.texture == Texture.from(texture))
-            }
-    }
-    let nextTo = placer.some(x=>x == true)
-    if((!nextTo) && player.roads > 0 && player.outposts > 0){
-        return
-    }
+    
+    
     switch (buildingCurrent) {
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
@@ -307,7 +322,7 @@ async function place(placeOn) {
             break;
     }
 }
-// app.stage.interactive = true
+app.stage.interactive = true
 // app.stage.on("pointerdown",(e)=>{
 //         // Get the click position
 //         const clickPosition = e.data.global;
@@ -522,41 +537,41 @@ async function startGameLoop() {
         const zoomFactor = event.deltaY < 0 ? zoom : -zoom; // Zoom in if scrolling up, zoom out if scrolling down
         currentZoom += zoomFactor;
         currentZoom = Math.min(Math.max(currentZoom, -.5), 2);
-        app.view.style.transform = `scale(${1 + currentZoom})`;
+        app.stage.scale.set(1+currentZoom);
+
         app.render(app.stage)
     });
-    // let isDragging = false;
-    // let startX, startY;
+    let startX, startY;
 
-    // app.stage.on('pointerdown', (event) => {
-    //     startX = event.clientX;
-    //     startY = event.clientY;
-    //     app.view.style.transformOrigin = `${startX}px ${startY}px `;
-    //     isDragging = true;
-    // });
+    app.stage.on('pointerdown', (event) => {
+        console.log(event)
+        startX = event.global.x;
+        startY = event.global.y;
+        isDragging = true;
+    });
 
-    // app.canvas.addEventListener('pointermove', (event) => {
-    //     if (!isDragging) return;
+    app.stage.on('pointermove', (event) => {
+        if (!isDragging) return;
 
-    //     const dx = event.clientX - startX;
-    //     const dy = event.clientY - startY;
+        const dx = event.global.x - startX;
+        const dy = event.global.y - startY;
 
-    //     // Update the view's position based on the drag
-    //     app.view.style.transform = `translate(${dx}px, ${dy}px)`;
-    //     // Optionally, update the transform-origin for zooming
+        app.stage.position.x += dx;
+        app.stage.position.y += dy;
+        startX = event.global.x;
+        startY = event.global.y;
+    });
 
-    // });
-
-    // app.canvas.addEventListener('pointerup', () => {
-    //     isDragging = false;
-    // });
+    app.stage.on('pointerup', () => {
+        isDragging = false;
+    });
 
     for (const [building,properties] of Object.entries(buildings)) {
         let costs = properties.costs
         for (const [resource,cost] of Object.entries(costs)) {
             // let player = new Player();
             players.forEach(player=>{
-                player.addResource(resource,cost)
+                player.addResource(resource,200)
                 console.log(player.hasResourceAmount(resource,cost));
             })
            

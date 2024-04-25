@@ -29,3 +29,7 @@ body {
     width: 25vw;
     height: 30vh;
 }
+
+:hover.btn {
+    cursor: pointer;
+}

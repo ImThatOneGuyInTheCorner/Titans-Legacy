@@ -14,6 +14,7 @@
 
 <body class="background">
     <main id="game">
+        <!-- This part is the first area of the game where the player can choose their game settings -->
         <section id="createGame" class="fillpage flex">
             <h1 class="font" id="fontHead">
                 Create Your Game
@@ -72,6 +73,9 @@
                 </a>
             </section>
         </section>
+        <!-- END OF GAME SETTINGS -->
+
+        <!-- TITAN SELECT SCREEN | players will choose their titans here | this section is hidden to allow for game settings to show first -->
         <section id="titanSelect" class="fillpage flex hidden">
             <button id="prevTitan" class="controller">&LessLess;</button>
             <section id="titanSelection" class="flex half">
@@ -146,10 +150,16 @@
             <button id="nextTitan" class="controller">&GreaterGreater;</button>
 
         </section>
+        <!-- END OF TITAN SELECTION -->
+
+        <!-- This is where the honeycomb.js is linked to -->
         <section id="playing" class="flex fillpage hidden">
             <section id="gameboard">
 
             </section>
+            <!-- END OF WHERE HONEYCOMB.JS IS LINKED -->
+
+            <!-- SIDE BAR FOR GAME LAYOUT SCREEn -->
             <section id="sidebar" class="flex column">
                 <section class="list flex full column" id="trades">
                     <h2 class=" font avail">Available Trades</h2>
