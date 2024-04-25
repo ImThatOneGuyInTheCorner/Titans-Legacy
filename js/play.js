@@ -5,10 +5,10 @@ class Player {
     constructor(render) {
         this.inventory = new Map;
         this.inventoryRender = render;
-        this.roads = 0;
-        this.outposts = 0;
+        this.roads = [];
+        this.outposts = [];
         this.resources = new Map;
-        this.resources.set("rock",0)
+        this.resources.set("wood",0)
         this.resources.set("mushroom",0)
         this.resources.set("deer",0)
         this.resources.set("ore",0)
@@ -272,13 +272,13 @@ let toResolve = []
 
 async function place(placeOn) {
     // console.log(placeOn)
+    let player = players[currentTurn]
     const popup = await getElementPromiseBySelctor("#popcontainer");
     let current = buildings[buildingCurrent];
     let costs = current.costs
     let canBuild = [];
     for (const [resource,cost] of Object.entries(costs)) {
         //let player = new Player();
-        let player = players[currentTurn]
         let buildCost = {}
         buildCost[resource] = player.hasResourceAmount(resource,cost);
         canBuild.push(buildCost)
@@ -287,6 +287,9 @@ async function place(placeOn) {
         return Object.values(x)[0] == true
     })
     if(canBuild !== true) return;
+    for(const [resource,cost] of Object.entries(costs)){
+        player.addResource(resource,-cost);
+    }
     switch (buildingCurrent) {
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
@@ -538,7 +541,8 @@ async function startGameLoop() {
         for (const [resource,cost] of Object.entries(costs)) {
             // let player = new Player();
             let player = players[currentTurn]
-            player.setResource(resource,cost)
+            console.log(resource)
+            player.addResource(resource,cost)
             console.log(player.hasResourceAmount(resource,cost));
         }
     }
