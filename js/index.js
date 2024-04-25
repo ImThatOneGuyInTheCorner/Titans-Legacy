@@ -1,20 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     // How to play screen
-    if ( document.getElementById('how-to-play-overlay') !== null) {
+    if (document.getElementById('how-to-play-overlay') !== null) {
         let howToPlay = document.getElementById('howToPlay');
         howToPlay.addEventListener('click', overlayShuffle)
     }
-    if ( document.getElementById('closeHowToButton') !== null) {
+    if (document.getElementById('closeHowToButton') !== null) {
         let howToPlay = document.getElementById('closeHowToButton');
         howToPlay.addEventListener('click', overlayShuffle)
     }
 
     // Credits
-    if ( document.getElementById('credits-overlay') !== null) {
+    if (document.getElementById('credits-overlay') !== null) {
         let credits = document.getElementById('credits');
         credits.addEventListener('click', overlayShuffleTwo)
     }
-    if ( document.getElementById('closeCreditsButton') !== null) {
+    if (document.getElementById('closeCreditsButton') !== null) {
         let credits = document.getElementById('closeCreditsButton');
         credits.addEventListener('click', overlayShuffleTwo)
     }
@@ -26,5 +26,5 @@ function overlayShuffle() {
 function overlayShuffleTwo() {
     document.getElementById("credits-overlay").classList.toggle("hidden");
     document.getElementById("credits-overlay").classList.toggle("flex");
-    
+
 }

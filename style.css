@@ -1,5 +1,5 @@
-:root{
-    --background : #594E36;
+:root {
+    --background: #594E36;
     --primary: #415F3E;
     --secondary: #89A587;
     --accent: #818e97;
@@ -7,21 +7,24 @@
     --text2: #000000;
     font-size: 14px;
 }
-button{
+
+button {
     border: none;
 }
-*{
-    margin:0;
+
+* {
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     max-width: 100%;
 }
 
-.background{
+.background {
     background-image: url(assets/background.png);
     background-size: 250px;
 }
-body{
+
+body {
     width: 100%;
 }
 
@@ -31,7 +34,7 @@ body{
     font-style: normal;
 }
 
-.button{
+.button {
     display: flex;
     justify-content: center;
     color: var(--text1);
@@ -42,13 +45,13 @@ body{
 
 }
 
-#home{
+#home {
     flex-flow: column wrap;
     align-items: center;
     height: 100dvh;
 }
 
-nav{
+nav {
     justify-content: center;
     align-content: space-around;
     height: 30%;
@@ -70,25 +73,30 @@ nav{
     margin-bottom: 20dvh;
 }
 
-.fillpage{
+.fillpage {
     width: 100dvw;
     height: 100dvh;
 }
 
-#createGame{
+#createGame {
     align-content: center;
     justify-content: center;
     padding: 2rem;
 }
-#pop{
+
+#pop {
     background-color: var(--primary);
     padding: 2rem;
     border-radius: 1vmin;
     border: #000000 solid .2rem;
 }
-#pop h2,p,label{
+
+#pop h2,
+p,
+label {
     font-size: 1.75rem;
 }
+
 .box-select {
     background-color: #594E36;
     color: white;
@@ -116,34 +124,36 @@ nav{
     margin-right: 1em;
 }
 
-#players,#duration{
+#players,
+#duration {
     justify-content: center;
 }
-.selector{
+
+.selector {
     justify-content: space-between;
     align-content: center;
     padding-bottom: 3rem;
     padding-top: .5rem;
 }
 
-#createPanel{
+#createPanel {
     justify-content: center;
     padding: 1rem;
 }
 
-#createPanel > a {
+#createPanel>a {
     width: 25%;
 }
 
 
-#titanSelect{
+#titanSelect {
     justify-content: center;
     align-content: center;
     align-items: center;
     column-gap: 2rem;
 }
 
-#titanSelection{
+#titanSelection {
     background-image: url(assets/woodBackground.jpg);
     height: 60%;
     align-content: center;
@@ -153,7 +163,8 @@ nav{
     border-color: #2F2504;
     border-width: 1em;
 }
-.titanCardSelect{
+
+.titanCardSelect {
     height: 100%;
     padding: 2rem;
     justify-content: space-around;
@@ -164,7 +175,7 @@ nav{
     margin-bottom: 1em;
 }
 
-.titanCardSelect > figure{
+.titanCardSelect>figure {
     width: 33%;
     justify-content: center;
     align-content: center;
@@ -181,28 +192,29 @@ nav{
     justify-content: center;
 }
 
-.titanCardSelect figcaption{
+.titanCardSelect figcaption {
     font-size: 3rem;
 }
-figure img{
+
+figure img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.displayStats p{
+.displayStats p {
     width: 100%;
     color: white;
     font-size: xx-large;
 }
 
-.stats{
+.stats {
     justify-content: center;
     color: white;
     font-size: xx-large;
 }
 
-.controller{
+.controller {
     display: flex;
     border-radius: 15vmin;
     width: 8vmin;
@@ -212,33 +224,40 @@ figure img{
     align-items: center;
     background-color: var(--accent);
 }
-#selectTitan{
+
+#selectTitan {
     width: 50%;
 }
-*:is(button,a), .menuButton{
+
+*:is(button, a),
+.menuButton {
     transition: filter .2s cubic-bezier(0.215, 0.610, 0.355, 1);
 
 }
-*:is(button,a):hover, .menuButton:hover{
+
+*:is(button, a):hover,
+.menuButton:hover {
     filter: brightness(1.2);
 }
 
-*:is(button,a):active, .menuButton:active{
+*:is(button, a):active,
+.menuButton:active {
     filter: brightness(.8);
 }
 
-#playing{
+#playing {
     height: 100dvh;
     width: 100dvw;
     overflow: hidden;
 }
 
-#gameboard{
+#gameboard {
     width: 75dvw;
     height: 85dvh;
 }
 
-#sidebar{
+#sidebar {
+    z-index: 1;
     background-color: #89A587;
     width: 25dvw;
     height: 85dvh;
@@ -247,12 +266,14 @@ figure img{
     align-items: center;
 }
 
-#bottombar{
+#bottombar {
+    z-index: 1;
     background-color: #89A587;
     height: 15dvh;
     align-self: flex-end;
     align-items: center;
 }
+
 #bottombar {
     justify-content: space-between;
     width: 100dvw;
@@ -261,17 +282,21 @@ figure img{
 .hidden {
     display: none;
 }
-#bottombar figure{
+
+#bottombar figure {
     height: 100%;
 }
-#cards{
+
+#cards {
     list-style: none;
     /* width: 80%; */
     height: 90%;
 }
-#cards li{
+
+#cards li {
     height: 100%;
 }
+
 /* #cards > li > p {
     position: fixed;
 } */
@@ -303,10 +328,10 @@ figure img{
     display: flex;
     flex-flow: column wrap;
     border-style: solid;
-    width:100%;
-    background-color:#FFEAC0 ;
+    width: 100%;
+    background-color: #FFEAC0;
     padding: 1em;
-    margin:0.5em;
+    margin: 0.5em;
 
 }
 
@@ -323,6 +348,7 @@ figure img{
     border-style: solid;
     align-items: center;
 }
+
 /*     
 
 #placepop{
@@ -333,7 +359,7 @@ figure img{
     justify-content: center;
     align-items: center;
 } */
-#popcontainer{
+#popcontainer {
     position: absolute;
     width: 75dvw;
     height: 85dvh;
@@ -341,7 +367,8 @@ figure img{
     justify-content: center;
     align-content: center;
 }
-#placepop{
+
+#placepop {
     flex-flow: column wrap;
     align-items: center;
     /* width: 50%;
@@ -350,30 +377,39 @@ figure img{
     padding: 2rem;
     background-color: var(--primary);
 }
-#resources{
+
+#resources {
     height: 50%;
 }
-#placing{
+
+#placing {
     height: 50%;
 }
-#placing figure{
+
+#placing figure {
     height: 80%;
 }
-#resources figure{
+
+#resources figure {
     width: 33.33%;
 }
-#resources figcaption{
+
+#resources figcaption {
     width: 100%;
     text-align: center;
 }
-#building{
+
+#building {
     cursor: pointer;
 }
-#inventory, #trades {
+
+#inventory,
+#trades {
     width: 90%;
     margin-top: 5%;
     height: 46%;
 }
+
 #inventory {
     display: flex;
     flex-direction: column;
@@ -383,7 +419,7 @@ figure img{
     background-color: #FFEAC0;
     margin-bottom: 1em;
     color: black;
-    
+
 }
 
 .swordImg {
@@ -413,7 +449,7 @@ figure img{
 }
 
 /* for create game selections */
-.selected{
+.selected {
     border: var(--accent) solid;
     filter: brightness(1.3);
 }
@@ -429,13 +465,15 @@ figure img{
     align-items: center;
     color: aliceblue;
 }
-#how-to-play-overlay > p {
+
+#how-to-play-overlay>p {
     border-bottom-style: solid;
     border-width: 3px;
     border-color: #000000;
     margin-bottom: 10px;
     font-size: 20px;
 }
+
 #closeHowToButton {
     align-self: flex-end;
     position: absolute;
@@ -447,6 +485,7 @@ figure img{
     display: flex;
     cursor: pointer;
 }
+
 #credits-overlay {
     width: 80dvw;
     height: 90dvh;
@@ -458,13 +497,15 @@ figure img{
     align-items: center;
     color: aliceblue;
 }
-#credits-overlay > p {
+
+#credits-overlay>p {
     border-bottom-style: solid;
     border-width: 3px;
     border-color: #000000;
     margin-bottom: 10px;
     font-size: 20px;
 }
+
 #closeCreditsButton {
     align-self: flex-end;
     position: absolute;
@@ -476,6 +517,7 @@ figure img{
     display: flex;
     cursor: pointer;
 }
+
 .l {
     height: 100%;
     width: 3px;
@@ -483,9 +525,12 @@ figure img{
     position: absolute;
     rotate: 45deg;
 }
+
 .r {
     rotate: -45deg;
-}.miniMargin {
+}
+
+.miniMargin {
     display: flex;
     width: 97%;
     margin-left: 0.5em;
@@ -503,7 +548,7 @@ figure img{
 
 /* REUSABLE CLASSES USE THESE PLEASE */
 
-.flex{
+.flex {
     display: flex;
     flex-flow: row wrap;
 }
@@ -512,36 +557,43 @@ figure img{
     width: 23%;
 }
 
-.half{
+.half {
     width: 50%;
 }
-.full{
+
+.full {
     width: 100%;
 }
-.column{
+
+.column {
     flex-flow: column wrap;
 }
-.hidden{
+
+.hidden {
     display: none;
 }
+
 /* End reusables */
 
-#resources > figure > figcaption{
+#resources>figure>figcaption {
     width: 100%;
     text-align: center;
     color: white;
 }
 
-#resources > figure{
+#resources>figure {
     width: 23%;
 }
-#placepop > figure{
+
+#placepop>figure {
     width: 23%;
 }
-#placepop > figure > img{
+
+#placepop>figure>img {
     width: 100%;
 }
-#resources > figure img{
+
+#resources>figure img {
     width: 100%;
 }
 
@@ -550,7 +602,8 @@ figure img{
     height: 75vh;
 }
 
-#exitBtn, #exitBtntwo {
+#exitBtn,
+#exitBtntwo {
     width: 25px;
     height: 25px;
 }

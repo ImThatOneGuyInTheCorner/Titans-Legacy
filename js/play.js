@@ -1,5 +1,5 @@
 //Import all things needed from PIXI
-import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker } from "../libraries/pixi.mjs"
+import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle } from "../libraries/pixi.mjs"
 console.log(VERSION)
 class Player {
     constructor(render) {
@@ -33,20 +33,20 @@ class Titan {
 }
 const turnEvent = new Event("turnEvent", { cancelable: true })
 
-class Turn{
-    constructor(){
+class Turn {
+    constructor() {
         this.event = turnEvent;
         this.finished = false;
     }
 
-    turnFinished(){
-        return new Promise(async (resolve,reject)=>{
-            if(this.finished == true){
+    turnFinished() {
+        return new Promise(async (resolve, reject) => {
+            if (this.finished == true) {
                 resolve()
             }
         });
     }
-    finshTurn(){
+    finshTurn() {
         document.dispatchEvent(this.event)
         this.finished = true;
     }
@@ -55,11 +55,12 @@ class Turn{
 class Placer {
     constructor(x, y) {
         this.sprite = Sprite.from("placer");
-        this.sprite.scale = .15;
+        this.sprite.scale = .35;
         this.sprite.alpha = .75
         this.sprite.anchor.set(.5);
         this.sprite.position.set(x, y);
         this.sprite.interactive = true;
+        this.sprite.hitArea = new Circle(0, 0, this.sprite.width * 1.5)
     }
     setInteraction(event, onEvent) {
         this.sprite.on(event, onEvent);
@@ -170,7 +171,7 @@ async function setup() {
         titans[titan] = createTitan(titan, stats);
     }
     await app.init({ background: 'white', antialias: true, autoDensity: true, resolution: 2 });
-   
+
     gameboard.appendChild(app.canvas);
     globalThis.__PIXI_APP__ = app;
 
@@ -181,7 +182,7 @@ async function setup() {
 async function preload() {
     let assets = [
         { alias: "hex", src: "../assets/polygon4.svg" },
-        { alias: "placer", src: "../assets/polygon4.svg" },
+        { alias: "placer", src: "../assets/placer.svg" },
         { alias: "outpost", src: "../assets/house.svg" },
         { alias: "road", src: "../assets/ryantile.png" },
         { alias: "bg", src: "../assets/background.png" }
@@ -239,6 +240,23 @@ async function addPlacers(places) {
 }
 let toResolve = []
 
+function place(placeOn) {
+
+}
+// app.stage.interactive = true
+// app.stage.on("pointerdown",(e)=>{
+//         // Get the click position
+//         const clickPosition = e.data.global;
+//         // Check if the click position intersects with any sprite
+//         app.stage.children.forEach((sprite) => {
+//             const localPosition = sprite.toLocal(clickPosition);
+//             if (sprite.hitArea && sprite.hitArea.contains(localPosition.x, localPosition.y)) {
+//                 console.log(`Sprite at (${sprite.x}, ${sprite.y}) clicked!`);
+//                 place(sprite);
+//                 // Perform actions based on the sprite clicked
+//             }
+//         });
+// })
 async function createPlacers(tile) {
     const hex = tile.hex;
     let corners = hex.corners;
@@ -247,24 +265,24 @@ async function createPlacers(tile) {
     let edgePlacers = await addPlacers(midpoints);
     const popup = await getElementPromiseBySelctor("#popcontainer");
     cornerPlacers.forEach(x => x.setInteraction("pointerdown", (e) => {
-        if(placing == false || restrictOutpost == true) return;
+        if (placing == false || restrictOutpost == true) return;
         selected = x
         if (selected && selected.sprite.texture != Texture.from("placer")) {
             return
         }
-        placing = false
+        //placing = false
         buildingCurrent = "outpost"
         let outpost = { mushroom: 1, log: 1 }
         modifyPopup(popup, outpost, "Place Outpost");
         popup.classList.toggle("hidden", false);
     }))
     edgePlacers.forEach(x => x.setInteraction("pointerdown", (e) => {
-    if(placing == false || restrictRoad == true) return;
+        if (placing == false || restrictRoad == true) return;
         selected = x
         if (selected && selected.sprite.texture != Texture.from("placer")) {
             return
         }
-        placing = false
+        //placing = false
         buildingCurrent = "road"
         let road = { mushroom: 1, log: 1 }
         modifyPopup(popup, road, "Place Road");
@@ -336,13 +354,13 @@ async function startGame() {
     getElementPromiseBySelctor('#prevTitan').then(x => x.addEventListener("click", e => { index = toTitanCard(index, titans, -1) }))
     let selected = 0;
     getElementPromiseBySelctor('#selectTitan').then(x => {
-        x.addEventListener("click",async e => {
+        x.addEventListener("click", async e => {
             selected++
             titanSelected(...titans.splice(index, 1))
             index = 0;
             toTitanCard(0, titans, 0);
-            if(selected >= playersNum){
-                
+            if (selected >= playersNum) {
+
                 getElementPromiseBySelctor('#titanSelect').then(x => x.classList.toggle("hidden", true)).catch(console.error);
                 await getElementPromiseBySelctor('#playing').then(x => x.classList.toggle("hidden", false)).catch(console.error);
                 startGameLoop();
@@ -371,7 +389,7 @@ async function titanSelected(currentCard) {
     player.name = "player" + players.length
     player.img = titanImg
     players.push(player);
-    currentCard.classList.toggle("hidden",true)
+    currentCard.classList.toggle("hidden", true)
 
 };
 
@@ -394,36 +412,36 @@ async function titanSelected(currentCard) {
     })
 })()
 let notification = await getElementPromiseBySelctor("#notify");
-function notify(message){
+function notify(message) {
     notification.innerText = message;
 }
 
-async function nextTurn(){
+async function nextTurn() {
     let turn = new Turn();
     let currentPlayer = players[currentTurn]
-    getElementPromiseBySelctor("#playerCard > img:nth-child(1)").then(img=>img.src=currentPlayer.img)
+    getElementPromiseBySelctor("#playerCard > img:nth-child(1)").then(img => img.src = currentPlayer.img)
     notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first outpost`);
     placing = true
-    restrictRoad = true
-    restrictOutpost = false
-    await turn.turnFinished()
-    notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first road`);
-    placing = true
     restrictRoad = false
-    restrictOutpost = true
-    await turn.turnFinished()
-    currentTurn++ 
-    console.log(currentTurn%playersNum )
-    if(currentTurn%playersNum == 0) return  
-    nextTurn()
+    restrictOutpost = false
+    // await turn.turnFinished()
+    // notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first road`);
+    // placing = true
+    // restrictRoad = false
+    // restrictOutpost = true
+    // await turn.turnFinished()
+    // currentTurn++ 
+    // console.log(currentTurn%playersNum )
+    // if(currentTurn%playersNum == 0) return  
+    // nextTurn()
 }
 
-async function startGameLoop(){
-    
+async function startGameLoop() {
+
 
     app.renderer.resize(gameboard.getBoundingClientRect().width, gameboard.getBoundingClientRect().height);
     const tilingSprite = new TilingSprite({
-        texture:Texture.from("bg"),
+        texture: Texture.from("bg"),
         width: app.screen.width,
         height: app.screen.height,
     });
@@ -438,8 +456,42 @@ async function startGameLoop(){
         tile.text = Math.floor(Math.random() * 4) + 1
         tile.placers = createPlacers(tile);
     }
+    let currentZoom = 0;
+    window.addEventListener('wheel', (event) => {
+        const zoom = 0.1;
+        const zoomFactor = event.deltaY < 0 ? zoom : -zoom; // Zoom in if scrolling up, zoom out if scrolling down
+        currentZoom += zoomFactor;
+        currentZoom = Math.min(Math.max(currentZoom, -.5), 2);
+        app.view.style.transform = `scale(${1 + currentZoom})`;
+        app.render(app.stage)
+    });
+    // let isDragging = false;
+    // let startX, startY;
+
+    // app.stage.on('pointerdown', (event) => {
+    //     startX = event.clientX;
+    //     startY = event.clientY;
+    //     app.view.style.transformOrigin = `${startX}px ${startY}px `;
+    //     isDragging = true;
+    // });
+
+    // app.canvas.addEventListener('pointermove', (event) => {
+    //     if (!isDragging) return;
+
+    //     const dx = event.clientX - startX;
+    //     const dy = event.clientY - startY;
+
+    //     // Update the view's position based on the drag
+    //     app.view.style.transform = `translate(${dx}px, ${dy}px)`;
+    //     // Optionally, update the transform-origin for zooming
+
+    // });
+
+    // app.canvas.addEventListener('pointerup', () => {
+    //     isDragging = false;
+    // });
     currentTurn = 0;
-    endturn.addEventListener("click",nextTurn);
+    endturn.addEventListener("click", nextTurn);
     nextTurn()
 }
 
