@@ -1,5 +1,5 @@
 //Import all things needed from PIXI
-import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle } from "../libraries/pixi.mjs"
+import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle, textureFrom } from "../libraries/pixi.mjs"
 console.log(VERSION)
 class Player {
     constructor(render) {
@@ -279,7 +279,7 @@ async function place(placeOn) {
         //let player = new Player();
         let buildCost = {}
         buildCost[resource] = player.hasResourceAmount(resource,cost);
-        canBuild.push(buildCost)
+        canBuild.push(buildCost);
     }
     canBuild = canBuild.every(x=>{
         return Object.values(x)[0] == true
@@ -288,15 +288,30 @@ async function place(placeOn) {
     for(const [resource,cost] of Object.entries(costs)){
         player.addResource(resource,-cost);
     }
-    
+    let radi = new Circle(placeOn.sprite.x, placeOn.sprite.y, placeOn.sprite.width);
+    let placer = [];
+    for (const child of app.stage.children) {
+            if(placeOn.sprite.getBounds() && child.getBounds() && placeOn.sprite.getBounds().rectangle.intersects(child.getBounds().rectangle)){
+                let texture = selected == "outpost" ? "road" : "outpost";
+                placer.push(child.texture == Texture.from(texture))
+            }
+    }
+    let nextTo = placer.some(x=>{
+        return x == true
+    })
+    // if((!nextTo) && player.roads > 0 && player.outposts > 0){
+    //     return
+    // }
     switch (buildingCurrent) {
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
+            player.outposts++
             popup.classList.toggle("hidden", false);
-            
             break;
         case "road":
+            
             modifyPopup(popup, costs, "Place Road");
+            player.roads++
             popup.classList.toggle("hidden", false);
             break;
         default:
@@ -463,7 +478,7 @@ async function titanSelected(currentCard) {
 
     building.addEventListener("click", () => {
         if (selected && selected.sprite.texture != Texture.from(buildingCurrent)) {
-            selected.sprite.texture = Texture.from(buildingCurrent)
+            selected.sprite.texture = Texture.from(buildingCurrent);
         }
         popup.classList.toggle("hidden", true)
     })
@@ -543,7 +558,7 @@ async function startGameLoop() {
         for (const [resource,cost] of Object.entries(costs)) {
             // let player = new Player();
             players.forEach(player=>{
-                player.addResource(resource,cost)
+                player.addResource(resource,20)
                 console.log(player.hasResourceAmount(resource,cost));
             })
            
