@@ -1,3 +1,11 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // Points slider
+    document.getElementById('pointsSlider').addEventListener('change', function (eventData) {
+        let pointRangeCont = document.getElementById('pointRangeCont');
+        pointRangeCont.innerText = eventData.target.value;
+    });
+});
+
 //Import all things needed from PIXI
 import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle } from "../libraries/pixi.mjs"
 console.log(VERSION)
