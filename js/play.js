@@ -5,15 +5,45 @@ class Player {
     constructor(render) {
         this.inventory = new Map;
         this.inventoryRender = render;
+        this.roads = 0;
+        this.outposts = 0;
+        this.resources = new Map;
+        this.resources.set("rock",0)
+        this.resources.set("mushroom",0)
+        this.resources.set("deer",0)
+        this.resources.set("ore",0)
+        this.resources.set("clay",0)
         this.titan;
         this.name;
     }
     // get inventory(){
     //     return this.inventory
     // }
+    hasResource(key) {
+        return this.resources.has(key)
+    }
+    hasResourceAmount(key,amount) {
+        return this.hasResource(key) && this.getResource(key) >= amount
+    }
+    setResource(key, value) {
+        this.resources.set(key, value)
+    }
+    addResource(key, value) {
+        this.resources.set(key, +this.getResource(key)+value)
+    }
+    getResource(key) {
+        if (this.hasResource(key)) {
+            return this.resources.get(key);
+        }
+    }
+    get resourceEntires(){
+        return this.resources.entries()
+    }
+
     hasItem(key) {
         return this.inventory.has(key)
     }
+    
     getInventoryItem(key) {
         if (this.hasItem(key)) {
             return this.inventory.get(key);
@@ -240,8 +270,35 @@ async function addPlacers(places) {
 }
 let toResolve = []
 
-function place(placeOn) {
-
+async function place(placeOn) {
+    // console.log(placeOn)
+    const popup = await getElementPromiseBySelctor("#popcontainer");
+    let current = buildings[buildingCurrent];
+    let costs = current.costs
+    let canBuild = [];
+    for (const [resource,cost] of Object.entries(costs)) {
+        //let player = new Player();
+        let player = players[currentTurn]
+        let buildCost = {}
+        buildCost[resource] = player.hasResourceAmount(resource,cost);
+        canBuild.push(buildCost)
+    }
+    canBuild = canBuild.every(x=>{
+        return Object.values(x)[0] == true
+    })
+    if(canBuild !== true) return;
+    switch (buildingCurrent) {
+        case "outpost":
+            modifyPopup(popup, costs, "Place Outpost");
+            popup.classList.toggle("hidden", false);
+            break;
+        case "road":
+            modifyPopup(popup, costs, "Place Road");
+            popup.classList.toggle("hidden", false);
+            break;
+        default:
+            break;
+    }
 }
 // app.stage.interactive = true
 // app.stage.on("pointerdown",(e)=>{
@@ -263,7 +320,6 @@ async function createPlacers(tile) {
     let midpoints = getMidpoints(corners).map(point => { return { x: point[0], y: point[1] } });
     let cornerPlacers = await addPlacers(corners);
     let edgePlacers = await addPlacers(midpoints);
-    const popup = await getElementPromiseBySelctor("#popcontainer");
     cornerPlacers.forEach(x => x.setInteraction("pointerdown", (e) => {
         if (placing == false || restrictOutpost == true) return;
         selected = x
@@ -271,10 +327,9 @@ async function createPlacers(tile) {
             return
         }
         //placing = false
+        place(x)
         buildingCurrent = "outpost"
-        let outpost = { mushroom: 1, log: 1 }
-        modifyPopup(popup, outpost, "Place Outpost");
-        popup.classList.toggle("hidden", false);
+
     }))
     edgePlacers.forEach(x => x.setInteraction("pointerdown", (e) => {
         if (placing == false || restrictRoad == true) return;
@@ -283,10 +338,9 @@ async function createPlacers(tile) {
             return
         }
         //placing = false
+        place(x)
         buildingCurrent = "road"
-        let road = { mushroom: 1, log: 1 }
-        modifyPopup(popup, road, "Place Road");
-        popup.classList.toggle("hidden", false);
+
 
 
     }))
@@ -417,23 +471,11 @@ function notify(message) {
 }
 
 async function nextTurn() {
-    let turn = new Turn();
-    let currentPlayer = players[currentTurn]
+    let currentPlayer = players[currentTurn];
     getElementPromiseBySelctor("#playerCard > img:nth-child(1)").then(img => img.src = currentPlayer.img)
-    notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first outpost`);
+    notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first outpost & road`);
     placing = true
-    restrictRoad = false
-    restrictOutpost = false
-    // await turn.turnFinished()
-    // notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first road`);
-    // placing = true
-    // restrictRoad = false
-    // restrictOutpost = true
-    // await turn.turnFinished()
-    // currentTurn++ 
-    // console.log(currentTurn%playersNum )
-    // if(currentTurn%playersNum == 0) return  
-    // nextTurn()
+
 }
 
 async function startGameLoop() {
@@ -490,6 +532,16 @@ async function startGameLoop() {
     // app.canvas.addEventListener('pointerup', () => {
     //     isDragging = false;
     // });
+
+    for (const [building,properties] of Object.entries(buildings)) {
+        let costs = properties.costs
+        for (const [resource,cost] of Object.entries(costs)) {
+            // let player = new Player();
+            let player = players[currentTurn]
+            player.setResource(resource,cost)
+            console.log(player.hasResourceAmount(resource,cost));
+        }
+    }
     currentTurn = 0;
     endturn.addEventListener("click", nextTurn);
     nextTurn()
