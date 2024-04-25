@@ -63,6 +63,7 @@
                             <input type="range" min="5" max="15" value="15" class="slider" id="pointsSlider">
                         </div>
                     </section>
+                    <p id="pointRangeCont">15</p>
                 </section>
             </section>
             <section id="createPanel" class="full flex">
@@ -101,10 +102,10 @@
 
                             <h2>Stats</h2>
                             <hr>
-                            <section class="displayStats font flex">
-                                <p>stat</p>
-                                <p>stat</p>
-                                <p>stat</p>
+                            <section class="displayStats flex">
+                                <p>Super speedy attacks</p>
+                                <p>Hard to hit</p>
+                                <p>Speed is life</p>
                             </section>
                         </section>
                     </li>
@@ -117,10 +118,10 @@
 
                             <h2>Stats</h2>
                             <hr>
-                            <section class="displayStats font flex">
-                                <p>stat</p>
-                                <p>stat</p>
-                                <p>stat</p>
+                            <section class="displayStats flex">
+                                <p>Dumb...</p>
+                                <p>Super strong</p>
+                                <p>Built like a tank</p>
                             </section>
                         </section>
                     </li>
@@ -132,10 +133,10 @@
                         <section class="stats flex font column half">
                             <h2>Stats</h2>
                             <hr>
-                            <section class="displayStats font flex">
-                                <p>stat</p>
-                                <p>stat</p>
-                                <p>stat</p>
+                            <section class="displayStats flex">
+                                <p>Gets lower rates on trades</p>
+                                <p>Weak</p>
+                                <p>Super smart</p>
                             </section>
                         </section>
                     </li>
@@ -151,14 +152,14 @@
             </section>
             <section id="sidebar" class="flex column">
                 <section class="list flex full column" id="trades">
-                    <h2 class="avail">Available Trades</h2>
+                    <h2 class=" font avail">Available Trades</h2>
                     <section class="trade1">
-                        <section id="tradebox1" class="tradeBox">
+                        <section id="tradebox1" class="tradeBox font">
                             <p>Trade 1 Mushroom for 1 wood</p>
                         </section>
                     </section>
                     <section class="trade2">
-                        <section id="tradebox2" class="tradeBox">
+                        <section id="tradebox2" class="tradeBox font">
                             <p>Trade 1 Mushroom for 1 wood</p>
                         </section>
                     </section>
@@ -167,7 +168,7 @@
                     </section>
                 </section>
                 <section class="list flex" id="inventory">
-                    <h2 class="inv">Inventory</h2>
+                    <h2 class=" font inv">Inventory</h2>
                     <section id="weaponInv" class="column full flex">
                         <section class="weapons miniMargin">
                             <figure class="flex sword">
@@ -221,27 +222,29 @@
                 </figure>
                 <ul id="cards" class="flex">
                     <li>
-                        <figure><img src="assets/1.png" alt="resource"></figure>
+                        <figure>
+                            <img src="assets/m-resource (1).png" alt="resourceImg">
+                        </figure>
                         <p id="resource1" class="resourceCount">1</p>
                     </li>
                     <li>
-                        <figure><img src="assets/2.png" alt="resource"></figure>
+                        <figure><img src="assets/l-resource.png" alt="resource"></figure>
                         <p id="resource2" class="resourceCount">1</p>
                     </li>
                     <li>
-                        <figure><img src="assets/3.png" alt="resource"></figure>
+                        <figure><img src="assets/o-resource.png" alt="resource"></figure>
                         <p id="resource3" class="resourceCount">1</p>
                     </li>
                     <li>
-                        <figure><img src="assets/4.png" alt="resource"></figure>
+                        <figure><img src="assets/s-resource.png" alt="resource"></figure>
                         <p id="resource4" class="resourceCount">1</p>
                     </li>
                     <li>
-                        <figure><img src="assets/5.png" alt="resource"></figure>
+                        <figure><img src="assets/g-resource.png" alt="resource"></figure>
                         <p id="resource5" class="resourceCount">1</p>
                     </li>
                 </ul>
-                <p id="notify">Waiting for...</p>
+                <p class="font" id="notify">Waiting for...</p>
                 <button id="endturn" class="font button">End Turn</button>
             </section>
         </section>
@@ -250,11 +253,11 @@
         <section id="placepop" class="flex column">
             <section id="resources" class="flex">
                 <figure>
-                    <img src="assets/polygon4.svg" alt="shroom">
+                    <img src="assets/o-poly.png" alt="shroom">
                     <figcaption>1</figcaption>
                 </figure>
                 <figure>
-                    <img src="assets/polygon4.svg" alt="log">
+                    <img src="assets/g-poly.png" alt="log">
                     <figcaption>1</figcaption>
 
                 </figure>
@@ -272,6 +275,13 @@
                 <h2 id="building"></h2>
             </section>
         </section>
+    </section>
+    <section id="create-trade-overlay" class="hidden">
+        <section id="closeCreateTrade">
+            <div class="l"></div>
+            <div class="l r"></div>
+        </section>
+        
     </section>
 
 </body>
