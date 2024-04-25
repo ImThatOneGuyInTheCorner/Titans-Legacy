@@ -241,7 +241,6 @@ function getMidpoints(points) {
     return midpoints
 }
 
-//Immedietly invoke a async function that runs both the setup and preload
 function createTitan(name, stats) {
     let titan = new Titan(name, stats)
     return titan;
@@ -294,6 +293,7 @@ async function place(placeOn) {
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
             popup.classList.toggle("hidden", false);
+            
             break;
         case "road":
             modifyPopup(popup, costs, "Place Road");
