@@ -562,3 +562,19 @@ async function startGameLoop() {
     nextTurn();
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    // How to play screen
+    if (document.getElementById('create-trade-overlay') !== null) {
+        let offerBtn = document.getElementById('offerBtn');
+        offerBtn.addEventListener('click', overlayShuffle)
+    }
+    if (document.getElementById('closeCreateTrade') !== null) {
+        let offerBtn = document.getElementById('closeCreateTrade');
+        offerBtn.addEventListener('click', overlayShuffle)
+    }
+});
+
+function overlayShuffle() {
+    document.getElementById("create-trade-overlay").classList.toggle("hidden");
+    document.getElementById("create-trade-overlay").classList.toggle("flex");
+}
