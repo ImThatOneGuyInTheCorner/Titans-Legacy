@@ -18,9 +18,9 @@ class Player {
         this.resources = new Map;
         this.resources.set("wood",0)
         this.resources.set("mushroom",0)
-        this.resources.set("deer",0)
-        this.resources.set("ore",0)
-        this.resources.set("clay",0)
+        this.resources.set("orange",0)
+        this.resources.set("gem",0)
+        this.resources.set("stone",0)
         this.titan;
         this.name;
     }
@@ -187,15 +187,15 @@ let buildings = {
     "outpost": {
         "texture": "assetoutpost",
         "costs": {
-            "clay": 1,
+            "stone": 1,
             "wood": 1,
-            "deer": 1
+            "orange": 1
         }
     },
     "road": {
         "texture": "assetroad",
         "costs": {
-            "clay": 1,
+            "stone": 1,
             "wood": 1
         }
     }
@@ -562,3 +562,19 @@ async function startGameLoop() {
     nextTurn();
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    // How to play screen
+    if (document.getElementById('create-trade-overlay') !== null) {
+        let offerBtn = document.getElementById('offerBtn');
+        offerBtn.addEventListener('click', overlayShuffle)
+    }
+    if (document.getElementById('closeCreateTrade') !== null) {
+        let offerBtn = document.getElementById('closeCreateTrade');
+        offerBtn.addEventListener('click', overlayShuffle)
+    }
+});
+
+function overlayShuffle() {
+    document.getElementById("create-trade-overlay").classList.toggle("hidden");
+    document.getElementById("create-trade-overlay").classList.toggle("flex");
+}
