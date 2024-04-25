@@ -202,6 +202,11 @@ figure img {
     object-fit: contain;
 }
 
+.resourceBack1 {
+    background-image: url;
+}
+
+
 .displayStats p {
     width: 100%;
     color: white;
@@ -253,6 +258,9 @@ figure img {
 
 #gameboard {
     width: 75dvw;
+    border-style: solid;
+    border-color: #2F2504;
+    border-width: 0.8em;
     height: 85dvh;
 }
 
