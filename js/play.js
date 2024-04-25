@@ -1,3 +1,11 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // Points slider
+    document.getElementById('pointsSlider').addEventListener('change', function (eventData) {
+        let pointRangeCont = document.getElementById('pointRangeCont');
+        pointRangeCont.innerText = eventData.target.value;
+    });
+});
+
 //Import all things needed from PIXI
 import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle } from "../libraries/pixi.mjs"
 console.log(VERSION)
@@ -270,7 +278,6 @@ async function addPlacers(places) {
 let toResolve = []
 
 async function place(placeOn) {
-    // console.log(placeOn)
     let player = players[currentTurn]
     const popup = await getElementPromiseBySelctor("#popcontainer");
     let current = buildings[buildingCurrent];
@@ -289,6 +296,7 @@ async function place(placeOn) {
     for(const [resource,cost] of Object.entries(costs)){
         player.addResource(resource,-cost);
     }
+    
     switch (buildingCurrent) {
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
@@ -474,11 +482,13 @@ function notify(message) {
 }
 
 async function nextTurn() {
+    currentTurn++;
+    currentTurn = currentTurn%playersNum;
     let currentPlayer = players[currentTurn];
+    console.log(currentPlayer)
     getElementPromiseBySelctor("#playerCard > img:nth-child(1)").then(img => img.src = currentPlayer.img)
     notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first outpost & road`);
     placing = true
-
 }
 
 async function startGameLoop() {
@@ -540,14 +550,15 @@ async function startGameLoop() {
         let costs = properties.costs
         for (const [resource,cost] of Object.entries(costs)) {
             // let player = new Player();
-            let player = players[currentTurn]
-            console.log(resource)
-            player.addResource(resource,cost)
-            console.log(player.hasResourceAmount(resource,cost));
+            players.forEach(player=>{
+                player.addResource(resource,cost)
+                console.log(player.hasResourceAmount(resource,cost));
+            })
+           
         }
     }
-    currentTurn = 0;
-    endturn.addEventListener("click", nextTurn);
-    nextTurn()
+    currentTurn = -1;
+    getElementPromiseBySelctor("#endturn").then(x=>x.addEventListener("click", nextTurn));
+    nextTurn();
 }
 
