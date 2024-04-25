@@ -309,9 +309,14 @@ figure img {
     border-color: #2F2504;
 }
 
-/* #cards > li > p {
+#cards > li > p {
     position: fixed;
-} */
+    bottom: .5%;
+    margin-left: 3%;
+    color: aliceblue;
+    font-weight: bold;
+    background-color: #000000;
+}
 
 
 .offerBtn {

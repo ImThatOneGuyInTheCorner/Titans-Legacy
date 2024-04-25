@@ -504,7 +504,19 @@ async function nextTurn() {
     getElementPromiseBySelctor("#playerCard > img:nth-child(1)").then(img => img.src = currentPlayer.img)
     notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first outpost & road`);
     placing = true
+    updateResourceCounters(currentPlayer);
 }
+
+// Finn Checkpoint
+function updateResourceCounters(player) {
+    // Scuffed
+    console.log(player.resources.entries.value);
+    // document.getElementById('mushroomCount').innerText = player.resources[0];
+    // document.getElementById('logCount').innerText = player.resources[1];
+    // document.getElementById('orangeCount').innerText = player.resources[2];
+    // document.getElementById('stoneCount').innerText = player.resources[3];
+    // document.getElementById('gemCount').innerText = player.resources[4];
+};
 
 async function startGameLoop() {
 
@@ -566,7 +578,7 @@ async function startGameLoop() {
         for (const [resource,cost] of Object.entries(costs)) {
             // let player = new Player();
             players.forEach(player=>{
-                player.addResource(resource,20)
+                player.addResource(resource,4)
                 console.log(player.hasResourceAmount(resource,cost));
             })
            
