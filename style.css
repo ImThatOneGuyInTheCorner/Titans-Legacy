@@ -448,7 +448,12 @@ figure img {
 }
 
 #resources figure {
-    width: 72.33%%;
+    width: 72.33%;
+    height: 100%;
+}
+
+#resources button{
+    height: 100%;
 }
 
 #resources figcaption {

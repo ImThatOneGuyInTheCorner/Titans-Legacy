@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //Import all things needed from PIXI
-import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle, textureFrom, Rectangle } from "../libraries/pixi.mjs"
+import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle, textureFrom, Rectangle, Graphics } from "../libraries/pixi.mjs"
 console.log(VERSION)
 class Player {
     constructor(render) {
@@ -270,6 +270,13 @@ async function addPlacers(places) {
 }
 let toResolve = []
 
+function rectOnSprite(placeOn,radius){
+    let r = new Rectangle(placeOn.sprite.x,placeOn.sprite.y,placeOn.sprite.width*radius,placeOn.sprite.height*radius);
+    r.x -= r.width/2
+    r.y -= r.height/2
+    return r
+}
+
 async function place(placeOn) {
     let player = players[currentTurn]
     const popup = await getElementPromiseBySelctor("#popcontainer");
@@ -283,15 +290,18 @@ async function place(placeOn) {
         return
     }
     let placer = [];
-    let rect = placeOn.sprite.getBounds().rectangle;
-    rect.width *= 2;
-    rect.height *= 2;
+    let rect = rectOnSprite(placeOn,3.5)
+    let rect2 = rectOnSprite(placeOn,6)
 
-    rect.x -= (rect.width - 50) / 2;
-    rect.y -= (rect.height - 50) / 2;
+    console.log(rect2,"aisdjasd")
     for (const child of app.stage.children) {
-        
-        
+       
+        if (child != placeOn.sprite && child.texture == Texture.from("outpost") && buildingCurrent == "outpost") {
+            if(rect2.intersects(child.getBounds())){
+                return
+
+            }
+        }
         if (rect && child.getBounds() && rect.intersects(child.getBounds().rectangle)) {
             let texture = buildingCurrent == "outpost" ? "road" : "outpost";
             // console.log("what",texture,child,child.texture,child.texture == Texture.from(texture));
@@ -317,13 +327,11 @@ async function place(placeOn) {
     switch (buildingCurrent) {
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
-            player.outposts++
             popup.classList.toggle("hidden", false);
             break;
         case "road":
 
             modifyPopup(popup, costs, "Place Road");
-            player.roads++
             popup.classList.toggle("hidden", false);
             break;
         default:
@@ -497,14 +505,32 @@ async function titanSelected(currentCard) {
             }
     
             updateResourceCounters(player);
+            console.log(buildingCurrent)
+            player[buildingCurrent+"s"]++
+
             selected.sprite.texture = Texture.from(buildingCurrent);
             selected.sprite.tint = players[currentTurn].color
             selected.sprite.alpha = 1;
             selected.sprite.scale = 1.35
             //this is horrible but i want to finish this
+            let rect = selected.sprite.getBounds().rectangle;
+            rect.width *= 1.5;
+            rect.height *= 1.5;
+
+            rect.x -= (rect.width - 50) / 2;
+            rect.y -= (rect.height - 50) / 2;
             for (const x of app.stage.children) {
+
+                if(x.texture == Texture.from("placer") && rect.intersects(x.getBounds().rectangle)){
+                    console.log(buildingCurrent,"hittin something...",x);
+                    if(buildingCurrent == "road"){
+                        selected.sprite.scale.y += 1
+                        app.stage.removeChild(x);
+                    }else{
+
+                    }
+                }
                 for (const y of app.stage.children) {
-                    if(selected.sprite)
                     if (y !== x && x.texture == Texture.from("placer") && y.texture == Texture.from("placer") && x.getBounds().rectangle.intersects(y.getBounds().rectangle)) {
                         app.stage.removeChild(y);
                         // console.log("removed",y)
@@ -530,8 +556,9 @@ let elapsedTime = 0;
 
 async function nextTurn() {
 
-    purgeTimers();
     ticker.stop()
+    purgeTimers();
+    elapsedTime = 0
     let lastsec = 0;
     let turnTimer = (deltaMS) => {
         elapsedTime += deltaMS.elapsedMS;
