@@ -1,6 +1,15 @@
 //PvE
 
-
+let attackBtn;
+let dodgeBtn;
+let braceBtn;
+let healBtn;
+document.addEventListener("DOMContentLoaded",()=>{
+    attackBtn = document.getElementById("playerAttackBtn");
+    dodgeBtn = document.getElementById("playerDodgeBtn");
+    braceBtn = document.getElementById("playerBraceBtn");
+    healBtn = document.getElementById("playerHealBtn");
+})
 let enemyDiff = "hard";
 
 
@@ -31,10 +40,6 @@ function enemyAttack(brace) {
 }
 
 function banditTBC(enemyDiff) {
-    const attackBtn = document.getElementById("playerAttackBtn");
-    const dodgeBtn = document.getElementById("playerDodgeBtn");
-    const braceBtn = document.getElementById("playerBraceBtn");
-    const healBtn = document.getElementById("playerHealBtn");
 
     let enemyHealth = 100;
     if (enemyDiff === "hard") {
@@ -101,10 +106,6 @@ function banditTBC(enemyDiff) {
 banditTBC(enemyDiff);
 
 function ravangeTBC(enemyDiff) {
-    const attackBtn = document.getElementById("playerAttackBtn");
-    const dodgeBtn = document.getElementById("playerDodgeBtn");
-    const braceBtn = document.getElementById("playerBraceBtn");
-    const healBtn = document.getElementById("playerHealBtn");
 
     // function endTBC(result) {
     //     if (result === "win") {
@@ -201,10 +202,6 @@ function ravangeTBC(enemyDiff) {
 
 
 function brutusTBC(enemyDiff) {
-    const attackBtn = document.getElementById("playerAttackBtn");
-    const dodgeBtn = document.getElementById("playerDodgeBtn");
-    const braceBtn = document.getElementById("playerBraceBtn");
-    const healBtn = document.getElementById("playerHealBtn");
 
     // function endTBC(result) {
     //     if (result === "win") {
@@ -292,10 +289,6 @@ function brutusTBC(enemyDiff) {
 
 
 function magnificusTBC(enemyDiff) {
-    const attackBtn = document.getElementById("playerAttackBtn");
-    const dodgeBtn = document.getElementById("playerDodgeBtn");
-    const braceBtn = document.getElementById("playerBraceBtn");
-    const healBtn = document.getElementById("playerHealBtn");
 
     // function endTBC(result) {
     //     if (result === "win") {
