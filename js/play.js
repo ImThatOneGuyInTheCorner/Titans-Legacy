@@ -131,6 +131,7 @@ let buildings = {
             "log": 1
         }
     }
+    
 }
 //Create a new application
 const app = new Application;
@@ -194,14 +195,16 @@ function createTitan(name, stats) {
 
 
 
-function modifyPopup(popup, resources, text) {
+function modifyPopup(popup, resources, text, fightpop) {
     // let outpost = {mushroom:1,log:1}
     //     modifyPopup(popup,outpost,"Place Outpost");
     //     popup.classList.toggle("flex");
     let use = document.getElementById("resources");
     let building = document.getElementById("building");
+    let fight = document.getElementById("whole");
     console.log(use.children);
     building.innerText = text
+    fight.addEventListener('click')
 }
 
 async function addPlacers(places) {
@@ -230,6 +233,7 @@ async function place(placeOn) {
 
     let player = players[currentTurn]
     const popup = await getElementPromiseBySelctor("#popcontainer");
+    const fightpop = await getElementById('whole');
     let current = buildings[buildingCurrent];
     let costs = current.costs
     isDragging = false
@@ -239,6 +243,10 @@ async function place(placeOn) {
     if (player.roads == 0 && player.outposts == 0 && buildingCurrent == "road") {
         return
     }
+    if (player.roads == 0 && player.outposts == 1 && buildingCurrent == "fight") {
+        return
+    }
+
     let placer = [];
     let rect = rectOnSprite(placeOn,3.5)
     let rect2 = rectOnSprite(placeOn,6)
@@ -275,12 +283,16 @@ async function place(placeOn) {
     if (canBuild !== true) return;
 
     switch (buildingCurrent) {
+        case "fight":
+            modifyPopup(popup, costs, "Fight?", fightpop);
+            popup.classList.toggle("hidden", false);
+            break;
+
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
             popup.classList.toggle("hidden", false);
             break;
         case "road":
-
             modifyPopup(popup, costs, "Place Road");
             popup.classList.toggle("hidden", false);
             break;
@@ -328,7 +340,7 @@ async function createPlacers(tile) {
         //placing = false
         place(x)
         buildingCurrent = "road"
-
+        
 
 
     }))
@@ -658,4 +670,11 @@ function overlayShuffle() {
     document.getElementById("create-trade-overlay").classList.toggle("hidden");
     document.getElementById("create-trade-overlay").classList.toggle("flex");
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+    if (document.getElementById('whole') != null) {
+        
+        
+    }
+})
 

@@ -16,8 +16,8 @@ body {
     align-self: center;
     width: 70vw;
     height: 70vh;
-    background-color: green;
-
+    background-size: 1399px;
+    background-image: url(assets/battleBackground.png);
 }
 
 .btn {
@@ -29,7 +29,7 @@ body {
     border-style: solid;
     margin-bottom: 1em;
     border-radius: 4px;
-    border-color: #;
+    border-color: #594E36;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -48,7 +48,10 @@ body {
 }
 
 .brutus {
-    width: 8dvw;
+    width: 10dvw;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+
 }
 
 .magnificus {
@@ -56,11 +59,16 @@ body {
 }
 
 .playerBtns {
-    width: 100%;
+    width: 15%;
     height: 35%;
     padding: 0.5em;
     display: flex;
     flex-flow: column;
     align-content: center;
     justify-content: center;
+}
+
+#enemy-half{
+    display: flex;
+    align-items: flex-end;
 }
