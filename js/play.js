@@ -539,19 +539,49 @@ async function nextTurn() {
     notify(`${captialize(currentPlayer.titan)}'s turn!`);
     placing = true
     updateResourceCounters(currentPlayer);
+    updateColors(currentPlayer);
 }
 
-// Finn Checkpoint (isaac fixy :3)
+// UI colors for each player
+function updateColors(player) {
+    console.log("COLOR UPDATE");
+        // 0x2D7EAB, 0xAB2D2D, 0x2DAB3A, 0x992DAB
+    switch(player.color) {
+        case 0x2D7EAB:
+            colorSwitch('#2D7EAB', '#248596');
+            break;
+        case 0xAB2D2D:
+            colorSwitch('#AB2D2D', '#9e263e');
+            break;
+        case 0x2DAB3A:
+            colorSwitch('#2DAB3A', '#3a9423');
+            break;
+        case 0x992DAB:
+            colorSwitch('#992DAB', '#762599');
+            break;
+        default:
+            console.log("Error: no color found")
+      }
+};
+
+function colorSwitch(color1, color2) {
+    // let bBar = document.getElementById('bottomBar');
+    // let sBar = document.getElementById('sideBar');
+    // let trades = document.getElementById('trades');
+    // let inv = document.getElementById('inventory');
+    document.getElementById('bottombar').style.backgroundColor = color1;
+    document.getElementById('sidebar').style.backgroundColor = color1;
+    document.getElementById('trades').style.backgroundColor = color2;
+    document.getElementById('inventory').style.backgroundColor = color2;
+
+
+};
+
 function updateResourceCounters(player) {
     for (const [resource, amount] of player.resourceEntires) {
         console.log(resource)
         document.getElementById(`${resource}Count`).innerText = amount;
     }
-    // document.getElementById('mushroomCount').innerText = player.getResource("mushroom");
-    // document.getElementById('logCount').innerText = player.resources[1];
-    // document.getElementById('orangeCount').innerText = player.resources[2];
-    // document.getElementById('stoneCount').innerText = player.resources[3];
-    // document.getElementById('gemCount').innerText = player.resources[4];
 };
 
 async function startGameLoop() {
