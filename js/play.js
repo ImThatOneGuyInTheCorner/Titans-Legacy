@@ -258,7 +258,7 @@ function modifyPopup(popup, resources, text) {
 async function addPlacers(places) {
     let placers = [];
     for (const place of places) {
-        console.log(place)
+        //console.log(place)
         let placed = new Placer(place.x, place.y);
         if (place.r) {
             placed.sprite.rotation = place.r + (90 * Math.PI / 180);
