@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //Import all things needed from PIXI
 import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle, textureFrom, Rectangle, Graphics } from "../libraries/pixi.mjs"
-console.log(VERSION)
+console.log(`Pixi.js [${VERSION}]`)
 class Player {
     constructor(render) {
         this.inventory = new Map;
@@ -278,6 +278,7 @@ function rectOnSprite(placeOn,radius){
 }
 
 async function place(placeOn) {
+
     let player = players[currentTurn]
     const popup = await getElementPromiseBySelctor("#popcontainer");
     let current = buildings[buildingCurrent];
@@ -292,24 +293,24 @@ async function place(placeOn) {
     let placer = [];
     let rect = rectOnSprite(placeOn,3.5)
     let rect2 = rectOnSprite(placeOn,6)
-
-    console.log(rect2,"aisdjasd")
+    let self = [];
     for (const child of app.stage.children) {
-       
         if (child != placeOn.sprite && child.texture == Texture.from("outpost") && buildingCurrent == "outpost") {
             if(rect2.intersects(child.getBounds())){
                 return
-
             }
         }
         if (rect && child.getBounds() && rect.intersects(child.getBounds().rectangle)) {
             let texture = buildingCurrent == "outpost" ? "road" : "outpost";
             // console.log("what",texture,child,child.texture,child.texture == Texture.from(texture));
-            placer.push(child.texture == Texture.from(texture))
+            self.push(child.tint == player.color);
+            placer.push(child.texture == Texture.from(texture));
         }
     }
+    let selfPlace = self.some(x => x == true)
     let nextTo = placer.some(x => x == true)
-    if (nextTo == false && player.outposts > 0) {
+    if (selfPlace == false && player.outposts > 0 && !self.every(x => x == false)) {
+        console.log("not next to own stuff")
         return
     }
     let canBuild = [];
@@ -524,8 +525,8 @@ async function titanSelected(currentCard) {
                 if(x.texture == Texture.from("placer") && rect.intersects(x.getBounds().rectangle)){
                     console.log(buildingCurrent,"hittin something...",x);
                     if(buildingCurrent == "road"){
-                        selected.sprite.scale.y += 1
-                        app.stage.removeChild(x);
+                        selected.sprite.scale.y += .5
+                        // app.stage.removeChild(x);
                     }else{
 
                     }
@@ -550,7 +551,9 @@ let activeTimers = [];
 function purgeTimers() {
     for (const timer of activeTimers) {
         ticker.remove(timer);
+        activeTimers.splice(activeTimers.indexOf(timer),1);
     }
+    
 }
 let elapsedTime = 0;
 
@@ -571,8 +574,8 @@ async function nextTurn() {
         }
         if (elapsedTime >= durationTurn * 1000) {
             console.log(currentPlayer.titan, 'Timer finished');
-            nextTurn();
             purgeTimers();
+            nextTurn();
         }
     }
     activeTimers.push(turnTimer);
@@ -625,53 +628,53 @@ async function startGameLoop() {
 
 
 
-    let currentZoom = 0;
-    window.addEventListener('wheel', (event) => {
-        const zoom = 0.1;
-        const zoomFactor = event.deltaY < 0 ? zoom : -zoom; // Zoom in if scrolling up, zoom out if scrolling down
-        currentZoom += zoomFactor;
-        currentZoom = Math.min(Math.max(currentZoom, -.5), 2);
-        app.stage.scale.set(1 + currentZoom);
-        // tilingSprite.width = app.stage.width
+    // let currentZoom = 0;
+    // window.addEventListener('wheel', (event) => {
+    //     const zoom = 0.1;
+    //     const zoomFactor = event.deltaY < 0 ? zoom : -zoom; // Zoom in if scrolling up, zoom out if scrolling down
+    //     currentZoom += zoomFactor;
+    //     currentZoom = Math.min(Math.max(currentZoom, -.5), 2);
+    //     app.stage.scale.set(1 + currentZoom);
+    //     // tilingSprite.width = app.stage.width
 
-        app.render(app.stage)
-    });
-    let startX, startY;
+    //     app.render(app.stage)
+    // });
+    // let startX, startY;
 
-    app.stage.on('pointerdown', (event) => {
-        console.log(event)
-        startX = event.global.x;
-        startY = event.global.y;
-        isDragging = true;
-    });
+    // app.stage.on('pointerdown', (event) => {
+    //     console.log(event)
+    //     startX = event.global.x;
+    //     startY = event.global.y;
+    //     isDragging = true;
+    // });
 
-    app.stage.on('pointermove', (event) => {
-        if (!isDragging) return;
+    // app.stage.on('pointermove', (event) => {
+    //     if (!isDragging) return;
 
-        const dx = event.global.x - startX;
-        const dy = event.global.y - startY;
+    //     const dx = event.global.x - startX;
+    //     const dy = event.global.y - startY;
 
-        // app.stage.position.x += dx;
-        // app.stage.position.y += dy;
-        // Clamping to the edges of the stage
-        const newX = Math.max(Math.min(app.stage.position.x + dx, app.renderer.width * 1.5 - app.stage.width), -app.stage.width / 2);
-        const newY = Math.max(Math.min(app.stage.position.y + dy, app.renderer.height * 1.5 - app.stage.height), -app.stage.height / 2);
+    //     // app.stage.position.x += dx;
+    //     // app.stage.position.y += dy;
+    //     // Clamping to the edges of the stage
+    //     const newX = Math.max(Math.min(app.stage.position.x + dx, app.renderer.width * 1.5 - app.stage.width), -app.stage.width / 2);
+    //     const newY = Math.max(Math.min(app.stage.position.y + dy, app.renderer.height * 1.5 - app.stage.height), -app.stage.height / 2);
 
-        app.stage.position.set(newX, newY);
-        startX = event.global.x;
-        startY = event.global.y;
-    });
+    //     app.stage.position.set(newX, newY);
+    //     startX = event.global.x;
+    //     startY = event.global.y;
+    // });
 
-    app.stage.on('pointerup', () => {
-        isDragging = false;
-    });
+    // app.stage.on('pointerup', () => {
+    //     isDragging = false;
+    // });
 
     for (const [building, properties] of Object.entries(buildings)) {
         let costs = properties.costs
         for (const [resource, cost] of Object.entries(costs)) {
             // let player = new Player();
             players.forEach(player => {
-                player.addResource(resource, cost)
+                player.addResource(resource, 999)
                 console.log(player.hasResourceAmount(resource, cost));
             })
 
