@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //Import all things needed from PIXI
-import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle, textureFrom } from "../libraries/pixi.mjs"
+import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle, textureFrom, Rectangle } from "../libraries/pixi.mjs"
 console.log(VERSION)
 class Player {
     constructor(render) {
@@ -16,11 +16,11 @@ class Player {
         this.roads = [];
         this.outposts = [];
         this.resources = new Map;
-        this.resources.set("wood",0)
-        this.resources.set("mushroom",0)
-        this.resources.set("orange",0)
-        this.resources.set("gem",0)
-        this.resources.set("stone",0)
+        this.resources.set("log", 0)
+        this.resources.set("mushroom", 0)
+        this.resources.set("orange", 0)
+        this.resources.set("gem", 0)
+        this.resources.set("stone", 0)
         this.titan;
         this.name;
     }
@@ -30,28 +30,28 @@ class Player {
     hasResource(key) {
         return this.resources.has(key)
     }
-    hasResourceAmount(key,amount) {
+    hasResourceAmount(key, amount) {
         return this.hasResource(key) && this.getResource(key) >= amount
     }
     setResource(key, value) {
         this.resources.set(key, value)
     }
     addResource(key, value) {
-        this.resources.set(key, +this.getResource(key)+value)
+        this.resources.set(key, +this.getResource(key) + value)
     }
     getResource(key) {
         if (this.hasResource(key)) {
             return this.resources.get(key);
         }
     }
-    get resourceEntires(){
+    get resourceEntires() {
         return this.resources.entries()
     }
 
     hasItem(key) {
         return this.inventory.has(key)
     }
-    
+
     getInventoryItem(key) {
         if (this.hasItem(key)) {
             return this.inventory.get(key);
@@ -80,7 +80,9 @@ class Placer {
         this.sprite.anchor.set(.5);
         this.sprite.position.set(x, y);
         this.sprite.interactive = true;
-        this.sprite.hitArea = new Circle(0, 0, this.sprite.width * 1.5)
+        this.sprite.buttonMode = true;
+        this.sprite.cursor = "pointer";
+        // this.sprite.hitArea = this
     }
     setInteraction(event, onEvent) {
         this.sprite.on(event, onEvent);
@@ -168,18 +170,16 @@ let titans = { "bandit": { health: 20, maxhealth: 20, dmg: 2, def: 1, special: (
 //}
 let buildings = {
     "outpost": {
-        "texture": "assetoutpost",
         "costs": {
             "stone": 1,
-            "wood": 1,
+            "log": 1,
             "orange": 1
         }
     },
     "road": {
-        "texture": "assetroad",
         "costs": {
             "stone": 1,
-            "wood": 1
+            "log": 1
         }
     }
 }
@@ -204,8 +204,8 @@ async function preload() {
     let assets = [
         { alias: "hex", src: "../assets/polygon4.svg" },
         { alias: "placer", src: "../assets/placer.svg" },
-        { alias: "outpost", src: "../assets/house.svg" },
-        { alias: "road", src: "../assets/ryantile.png" },
+        { alias: "outpost", src: "../assets/outpost.svg" },
+        { alias: "road", src: "../assets/road.svg" },
         { alias: "bg", src: "../assets/background.png" },
         { alias: "orange", src: "../assets/orange-resource.png" },
         { alias: "wood", src: "../assets/log-resource.png" },
@@ -219,13 +219,14 @@ async function preload() {
 }
 
 function directionFromPoints(point1, point2) {
-    return Math.atan(point1.y - point2.y / point1.x - point2.x)
+
+    return Math.atan2(point2.y - point1.y, point2.x - point1.x)
 }
 
 //Get the midpoint of 2 points
 function getMidpoint(point1, point2) {
     if (point1 == null || point2 == null) return;
-    return [(point2.x + point1.x) / 2, (point2.y + point1.y) / 2]
+    return [(point2.x + point1.x) / 2, (point2.y + point1.y) / 2, directionFromPoints(point1, point2)]
 }
 
 function getMidpoints(points) {
@@ -257,7 +258,11 @@ function modifyPopup(popup, resources, text) {
 async function addPlacers(places) {
     let placers = [];
     for (const place of places) {
+        console.log(place)
         let placed = new Placer(place.x, place.y);
+        if (place.r) {
+            placed.sprite.rotation = place.r + (90 * Math.PI / 180);
+        }
         app.stage.addChild(placed.sprite);
         placers.push(placed);
     }
@@ -270,42 +275,45 @@ async function place(placeOn) {
     const popup = await getElementPromiseBySelctor("#popcontainer");
     let current = buildings[buildingCurrent];
     let costs = current.costs
-    let canBuild = [];
     isDragging = false
-    if(player.roads == 0 && player.outposts == 1 && buildingCurrent == "outpost"){
+    if (player.roads == 0 && player.outposts == 1 && buildingCurrent == "outpost") {
         return
     }
-    if(player.roads == 0 && player.outposts == 0 && buildingCurrent == "road"){
+    if (player.roads == 0 && player.outposts == 0 && buildingCurrent == "road") {
         return
     }
     let placer = [];
+    let rect = placeOn.sprite.getBounds().rectangle;
+    rect.width *= 2;
+    rect.height *= 2;
+
+    rect.x -= (rect.width - 50) / 2;
+    rect.y -= (rect.height - 50) / 2;
     for (const child of app.stage.children) {
-            if(placeOn.sprite.getBounds() && child.getBounds() && placeOn.sprite.getBounds().rectangle.intersects(child.getBounds().rectangle)){
-                let texture = buildingCurrent == "outpost" ? "road" : "outpost";
-                console.log("what",texture,child,child.texture,child.texture == Texture.from(texture));
-                placer.push(child.texture == Texture.from(texture))
-            }
+        
+        
+        if (rect && child.getBounds() && rect.intersects(child.getBounds().rectangle)) {
+            let texture = buildingCurrent == "outpost" ? "road" : "outpost";
+            // console.log("what",texture,child,child.texture,child.texture == Texture.from(texture));
+            placer.push(child.texture == Texture.from(texture))
+        }
     }
-    let nextTo = placer.some(x=>x == true)
-    if(nextTo == false && player.outposts > 0){
+    let nextTo = placer.some(x => x == true)
+    if (nextTo == false && player.outposts > 0) {
         return
     }
-
-    for (const [resource,cost] of Object.entries(costs)) {
+    let canBuild = [];
+    for (const [resource, cost] of Object.entries(costs)) {
         //let player = new Player();
         let buildCost = {}
-        buildCost[resource] = player.hasResourceAmount(resource,cost);
+        buildCost[resource] = player.hasResourceAmount(resource, cost);
         canBuild.push(buildCost);
     }
-    canBuild = canBuild.every(x=>{
+    canBuild = canBuild.every(x => {
         return Object.values(x)[0] == true
     })
-    if(canBuild !== true) return;
-    for(const [resource,cost] of Object.entries(costs)){
-        player.addResource(resource,-cost);
-    }
-    
-    
+    if (canBuild !== true) return;
+
     switch (buildingCurrent) {
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
@@ -313,7 +321,7 @@ async function place(placeOn) {
             popup.classList.toggle("hidden", false);
             break;
         case "road":
-            
+
             modifyPopup(popup, costs, "Place Road");
             player.roads++
             popup.classList.toggle("hidden", false);
@@ -339,7 +347,7 @@ app.stage.interactive = true
 async function createPlacers(tile) {
     const hex = tile.hex;
     let corners = hex.corners;
-    let midpoints = getMidpoints(corners).map(point => { return { x: point[0], y: point[1] } });
+    let midpoints = getMidpoints(corners).map(point => { return { x: point[0], y: point[1], r: point[2] } });
     let cornerPlacers = await addPlacers(corners);
     let edgePlacers = await addPlacers(midpoints);
     cornerPlacers.forEach(x => x.setInteraction("pointerdown", (e) => {
@@ -367,8 +375,8 @@ async function createPlacers(tile) {
 
     }))
     let allPlacers = cornerPlacers.concat(edgePlacers)
-    allPlacers.forEach(x => x.setInteraction("pointerenter", (e) => { x.sprite.tint = "green" }))
-    allPlacers.forEach(x => x.setInteraction("pointerleave", (e) => { x.sprite.tint = 0xffffff }))
+    // allPlacers.forEach(x => x.setInteraction("pointerenter", (e) => { x.sprite.tint = players[currentTurn].color }))
+    // allPlacers.forEach(x => x.setInteraction("pointerleave", (e) => { x.sprite.tint = 0xffffff }))
 
     return allPlacers
 }
@@ -414,7 +422,7 @@ async function startGame() {
     await getElementPromiseBySelctor('#createGame').then(async x => {
         x.classList.toggle("hidden", true);
         await getElementPromiseBySelctor('#playerSelector .selected').then(x => playersNum = x.innerText.trim()).catch(console.error)
-        await getElementPromiseBySelctor('#durationSelector .selected').then(x => durationTurn = x.innerText.trim()).catch(console.error)
+        await getElementPromiseBySelctor('#durationSelector .selected').then(x => durationTurn = x.innerText.trim().split(":").reduce((a, b) => 60 * +a + +b)).catch(console.error)
     }).catch(console.error);
     console.log(durationTurn, playersNum)
 
@@ -454,18 +462,19 @@ function toTitanCard(currentIndex, cards, moveAmount) {
     cards[currentIndex + moveAmount].classList.toggle("hidden", false);
     return currentIndex + moveAmount
 }
-
+let playerColors = [0x2D7EAB, 0xAB2D2D, 0x2DAB3A, 0x992DAB]
 async function titanSelected(currentCard) {
-    console.log(currentCard)
-    let titanName = currentCard.getElementsByTagName("figcaption")[0].innerText
-    let titanImg = currentCard.getElementsByTagName("img")[0].src
-    titanName = titanName.toLowerCase()
+    console.log(currentCard);
+    let titanName = currentCard.getElementsByTagName("figcaption")[0].innerText;
+    let titanImg = currentCard.getElementsByTagName("img")[0].src;
+    titanName = titanName.toLowerCase();
     let player = new Player();
     player.titan = titanName;
-    player.name = "player" + players.length
-    player.img = titanImg
+    player.name = "player" + players.length;
+    player.img = titanImg;
+    player.color = playerColors[players.length] || 0xfff;
     players.push(player);
-    currentCard.classList.toggle("hidden", true)
+    currentCard.classList.toggle("hidden", true);
 
 };
 
@@ -478,8 +487,30 @@ async function titanSelected(currentCard) {
     const building = await getElementPromiseBySelctor("#building");
 
     building.addEventListener("click", () => {
+       
         if (selected && selected.sprite.texture != Texture.from(buildingCurrent)) {
+            let player = players[currentTurn];
+            let costs = buildings[buildingCurrent].costs
+            
+            for (const [resource, cost] of Object.entries(costs)) {
+                player.addResource(resource, -cost);
+            }
+    
+            updateResourceCounters(player);
             selected.sprite.texture = Texture.from(buildingCurrent);
+            selected.sprite.tint = players[currentTurn].color
+            selected.sprite.alpha = 1;
+            selected.sprite.scale = 1.35
+            //this is horrible but i want to finish this
+            for (const x of app.stage.children) {
+                for (const y of app.stage.children) {
+                    if(selected.sprite)
+                    if (y !== x && x.texture == Texture.from("placer") && y.texture == Texture.from("placer") && x.getBounds().rectangle.intersects(y.getBounds().rectangle)) {
+                        app.stage.removeChild(y);
+                        // console.log("removed",y)
+                    }
+                }
+            }
         }
         popup.classList.toggle("hidden", true)
     })
@@ -488,23 +519,56 @@ let notification = await getElementPromiseBySelctor("#notify");
 function notify(message) {
     notification.innerText = message;
 }
+let captialize = x => x.charAt(0).toUpperCase() + x.slice(1);
+let activeTimers = [];
+function purgeTimers() {
+    for (const timer of activeTimers) {
+        ticker.remove(timer);
+    }
+}
+let elapsedTime = 0;
 
 async function nextTurn() {
+
+    purgeTimers();
+    ticker.stop()
+    let lastsec = 0;
+    let turnTimer = (deltaMS) => {
+        elapsedTime += deltaMS.elapsedMS;
+        // console.log(elapsedTime)
+        let sec = Math.floor(elapsedTime / 1000);
+        if (lastsec != sec) {
+            lastsec = sec
+            notify(`${captialize(currentPlayer.titan)} (${durationTurn - sec}s)`);
+
+        }
+        if (elapsedTime >= durationTurn * 1000) {
+            console.log(currentPlayer.titan, 'Timer finished');
+            nextTurn();
+            purgeTimers();
+        }
+    }
+    activeTimers.push(turnTimer);
+    ticker.add(turnTimer);
+    ticker.start()
+
     currentTurn++;
-    currentTurn = currentTurn%playersNum;
+    currentTurn = currentTurn % playersNum;
     let currentPlayer = players[currentTurn];
     console.log(currentPlayer)
     getElementPromiseBySelctor("#playerCard > img:nth-child(1)").then(img => img.src = currentPlayer.img)
-    notify(`${currentPlayer.name} (${currentPlayer.titan}) place your first outpost & road`);
+    notify(`${captialize(currentPlayer.titan)}'s turn!`);
     placing = true
     updateResourceCounters(currentPlayer);
 }
 
-// Finn Checkpoint
+// Finn Checkpoint (isaac fixy :3)
 function updateResourceCounters(player) {
-    // Scuffed
-    console.log(player.resources.entries.value);
-    // document.getElementById('mushroomCount').innerText = player.resources[0];
+    for (const [resource, amount] of player.resourceEntires) {
+        console.log(resource)
+        document.getElementById(`${resource}Count`).innerText = amount;
+    }
+    // document.getElementById('mushroomCount').innerText = player.getResource("mushroom");
     // document.getElementById('logCount').innerText = player.resources[1];
     // document.getElementById('orangeCount').innerText = player.resources[2];
     // document.getElementById('stoneCount').innerText = player.resources[3];
@@ -520,8 +584,8 @@ async function startGameLoop() {
         width: app.screen.width,
         height: app.screen.height,
     });
-    app.stage.addChild(tilingSprite)
-    const origin = { x: -app.canvas.width / 4, y: -app.canvas.height / 4 }
+    app.stage.addChild(tilingSprite);
+    const origin = { x: -app.canvas.width / 4, y: -app.canvas.height / 4 };
     const tileHeight = app.canvas.height / 20;
     const mainBoard = new HexBoard(tileHeight, "POINTY", 2, origin);
 
@@ -531,13 +595,17 @@ async function startGameLoop() {
         tile.text = Math.floor(Math.random() * 4) + 1
         tile.placers = createPlacers(tile);
     }
+
+
+
     let currentZoom = 0;
     window.addEventListener('wheel', (event) => {
         const zoom = 0.1;
         const zoomFactor = event.deltaY < 0 ? zoom : -zoom; // Zoom in if scrolling up, zoom out if scrolling down
         currentZoom += zoomFactor;
         currentZoom = Math.min(Math.max(currentZoom, -.5), 2);
-        app.stage.scale.set(1+currentZoom);
+        app.stage.scale.set(1 + currentZoom);
+        // tilingSprite.width = app.stage.width
 
         app.render(app.stage)
     });
@@ -556,8 +624,13 @@ async function startGameLoop() {
         const dx = event.global.x - startX;
         const dy = event.global.y - startY;
 
-        app.stage.position.x += dx;
-        app.stage.position.y += dy;
+        // app.stage.position.x += dx;
+        // app.stage.position.y += dy;
+        // Clamping to the edges of the stage
+        const newX = Math.max(Math.min(app.stage.position.x + dx, app.renderer.width * 1.5 - app.stage.width), -app.stage.width / 2);
+        const newY = Math.max(Math.min(app.stage.position.y + dy, app.renderer.height * 1.5 - app.stage.height), -app.stage.height / 2);
+
+        app.stage.position.set(newX, newY);
         startX = event.global.x;
         startY = event.global.y;
     });
@@ -566,19 +639,27 @@ async function startGameLoop() {
         isDragging = false;
     });
 
-    for (const [building,properties] of Object.entries(buildings)) {
+    for (const [building, properties] of Object.entries(buildings)) {
         let costs = properties.costs
-        for (const [resource,cost] of Object.entries(costs)) {
+        for (const [resource, cost] of Object.entries(costs)) {
             // let player = new Player();
-            players.forEach(player=>{
-                player.addResource(resource,200)
-                console.log(player.hasResourceAmount(resource,cost));
+            players.forEach(player => {
+                player.addResource(resource, cost)
+                console.log(player.hasResourceAmount(resource, cost));
             })
-           
+
         }
     }
     currentTurn = -1;
-    getElementPromiseBySelctor("#endturn").then(x=>x.addEventListener("click", nextTurn));
+    getElementPromiseBySelctor("#endturn").then(x => x.addEventListener("click", nextTurn));
+    for (const x of app.stage.children) {
+        for (const y of app.stage.children) {
+            if (y !== x && x.texture == Texture.from("placer") && y.texture == Texture.from("placer") && x.getBounds().rectangle.intersects(y.getBounds().rectangle)) {
+                app.stage.removeChild(y);
+            }
+        }
+    }
+
     nextTurn();
 }
 
