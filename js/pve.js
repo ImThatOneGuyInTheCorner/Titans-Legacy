@@ -13,7 +13,8 @@ class Battle{
         if(toPlayer){
             console.log(`Induced ${dmg} damage to player`)
             this.player.hp -= dmg;
-        }else{
+        }
+        else{
             console.log(`Induced ${dmg} damage to enemy`)
             this.enemyHP -= dmg;
         }
@@ -25,6 +26,10 @@ class Battle{
         return this.enemyHP > 0 && this.player.hp <= 0;
     }
     stepTurn(){
+        if (this.diff == 'hard') {
+            var audio = new Audio(`../audio/perry${Math.floor(Math.random() * (3 - 1 + 1)) + 1}.mp3`);
+            audio.play();
+        }
         if(this.didPlayerWin()){
             console.log("plr won")
             return
@@ -62,7 +67,28 @@ testPlr.maxhp = 100;
 testPlr.dmgModifier = 1.5;
 testPlr.dodgeChance = 1.2;
 
-let fight = new Battle("easy",testPlr);
+let randNum = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+switch (randNum) {
+    case 1:
+        var difficulty = "easy";
+        document.getElementById("slime").classList.toggle('hidden');
+        break;
+    case 2:
+        var difficulty = "medium";
+        document.getElementById("wolf").classList.toggle('hidden');
+        break;
+    case 3:
+        var difficulty = "hard";
+        document.getElementById("perry").classList.toggle('hidden');
+        var audio = new Audio(`../audio/perry${Math.floor(Math.random() * (3 - 1 + 1)) + 1}.mp3`);
+        audio.play();
+        break;
+    default:
+        console.log("Error: No difficulty for battle");
+}
+
+let fight = new Battle(difficulty,testPlr);
+console.log(difficulty);
 
 let moveFunctions = {
     brace:()=>{
