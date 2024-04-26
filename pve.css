@@ -47,14 +47,14 @@ body {
     cursor: pointer;
 }
 
-.brutus {
+.enemy {
     width: 10dvw;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 
 }
 
-.magnificus {
+.Player {
     width: 8dvw;
 }
 
@@ -71,4 +71,8 @@ body {
 #enemy-half{
     display: flex;
     align-items: flex-end;
+}
+
+.hidden {
+    display: none;
 }
