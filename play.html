@@ -260,25 +260,36 @@
     <section id="popcontainer" class="flex hidden">
         <section id="placepop" class="flex column">
             <section id="resources" class="flex">
-                <figure>
-                    <img src="assets/o-poly.png" alt="shroom">
-                    <figcaption>1</figcaption>
-                </figure>
-                <figure>
-                    <img src="assets/g-poly.png" alt="log">
-                    <figcaption>1</figcaption>
-
-                </figure>
-                <figure>
-                    <img src="assets/polygon4.svg" alt="house">
-                    <figcaption>1</figcaption>
-
-                </figure>
+                <button  class="btnTransparent" id="orangePolyBtn">
+                    <figure class="polyResource">
+                            <img src="assets/o-poly.png" alt="">
+                    </figure>
+                </button>
+                <button class="btnTransparent" id="gemPolyBtn">
+                    <figure class="polyResource">
+                        <img src="assets/g-poly.png" alt="">
+                    </figure>    
+                </button>
+                <button class="btnTransparent" id="mushPolyBtn">
+                    <figure class="polyResource">
+                        <img src="assets/m-poly.png" alt="">
+                    </figure>
+                </button>
+                <button class="btnTransparent" id="stonePolyBtn">
+                    <figure class="polyResource">
+                        <img src="assets/s-poly.png" alt="">
+                    </figure>
+                </button>
+                <button class="btnTransparent" id="logPolyBtn">
+                    <figure class="polyResource">
+                        <img src="assets/l-poly.png" alt="">
+                    </figure>
+                </button>
 
             </section>
             <section id="placing" class="flex column">
                 <figure>
-                    <img src="assets/house.svg" alt="house">
+                    <img src="assets/outpost.svg" alt="house">
                 </figure>
                 <h2 id="building"></h2>
             </section>
@@ -331,7 +342,7 @@
     
                 </section>
                 <section class="playerOffer" id="platerRecieve">
-                    <section class="playerOfferShow">
+                    <section class=" column playerOfferShow">
                         <h2 class="font offerText">You will recieve</h2>
                         <button id="selectTrade" class="selectTrade">
                             <h2 class="font">Select Resources to Recieve</h2>

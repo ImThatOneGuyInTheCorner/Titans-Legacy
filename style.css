@@ -55,8 +55,7 @@ body {
     border-color: #2F2504;
     color: black;
     width: 28dvw;
-    margin-top: 5em;
-    margin-left: 1em;
+    justify-content: space-around;
     height: 40.5dvh;
 }
 
@@ -273,6 +272,10 @@ figure img {
     width: 50%;
 }
 
+.polyResource {
+    width: 50%;
+}
+
 *:is(button, a),
 .menuButton {
     transition: filter .2s cubic-bezier(0.215, 0.610, 0.355, 1);
@@ -377,7 +380,6 @@ figure img {
 .avail {
     color: white;
     font-size: xx-large;
-    margin-bottom: 2em;
 }
 
 .tradeBox {
@@ -386,9 +388,8 @@ figure img {
     border-style: solid;
     width: 100%;
     background-color: #FFEAC0;
-    padding: 1em;
-    margin: 0.5em;
-
+    padding: 0.3em;
+    margin-top: 1em;
 }
 
 .avail {
@@ -447,7 +448,7 @@ figure img {
 }
 
 #resources figure {
-    width: 33.33%;
+    width: 72.33%%;
 }
 
 #resources figcaption {
@@ -463,12 +464,12 @@ figure img {
 #trades {
     width: 90%;
     margin-top: 5%;
-    height: 46%;
+    height: 47%;
 }
 
 #inventory {
     display: flex;
-    flex-direction: column;
+    flex-direction: column wrap;
 }
 
 .weapons {
@@ -500,7 +501,6 @@ figure img {
 
 .inv {
     color: white;
-    margin-bottom: 0.5em;
     font-size: xx-large;
 }
 
@@ -612,6 +612,11 @@ figure img {
 .bottom-overlay {
     width: 98%;
 }
+.selectSectionBtm {
+    display: flex;
+    
+    height: 50% ;
+}
 
 .selectTrade {
     background-color: #89A587;
@@ -620,7 +625,6 @@ figure img {
     border-radius: 0.3em;
     color: black;
     padding: 0.5em;
-    margin-top: 20em;
 }
 
 /* REUSABLE CLASSES USE THESE PLEASE */
@@ -663,10 +667,12 @@ figure img {
 /* End reusables */
 
 .playerOfferShow {
-    display: flex;
-    justify-content: center;
+    Display: flex;
+    height: 96%;
     align-items: center;
+    align-self: flex-end;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 #resources>figure>figcaption {
