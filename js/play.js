@@ -540,6 +540,12 @@ async function nextTurn() {
     placing = true
     updateResourceCounters(currentPlayer);
     updateColors(currentPlayer);
+    
+    if (currentPlayer.titan == "ravange") {
+        // console.log(Math.floor(Math.random() * (3 - 1 + 1)) + 1);
+        var audio = new Audio(`../audio/ravange${Math.floor(Math.random() * (3 - 1 + 1)) + 1}.mp3`);
+        audio.play();
+    };
 }
 
 // UI colors for each player
@@ -565,10 +571,6 @@ function updateColors(player) {
 };
 
 function colorSwitch(color1, color2) {
-    // let bBar = document.getElementById('bottomBar');
-    // let sBar = document.getElementById('sideBar');
-    // let trades = document.getElementById('trades');
-    // let inv = document.getElementById('inventory');
     document.getElementById('bottombar').style.backgroundColor = color1;
     document.getElementById('sidebar').style.backgroundColor = color1;
     document.getElementById('trades').style.backgroundColor = color2;
