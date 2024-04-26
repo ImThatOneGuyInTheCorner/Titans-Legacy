@@ -601,42 +601,41 @@ function overlayShuffle() {
 
 //PvE
 
+
 let enemyDiff = "hard";
+
+
+function checkResult(enemyHealth, playerHealth) {
+    console.log("Enemy Health:", enemyHealth);
+    console.log("Player Health:", playerHealth);
+    if (enemyHealth <= 0) {
+        console.log("win");
+        return;
+    }
+    if (playerHealth <= 0) {
+        console.log("loss");
+        return;
+    }
+    else {
+        return;
+    }
+}
+
+function enemyAttack(brace) {
+    let atkDmg;
+    if (brace === "braced") {
+        atkDmg = Math.floor(Math.random() * 10);
+    } else {
+        atkDmg = Math.floor(Math.random() * 20) + 10;
+    }
+    return (playerHealth -= atkDmg);
+}
+
 function banditTBC(enemyDiff) {
     const attackBtn = document.getElementById("playerAttackBtn");
     const dodgeBtn = document.getElementById("playerDodgeBtn");
     const braceBtn = document.getElementById("playerBraceBtn");
     const healBtn = document.getElementById("playerHealBtn");
-
-    function endTBC(result) {
-        if (result === "win") {
-            //GIVE PLAYER RESOURCES
-        } else if (result === "lose") {
-            //CLOSE PVE OVERLAY
-        }
-        //CLOSE PVE OVERLAY
-    }
-
-    function checkResult() {
-        console.log("Enemy Health,", enemyHealth);
-        console.log("Player Health,", playerHealth);
-        if (enemyHealth <= 0) {
-            endTBC("win");
-        }
-        if (playerHealth <= 0) {
-            endTBC("lose");
-        }
-
-    function enemyAttack(brace, enemyDiff) {
-        if (brace === "braced") {
-            let atkDmg = Math.floor(Math.random() * 10);
-            playerHealth -= atkDmg;
-        } else {
-            let atkDmg = Math.floor(Math.random() * 20) + 10;
-            playerHealth -= atkDmg;
-        }
-        checkResult();
-    }
 
     let enemyHealth = 100;
     if (enemyDiff === "hard") {
@@ -648,54 +647,51 @@ function banditTBC(enemyDiff) {
     let playerHealth = 100;
 
     function attack() {
-        let atkDmg = 0;
-        
-        atkDmg = Math.floor(Math.random() * 20 + 10)
-        
+        if (playerHealth || enemyHealth <= 0) {
+            return;
+        }
+        let atkDmg = Math.floor(Math.random() * 20 + 10);
         enemyHealth -= atkDmg;
-        checkResult();
+        checkResult(enemyHealth, playerHealth);
         enemyAttack();
     }
 
     function dodge() {
+        if (playerHealth || enemyHealth <= 0) {
+            return;
+        }
         let dodgeChance = Math.random();
         if (dodgeChance < 0.3) {
-            enemyAttack();
+            enemyAttack("notBraced");
         }
-        checkResult();
-        
+        checkResult(enemyHealth, playerHealth);
     }
 
     function brace() {
+        if (playerHealth || enemyHealth <= 0) {
+            return;
+        }
         let braceChance = Math.random();
         if (braceChance < 0.7) {
             enemyAttack("braced");
         } else {
             enemyAttack();
         }
-        checkResult();
-  
+        checkResult(enemyHealth, playerHealth);
     }
 
     function heal() {
+        if (playerHealth || enemyHealth <= 0) {
+            return;
+        }
         let healNmb = Math.floor(Math.random() * 20) + 10;
         playerHealth += healNmb;
         if (playerHealth > 100) {
             playerHealth = 100;
         }
-        checkResult();
+        checkResult(enemyHealth, playerHealth);
         enemyAttack();
     }
-
-    
-    }
-
-    
-
-    attackBtn.addEventListener("click", attack);
-    dodgeBtn.addEventListener("click", dodge);
-    braceBtn.addEventListener("click", brace);
-    healBtn.addEventListener("click", heal);
 
     attackBtn.addEventListener("click", attack);
     dodgeBtn.addEventListener("click", dodge);
@@ -703,43 +699,45 @@ function banditTBC(enemyDiff) {
     healBtn.addEventListener("click", heal);
 }
 
+banditTBC(enemyDiff);
+
 function ravangeTBC(enemyDiff) {
     const attackBtn = document.getElementById("playerAttackBtn");
     const dodgeBtn = document.getElementById("playerDodgeBtn");
     const braceBtn = document.getElementById("playerBraceBtn");
     const healBtn = document.getElementById("playerHealBtn");
 
-    function endTBC(result) {
-        if (result === "win") {
-            //GIVE PLAYER RESOURCES
-        } else if (result === "lose") {
-            //CLOSE PVE OVERLAY
-        }
-        //CLOSE PVE OVERLAY
-    }
+    // function endTBC(result) {
+    //     if (result === "win") {
+    //         //GIVE PLAYER RESOURCES
+    //     } else if (result === "lose") {
+    //         //CLOSE PVE OVERLAY
+    //     }
+    //     //CLOSE PVE OVERLAY
+    // }
 
 
-    function checkResult() {
-        console.log("Enemy Health,", enemyHealth);
-        console.log("Player Health,", playerHealth);
-        if (enemyHealth <= 0) {
-            endTBC("win");
-        }
-        if (playerHealth <= 0) {
-            endTBC("lose");
-        }
-    }
+    // function checkResult() {
+    //     console.log("Enemy Health,", enemyHealth);
+    //     console.log("Player Health,", playerHealth);
+    //     if (enemyHealth <= 0) {
+    //         endTBC("win");
+    //     }
+    //     if (playerHealth <= 0) {
+    //         endTBC("lose");
+    //     }
+    // }
 
-    function enemyAttack(brace, enemyDiff) {
-        if (brace === "braced") {
-            let atkDmg = Math.floor(Math.random() * 10);
-            playerHealth -= atkDmg;
-        } else {
-            let atkDmg = Math.floor(Math.random() * 20) + 10;
-            playerHealth -= atkDmg;
-        }
-        checkResult();
-    }
+    // function enemyAttack(brace, enemyDiff) {
+    //     if (brace === "braced") {
+    //         let atkDmg = Math.floor(Math.random() * 10);
+    //         playerHealth -= atkDmg;
+    //     } else {
+    //         let atkDmg = Math.floor(Math.random() * 20) + 10;
+    //         playerHealth -= atkDmg;
+    //     }
+    //     checkResult();
+    // }
 
 
     let enemyHealth = 100;
@@ -770,7 +768,7 @@ function ravangeTBC(enemyDiff) {
             enemyAttack();
         }
         checkResult();
-        
+
     }
 
     function brace() {
@@ -781,7 +779,7 @@ function ravangeTBC(enemyDiff) {
             enemyAttack();
         }
         checkResult();
-  
+
     }
 
     function heal() {
@@ -794,7 +792,7 @@ function ravangeTBC(enemyDiff) {
         enemyAttack();
     }
 
-    
+
 
     attackBtn.addEventListener("click", attack);
     dodgeBtn.addEventListener("click", dodge);
@@ -809,37 +807,37 @@ function brutusTBC(enemyDiff) {
     const braceBtn = document.getElementById("playerBraceBtn");
     const healBtn = document.getElementById("playerHealBtn");
 
-    function endTBC(result) {
-        if (result === "win") {
-            //GIVE PLAYER RESOURCES
-        } else if (result === "lose") {
-            //CLOSE PVE OVERLAY
-        }
-        //CLOSE PVE OVERLAY
-    }
+    // function endTBC(result) {
+    //     if (result === "win") {
+    //         //GIVE PLAYER RESOURCES
+    //     } else if (result === "lose") {
+    //         //CLOSE PVE OVERLAY
+    //     }
+    //     //CLOSE PVE OVERLAY
+    // }
 
 
-    function checkResult() {
-        console.log("Enemy Health,", enemyHealth);
-        console.log("Player Health,", playerHealth);
-        if (enemyHealth <= 0) {
-            endTBC("win");
-        }
-        if (playerHealth <= 0) {
-            endTBC("lose");
-        }
-    }
+    // function checkResult() {
+    //     console.log("Enemy Health,", enemyHealth);
+    //     console.log("Player Health,", playerHealth);
+    //     if (enemyHealth <= 0) {
+    //         endTBC("win");
+    //     }
+    //     if (playerHealth <= 0) {
+    //         endTBC("lose");
+    //     }
+    // }
 
-    function enemyAttack(brace, enemyDiff) {
-        if (brace === "braced") {
-            let atkDmg = Math.floor(Math.random() * 10);
-            playerHealth -= atkDmg;
-        } else {
-            let atkDmg = Math.floor(Math.random() * 20) + 10;
-            playerHealth -= atkDmg;
-        }
-        checkResult();
-    }
+    // function enemyAttack(brace, enemyDiff) {
+    //     if (brace === "braced") {
+    //         let atkDmg = Math.floor(Math.random() * 10);
+    //         playerHealth -= atkDmg;
+    //     } else {
+    //         let atkDmg = Math.floor(Math.random() * 20) + 10;
+    //         playerHealth -= atkDmg;
+    //     }
+    //     checkResult();
+    // }
 
     let enemyHealth = 100;
     if (enemyDiff === "hard") {
@@ -863,7 +861,7 @@ function brutusTBC(enemyDiff) {
             enemyAttack();
         }
         checkResult();
-        
+
     }
 
     function brace() {
@@ -874,7 +872,7 @@ function brutusTBC(enemyDiff) {
             enemyAttack();
         }
         checkResult();
-  
+
     }
 
     function heal() {
@@ -900,37 +898,37 @@ function magnificusTBC(enemyDiff) {
     const braceBtn = document.getElementById("playerBraceBtn");
     const healBtn = document.getElementById("playerHealBtn");
 
-    function endTBC(result) {
-        if (result === "win") {
-            //GIVE PLAYER RESOURCES
-        } else if (result === "lose") {
-            //CLOSE PVE OVERLAY
-        }
-        //CLOSE PVE OVERLAY
-    }
+    // function endTBC(result) {
+    //     if (result === "win") {
+    //         //GIVE PLAYER RESOURCES
+    //     } else if (result === "lose") {
+    //         //CLOSE PVE OVERLAY
+    //     }
+    //     //CLOSE PVE OVERLAY
+    // }
 
 
-    function checkResult() {
-        console.log("Enemy Health,", enemyHealth);
-        console.log("Player Health,", playerHealth);
-        if (enemyHealth <= 0) {
-            endTBC("win");
-        }
-        if (playerHealth <= 0) {
-            endTBC("lose");
-        }
-    }
+    // function checkResult() {
+    //     console.log("Enemy Health,", enemyHealth);
+    //     console.log("Player Health,", playerHealth);
+    //     if (enemyHealth <= 0) {
+    //         endTBC("win");
+    //     }
+    //     if (playerHealth <= 0) {
+    //         endTBC("lose");
+    //     }
+    // }
 
-    function enemyAttack(brace, enemyDiff) {
-        if (brace === "braced") {
-            let atkDmg = Math.floor(Math.random() * 10);
-            playerHealth -= atkDmg;
-        } else {
-            let atkDmg = Math.floor(Math.random() * 20) + 10;
-            playerHealth -= atkDmg;
-        }
-        checkResult();
-    }
+    // function enemyAttack(brace, enemyDiff) {
+    //     if (brace === "braced") {
+    //         let atkDmg = Math.floor(Math.random() * 10);
+    //         playerHealth -= atkDmg;
+    //     } else {
+    //         let atkDmg = Math.floor(Math.random() * 20) + 10;
+    //         playerHealth -= atkDmg;
+    //     }
+    //     checkResult();
+    // }
 
     let enemyHealth = 100;
     if (enemyDiff === "hard") {
@@ -954,7 +952,7 @@ function magnificusTBC(enemyDiff) {
             enemyAttack();
         }
         checkResult();
-        
+
     }
 
     function brace() {
@@ -965,7 +963,7 @@ function magnificusTBC(enemyDiff) {
             enemyAttack();
         }
         checkResult();
-  
+
     }
 
     function heal() {
@@ -983,4 +981,3 @@ function magnificusTBC(enemyDiff) {
     braceBtn.addEventListener("click", brace);
     healBtn.addEventListener("click", heal);
 }
-
