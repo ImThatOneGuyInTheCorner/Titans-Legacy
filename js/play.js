@@ -201,10 +201,10 @@ function modifyPopup(popup, resources, text, fightpop) {
     //     popup.classList.toggle("flex");
     let use = document.getElementById("resources");
     let building = document.getElementById("building");
-    let fight = document.getElementById("whole");
+    // let fight = document.getElementById("whole");
     console.log(use.children);
     building.innerText = text
-    fight.addEventListener('click')
+    // fight.addEventListener('click')
 }
 
 async function addPlacers(places) {
@@ -233,7 +233,7 @@ async function place(placeOn) {
 
     let player = players[currentTurn]
     const popup = await getElementPromiseBySelctor("#popcontainer");
-    const fightpop = await getElementById('whole');
+    // const fightpop = getElementById('whole');
     let current = buildings[buildingCurrent];
     let costs = current.costs
     isDragging = false
@@ -266,8 +266,11 @@ async function place(placeOn) {
     }
     let selfPlace = self.some(x => x == true)
     let nextTo = placer.some(x => x == true)
-    if (selfPlace == false && player.outposts > 0 && !self.every(x => x == false)) {
+    if (selfPlace == false && player.outposts > 0) {
         console.log("not next to own stuff")
+        return
+    }
+    if(self.every(x => x == false) && player.outposts > 0){
         return
     }
     let canBuild = [];
@@ -447,7 +450,7 @@ async function titanSelected(currentCard) {
     currentCard.classList.toggle("hidden", true);
 
 };
-
+let mainBoard;
 //Loads in the canvas for the board game
 (async () => {
 
@@ -481,8 +484,20 @@ async function titanSelected(currentCard) {
 
             rect.x -= (rect.width - 50) / 2;
             rect.y -= (rect.height - 50) / 2;
-            for (const x of app.stage.children) {
 
+            for(const x of mainBoard.board.children){
+                if(selected.sprite.getBounds().rectangle.intersects(x.getBounds().rectangle)){
+                    x.interactive = true;
+                    x.on("pointerdown",()=>{
+                        
+                        x.getChildAt(1);
+
+                    });
+                }
+            }
+
+            for (const x of app.stage.children) {
+                
                 if(x.texture == Texture.from("placer") && rect.intersects(x.getBounds().rectangle)){
                     console.log(buildingCurrent,"hittin something...",x);
                     if(buildingCurrent == "road"){
@@ -597,7 +612,11 @@ function updateResourceCounters(player) {
         document.getElementById(`${resource}Count`).innerText = amount;
     }
 };
-
+let diffculties = {
+    "hard":"BE6A6A",
+    "medium":"BE926A",
+    "easy":"6ABE7D"
+}
 async function startGameLoop() {
 
 
@@ -610,13 +629,15 @@ async function startGameLoop() {
     app.stage.addChild(tilingSprite);
     const origin = { x: -app.canvas.width / 4, y: -app.canvas.height / 4 };
     const tileHeight = app.canvas.height / 20;
-    const mainBoard = new HexBoard(tileHeight, "POINTY", 2, origin);
-
+    mainBoard = new HexBoard(tileHeight, "POINTY", 2, origin);
+    
     mainBoard.buildTiles("hex", "3");
     for (const tile of mainBoard.tiles) {
-        tile.sprite.scale.set(tileHeight / 100)
+        tile.sprite.scale.set(tileHeight / 100);
         tile.text = Math.floor(Math.random() * 4) + 1
         tile.placers = createPlacers(tile);
+        let diff = Math.floor(Math.random()*3)
+        tile.sprite.tint = Object.values(diffculties)[diff];
     }
 
 

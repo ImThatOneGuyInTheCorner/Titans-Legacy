@@ -751,3 +751,22 @@ figure img {
     display: flex;
     cursor: pointer;
 }
+
+#PvEContainer{
+    position: absolute;
+    width: 100dvw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-content: center;
+
+}
+
+
+#PvEContainer > iframe{
+    align-content:  center;
+    justify-content: center;
+    width: 50%;
+    height: 50%;
+}
