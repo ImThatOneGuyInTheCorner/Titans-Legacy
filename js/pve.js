@@ -85,7 +85,7 @@ let moveFunctions = {
 function doMove(btn){
     btn.addEventListener("click",()=>{
         let move = btn.id.substring(6).slice(0,-3).toLowerCase();
-        moveFunctions[move](fight.player)
+        moveFunctions[move](fight.player);
     }) 
 }
 document.addEventListener("DOMContentLoaded",()=>{

@@ -623,7 +623,7 @@ async function startGameLoop() {
         for (const [resource, cost] of Object.entries(costs)) {
             // let player = new Player();
             players.forEach(player => {
-                player.addResource(resource, 999)
+                player.addResource(resource, cost)
                 console.log(player.hasResourceAmount(resource, cost));
             })
 
