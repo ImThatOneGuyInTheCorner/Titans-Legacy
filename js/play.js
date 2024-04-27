@@ -625,7 +625,9 @@ let mainBoard;
             updateResourceCounters(player);
             console.log(buildingCurrent)
             player[buildingCurrent + "s"]++
-
+            if(player[buildingCurrent + "s"] == 10){
+                document.write(`${player.titan} won the game!`)
+            }
             selected.sprite.texture = Texture.from(buildingCurrent);
             selected.sprite.tint = players[currentTurn].color
             selected.sprite.alpha = 1;
