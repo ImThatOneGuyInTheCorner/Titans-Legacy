@@ -578,8 +578,8 @@ async function PvE(plr) {
     fight.cb = () => {
         if(fight.didPlayerWin() == true){
             let resources = randResource(4)
-            resources.forEach(x=>fight.player.addResource(x,Math.floor(Math.random()*2)))
-            updateResourceCounters();
+            resources.forEach(x=>fight.player.addResource(x,Math.floor(Math.random()*2+1)))
+            updateResourceCounters(fight.player);
         }
         if (fight.didEnemyWin() == true || fight.didPlayerWin() == true) {
             fight.player.health = fight.player.maxhealth;
