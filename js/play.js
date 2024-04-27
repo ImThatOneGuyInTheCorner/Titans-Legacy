@@ -60,12 +60,11 @@ class Battle {
         } else if (this.dodge == false) {
             this.induceDamage(damage, true);
         } else {
-            console.log(`plr dodged ${damage} damage`)
+            notify(`${this.player.titan} dodged ${damage} damage`)
         }
         this.bracing = false;
         this.dodge = false;
-        console.log(`plr: ${this.player.hp}/${this.player.maxhp}`)
-        console.log(`enemy: ${this.enemyHP}/${this.enemymaxHP}`)
+        notify(`${this.player.titan}: ${this.player.hp}/${this.player.maxhp} enemy: ${this.enemyHP}/${this.enemymaxHP}`)
         console.log("<|-|>".repeat(25))
         if (this.didEnemyWin()) {
             console.warn("player dead")

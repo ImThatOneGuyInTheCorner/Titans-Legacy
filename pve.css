@@ -11,6 +11,7 @@ body {
 }
 
 #whole {
+    z-index: 2;
     display: flex;
     justify-self: center;
     align-self: center;
