@@ -100,6 +100,7 @@ let moveFunctions = {
         fight.stepTurn();
     },
     dodge:(plr)=>{
+        fight.dodge = true;
         fight.stepTurn();
     },
     attack:(plr)=>{

@@ -9,7 +9,7 @@
     <script src="libraries/honeycomb.js"></script>
     <script type="module" src="js/play.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Mystery+Quest&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="pve.css">
 </head>
 
 <body class="background">
@@ -258,7 +258,51 @@
         </section>
     </main>
     <section id="PvEContainer" class="flex hidden">
-        <iframe src="pve.html" class="flex" frameborder="0"></iframe>
+        <section id="whole">
+            <section id="playerHalf">
+                <section class="playerBtns">
+                    <section id="playerAttackBtn" class="btn">
+                        <p>Attack</p>
+                    </section>
+                    <section id="playerBraceBtn" class="btn">
+                        <p>Brace</p>
+                    </section>
+                    <section id="playerDodgeBtn" class="btn">
+                        <p>Dodge</p>
+                    </section>
+                    <section id="playerHealBtn" class="btn">
+                        <p>Heal</p>
+                    </section>
+                    <section id="playerHealth">
+                        
+                    </section>
+                </section>
+                    <figure id="playerIcon">
+                        <img class="Player" src="assets\magnificus.svg" alt="Titan">
+                    </figure>
+                </section>
+                
+            <section id="enemy-half">
+                <!-- <section id="enemyAttackBtn">
+                    <p>Attack</p>
+                </section>
+                <section id="enemyBraceBtn">
+                    <p>Brace</p>
+                </section>
+                <section id="enemyDodgeBtn">
+                    <p>Dodge</p>
+                </section>
+                <section id="enemyHealBtn">
+                    <p>Heal</p>
+                </section> -->
+                <figure class="hidden"  id="slime"><img src="assets\easySlimeActual.png" alt="Enemy"></figure>
+                <figure class="hidden"  id="wolf"><img src="assets\midWolfActual.png" alt="Enemy"></figure>
+                <figure class="hidden"  id="perry"><img src="assets\perry.png" alt="Enemy"></figure>
+                <section id="enemyHealth">
+    
+                </section>
+            </section>
+        </section>
     </section>
     <section id="popcontainer" class="flex hidden">
         <section id="placepop" class="flex column">

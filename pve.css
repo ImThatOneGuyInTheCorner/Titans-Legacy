@@ -14,9 +14,9 @@ body {
     display: flex;
     justify-self: center;
     align-self: center;
-    width: 70vw;
-    height: 70vh;
-    background-size: 1399px;
+    width: 60%;
+    height: 75vh;
+    background-size: contain;
     background-image: url(assets/battleBackground.png);
 }
 

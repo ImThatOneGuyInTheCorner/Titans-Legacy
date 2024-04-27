@@ -7,7 +7,8 @@ class Player {
         this.resources = new Map;
         this.hp = 100;
         this.maxhp = 100;
-
+        this.dmgModifier = 1;
+        this.dodgeChance = 1;
         this.resources.set("log", 0)
         this.resources.set("mushroom", 0)
         this.resources.set("orange", 0)

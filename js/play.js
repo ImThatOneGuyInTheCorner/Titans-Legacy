@@ -7,9 +7,75 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //Import all things needed from PIXI
-import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Circle, textureFrom, Rectangle, Graphics } from "../libraries/pixi.mjs"
+import { Application, Assets, Sprite, Container, Text, Texture, VERSION, TilingSprite, Ticker, Rectangle } from "../libraries/pixi.mjs"
 console.log(`Pixi.js [${VERSION}]`)
 import Player from "./player.js"
+class Battle {
+    constructor(diff, player) {
+        this.diff = diff;
+        this.player = player;
+        this.enemyHP = 80 + (this.diff == "hard" ? 70 : this.diff == "medium" ? 20 : 0);
+        this.enemymaxHP = this.enemyHP;
+        this.bracing = false;
+        this.dodge = false;
+        this.cb = ()=>{}
+    }
+    induceDamage(dmg, toPlayer) {
+        if (toPlayer) {
+            console.log(`Induced ${dmg} damage to player`)
+            this.player.hp -= dmg;
+        }
+        else {
+            console.log(`Induced ${dmg} damage to enemy`)
+            this.enemyHP -= dmg;
+        }
+    }
+    didPlayerWin() {
+        return this.enemyHP <= 0;
+    }
+    didEnemyWin() {
+        return this.enemyHP > 0 && this.player.hp <= 0;
+    }
+    stepTurn() {
+        console.log(this.player)
+        this.cb(this.didPlayerWin());
+        if (this.diff == 'hard') {
+            var audio = new Audio(`../audio/perry${Math.floor(Math.random() * (3 - 1 + 1)) + 1}.mp3`);
+            audio.play();
+        }
+        if (this.didPlayerWin()) {
+            console.log("plr won")
+            return
+        }
+        if (this.didEnemyWin()) {
+            console.warn("player dead")
+            return
+        }
+        console.log(`plr ${this.bracing ? "is" : "is not"} bracing`)
+        let damage = this.bracing == true ? Math.floor(Math.random() * 10) : Math.floor(Math.random() * 20) + 10
+        let dodgeChance = Math.random();
+        if (dodgeChance > 0.3 * this.player.dodgeChance && this.dodge == true) {
+            this.induceDamage(damage, true);
+
+        } else if (this.dodge == false) {
+            this.induceDamage(damage, true);
+        } else {
+            console.log(`plr dodged ${damage} damage`)
+        }
+        this.bracing = false;
+        this.dodge = false;
+        console.log(`plr: ${this.player.hp}/${this.player.maxhp}`)
+        console.log(`enemy: ${this.enemyHP}/${this.enemymaxHP}`)
+        console.log("<|-|>".repeat(25))
+        if (this.didEnemyWin()) {
+            console.warn("player dead")
+            return
+        }
+    }
+    set turncb(cb) {
+        this.cb = cb
+    }
+}
 
 
 class Titan {
@@ -131,7 +197,7 @@ let buildings = {
             "log": 1
         }
     }
-    
+
 }
 //Create a new application
 const app = new Application;
@@ -222,10 +288,10 @@ async function addPlacers(places) {
 }
 let toResolve = []
 
-function rectOnSprite(placeOn,radius){
-    let r = new Rectangle(placeOn.sprite.x,placeOn.sprite.y,placeOn.sprite.width*radius,placeOn.sprite.height*radius);
-    r.x -= r.width/2
-    r.y -= r.height/2
+function rectOnSprite(placeOn, radius) {
+    let r = new Rectangle(placeOn.sprite.x, placeOn.sprite.y, placeOn.sprite.width * radius, placeOn.sprite.height * radius);
+    r.x -= r.width / 2
+    r.y -= r.height / 2
     return r
 }
 
@@ -248,12 +314,12 @@ async function place(placeOn) {
     }
 
     let placer = [];
-    let rect = rectOnSprite(placeOn,3.5)
-    let rect2 = rectOnSprite(placeOn,6)
+    let rect = rectOnSprite(placeOn, 3.5)
+    let rect2 = rectOnSprite(placeOn, 6)
     let self = [];
     for (const child of app.stage.children) {
         if (child != placeOn.sprite && child.texture == Texture.from("outpost") && buildingCurrent == "outpost") {
-            if(rect2.intersects(child.getBounds())){
+            if (rect2.intersects(child.getBounds())) {
                 return
             }
         }
@@ -270,7 +336,7 @@ async function place(placeOn) {
         console.log("not next to own stuff")
         return
     }
-    if(self.every(x => x == false) && player.outposts > 0){
+    if (self.every(x => x == false) && player.outposts > 0) {
         return
     }
     let canBuild = [];
@@ -286,10 +352,6 @@ async function place(placeOn) {
     if (canBuild !== true) return;
 
     switch (buildingCurrent) {
-        case "fight":
-            modifyPopup(popup, costs, "Fight?", fightpop);
-            popup.classList.toggle("hidden", false);
-            break;
 
         case "outpost":
             modifyPopup(popup, costs, "Place Outpost");
@@ -343,7 +405,7 @@ async function createPlacers(tile) {
         //placing = false
         place(x)
         buildingCurrent = "road"
-        
+
 
 
     }))
@@ -450,6 +512,98 @@ async function titanSelected(currentCard) {
     currentCard.classList.toggle("hidden", true);
 
 };
+
+let fight
+let PvEcontainer = await getElementPromiseBySelctor("#PvEContainer");
+
+async function PvE(plr) {
+    PvEcontainer.classList.toggle("hidden", false);
+    let randNum = Math.floor(Math.random() * 2) + 1;
+    switch (randNum) {
+        case 0:
+            var difficulty = "easy";
+            document.getElementById("slime").classList.toggle('hidden');
+            break;
+        case 1:
+            var difficulty = "medium";
+            document.getElementById("wolf").classList.toggle('hidden');
+            break;
+        case 2:
+            var difficulty = "hard";
+            document.getElementById("perry").classList.toggle('hidden');
+            var audio = new Audio(`../audio/perry${Math.floor(Math.random() * (3 - 1 + 1)) + 1}.mp3`);
+            audio.play();
+            break;
+        default:
+            console.log("Error: No difficulty for battle");
+    }
+    plr.hp = 100;
+    let fight = new Battle(difficulty, plr);
+    
+    let moveFunctions = {
+        brace: () => {
+            fight.bracing = true;
+            fight.stepTurn();
+        },
+        heal: (plr) => {
+            plr.hp = Math.min(plr.hp + 10, plr.maxhp);
+            fight.stepTurn();
+        },
+        dodge: (plr) => {
+            fight.dodge = true;
+            fight.stepTurn();
+        },
+        attack: (plr) => {
+            let dmg = Math.floor(Math.random() * 20) * plr.dmgModifier + 10;
+            fight.induceDamage(dmg, false);
+            fight.stepTurn();
+        }
+    }
+    let events = [];
+    function doMove(btn) {
+        let event = () => {
+            let move = btn.id.substring(6).slice(0, -3).toLowerCase();
+            if (fight) {
+                moveFunctions[move](fight.player);
+            }
+        }
+        btn.addEventListener("click", event)
+        console.log(btn)
+        events.push([event,btn]);
+    }
+    let buttons = document.querySelectorAll("section .btn");
+    for (const btn of buttons) {
+        doMove(btn);
+    }
+    fight.cb = () => {
+        if(fight.didPlayerWin() == true){
+            let resources = randResource(4)
+            resources.forEach(x=>fight.player.addResource(x,Math.floor(Math.random()*2)))
+            updateResourceCounters();
+        }
+        if (fight.didEnemyWin() == true || fight.didPlayerWin() == true) {
+            fight.player.health = fight.player.maxhealth;
+            fight = null;
+            PvEcontainer.classList.toggle("hidden", true);
+            events.forEach(x => x[1].removeEventListener("click",x[0]))
+        }
+        
+    }
+
+}
+
+function randResource(amount){
+    let ret = [];
+    for (let i = 0; i < amount; i++) {
+        let res = Math.floor(Math.random() * players[currentTurn].resources.size);
+        let values = Object.keys(Object.fromEntries(players[currentTurn].resourceEntires))[res];
+        ret.push(values);
+       
+    }
+    console.log(ret)
+    return ret;
+}
+
 let mainBoard;
 //Loads in the canvas for the board game
 (async () => {
@@ -460,18 +614,18 @@ let mainBoard;
     const building = await getElementPromiseBySelctor("#building");
 
     building.addEventListener("click", () => {
-       
+
         if (selected && selected.sprite.texture != Texture.from(buildingCurrent)) {
             let player = players[currentTurn];
             let costs = buildings[buildingCurrent].costs
-            
+
             for (const [resource, cost] of Object.entries(costs)) {
                 player.addResource(resource, -cost);
             }
-    
+
             updateResourceCounters(player);
             console.log(buildingCurrent)
-            player[buildingCurrent+"s"]++
+            player[buildingCurrent + "s"]++
 
             selected.sprite.texture = Texture.from(buildingCurrent);
             selected.sprite.tint = players[currentTurn].color
@@ -485,25 +639,28 @@ let mainBoard;
             rect.x -= (rect.width - 50) / 2;
             rect.y -= (rect.height - 50) / 2;
 
-            for(const x of mainBoard.board.children){
-                if(selected.sprite.getBounds().rectangle.intersects(x.getBounds().rectangle)){
+            for (const x of mainBoard.board.children) {
+                if (selected.sprite.getBounds().rectangle.intersects(x.getBounds().rectangle)) {
                     x.interactive = true;
-                    x.on("pointerdown",()=>{
-                        
-                        x.getChildAt(1);
+                    x.on("pointerdown", () => {
+                        if (PvEcontainer.classList.hidden != null) {
+                            return
+                        }
+                        // console.log(PvEcontainer.classList.hidden)
+                        PvE(player);
 
                     });
                 }
             }
 
             for (const x of app.stage.children) {
-                
-                if(x.texture == Texture.from("placer") && rect.intersects(x.getBounds().rectangle)){
-                    console.log(buildingCurrent,"hittin something...",x);
-                    if(buildingCurrent == "road"){
+
+                if (x.texture == Texture.from("placer") && rect.intersects(x.getBounds().rectangle)) {
+                    console.log(buildingCurrent, "hittin something...", x);
+                    if (buildingCurrent == "road") {
                         selected.sprite.scale.y += .5
                         // app.stage.removeChild(x);
-                    }else{
+                    } else {
 
                     }
                 }
@@ -527,14 +684,14 @@ let activeTimers = [];
 function purgeTimers() {
     for (const timer of activeTimers) {
         ticker.remove(timer);
-        activeTimers.splice(activeTimers.indexOf(timer),1);
+        activeTimers.splice(activeTimers.indexOf(timer), 1);
     }
-    
+
 }
 let elapsedTime = 0;
 
 async function nextTurn() {
-
+    PvEcontainer.classList.toggle("hidden","true");
     ticker.stop()
     purgeTimers();
     elapsedTime = 0
@@ -567,7 +724,7 @@ async function nextTurn() {
     placing = true
     updateResourceCounters(currentPlayer);
     updateColors(currentPlayer);
-    
+
     if (currentPlayer.titan == "ravange") {
         // console.log(Math.floor(Math.random() * (3 - 1 + 1)) + 1);
         var audio = new Audio(`../audio/ravange${Math.floor(Math.random() * (3 - 1 + 1)) + 1}.mp3`);
@@ -578,8 +735,8 @@ async function nextTurn() {
 // UI colors for each player
 function updateColors(player) {
     console.log("COLOR UPDATE");
-        // 0x2D7EAB, 0xAB2D2D, 0x2DAB3A, 0x992DAB
-    switch(player.color) {
+    // 0x2D7EAB, 0xAB2D2D, 0x2DAB3A, 0x992DAB
+    switch (player.color) {
         case 0x2D7EAB:
             colorSwitch('#2D7EAB', '#248596');
             break;
@@ -594,7 +751,7 @@ function updateColors(player) {
             break;
         default:
             console.log("Error: no color found")
-      }
+    }
 };
 
 function colorSwitch(color1, color2) {
@@ -613,9 +770,9 @@ function updateResourceCounters(player) {
     }
 };
 let diffculties = {
-    "hard":"BE6A6A",
-    "medium":"BE926A",
-    "easy":"6ABE7D"
+    "hard": "BE6A6A",
+    "medium": "BE926A",
+    "easy": "6ABE7D"
 }
 async function startGameLoop() {
 
@@ -630,13 +787,13 @@ async function startGameLoop() {
     const origin = { x: -app.canvas.width / 4, y: -app.canvas.height / 4 };
     const tileHeight = app.canvas.height / 20;
     mainBoard = new HexBoard(tileHeight, "POINTY", 2, origin);
-    
+
     mainBoard.buildTiles("hex", "3");
     for (const tile of mainBoard.tiles) {
         tile.sprite.scale.set(tileHeight / 100);
         tile.text = Math.floor(Math.random() * 4) + 1
         tile.placers = createPlacers(tile);
-        let diff = Math.floor(Math.random()*3)
+        let diff = Math.floor(Math.random() * 3)
         tile.sprite.tint = Object.values(diffculties)[diff];
     }
 
@@ -707,8 +864,12 @@ async function startGameLoop() {
     nextTurn();
 }
 
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     // How to play screen
+
     if (document.getElementById('create-trade-overlay') !== null) {
         let offerBtn = document.getElementById('offerBtn');
         offerBtn.addEventListener('click', overlayShuffle)
@@ -724,10 +885,10 @@ function overlayShuffle() {
     document.getElementById("create-trade-overlay").classList.toggle("flex");
 }
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById('whole') != null) {
-        
-        
+
+
     }
 })
 
